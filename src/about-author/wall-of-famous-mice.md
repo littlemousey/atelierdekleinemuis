@@ -28,7 +28,7 @@
 		{
 			name: 'Lara',
 			imgUrl: '/img/avatars/lara.jpg',
-			traits: 'lief zusje',
+			traits: 'voorzichtig en ondeugend',
 		},
 		{
 			name: 'Chell',
