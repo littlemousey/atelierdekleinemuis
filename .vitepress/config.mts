@@ -31,9 +31,10 @@ export default defineConfig({
           { text: 'Burenruzie', link: '/src/verhalen-van-de-muis/burenruzie' },
         ]
       },
-      { text: 'Wall of fame', link: '/src/about-author/wall-of-famous-mice' },
       { text: 'Over auteur', items: [
         { text: 'Auteur', link: '/src/about-author/' },
+        { text: 'Wall of fame', link: '/src/about-author/wall-of-famous-mice' },
+        { text: 'Website', link: '/src/about-author/frontend' }
       ]},
       { text: 'Copyright', link: '/src/verhalen-van-de-muis/copyright' },
     ],
