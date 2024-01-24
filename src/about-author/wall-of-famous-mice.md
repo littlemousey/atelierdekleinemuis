@@ -77,17 +77,14 @@
 
 <style module>
 .wall {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  justify-content: space-between;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   margin-top: 30px;
 }
 
-.mouse {
-  flex-grow: 4;
-  flex-basis: 25%
-}
+.mouse {}
 
 .avatar {
   border-radius: 50%;
