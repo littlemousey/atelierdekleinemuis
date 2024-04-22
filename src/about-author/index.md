@@ -15,7 +15,22 @@ My other hobbies are travelling, drawing, writing stories, video games, photogra
 	<img :class="$style.mouse" src='/img/littlemousey_wave.png' alt='muis zwaait' />
 </div>
 
+<q>
+	Yes, I'm a female developer,<br/>
+	Yes, I don't write perfect code,<br/>
+	But who does?
+</q>
+
 <style module>
+q {
+	display: block;
+	font-size: 1.5rem;
+	font-style: italic;
+	line-height: 1.5;
+	margin: 20px auto;
+	quotes: "„" "“";
+	text-align: center;
+}
 .mouse {
 	margin: 0 auto;
 }
