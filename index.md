@@ -8,7 +8,7 @@ hero:
   text: ""
   tagline: 
   image:
-    src: /img/slapende-muizen.jpg
+    src: /img/cover.PNG
     alt: muizen
   actions:
     - theme: brand
