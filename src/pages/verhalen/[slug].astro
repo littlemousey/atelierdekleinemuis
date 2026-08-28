@@ -26,13 +26,11 @@ const { entry, prev, next } = Astro.props;
 const { Content } = await render(entry);
 
 const url = new URL(`/verhalen/${entry.id}`, Astro.site).href;
-const isRecipe = entry.data.type === 'recept';
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': isRecipe ? 'Recipe' : 'Article',
+  '@type': 'Article',
   headline: entry.data.title,
-  name: entry.data.title,
   description: entry.data.description,
   inLanguage: 'nl-NL',
   datePublished: entry.data.pubDate.toISOString(),
@@ -53,14 +51,14 @@ const dateFmt = new Intl.DateTimeFormat('nl-NL', { dateStyle: 'long' });
   publishedTime={entry.data.pubDate}
   modifiedTime={entry.data.updatedDate}
   jsonLd={jsonLd}
+  narrow
 >
   <article class="prose">
+    <p class="kicker">Verhaal</p>
     <h1>{entry.data.title}</h1>
     <p class="article__meta">
-      {isRecipe ? 'Recept' : 'Verhaal'} van {AUTHOR} ·
-      <time datetime={entry.data.pubDate.toISOString()}>
-        {dateFmt.format(entry.data.pubDate)}
-      </time>
+      {AUTHOR} ·
+      <time datetime={entry.data.pubDate.toISOString()}>{dateFmt.format(entry.data.pubDate)}</time>
       {entry.data.updatedDate && (
         <> · bijgewerkt <time datetime={entry.data.updatedDate.toISOString()}>
           {dateFmt.format(entry.data.updatedDate)}

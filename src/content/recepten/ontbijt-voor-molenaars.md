@@ -3,8 +3,7 @@ title: "Ontbijt voor molenaars"
 description: "Recept voor gebakken havermout met appel, kokosrasp en rozijnen: het stevige molenaarsontbijt uit de verhalen van de kleine muis, klaar in een paar minuten."
 pubDate: 2023-10-22
 updatedDate: 2024-01-21
-order: 2
-type: recept
+order: 1
 ---
 
 ## Wat heb je nodig

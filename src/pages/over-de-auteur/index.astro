@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Plate from '../../components/Plate.astro';
 import { AUTHOR } from '../../consts';
 
 const jsonLd = {
@@ -19,9 +20,14 @@ const jsonLd = {
   title="Over de auteur"
   description="Atelier de kleine muis wordt geschreven en gebouwd door A.N.S. de Nijs, een front-end developer uit Nederland met een levenslange fascinatie voor muizen."
   jsonLd={jsonLd}
+  narrow
 >
-  <div class="prose">
+  <div class="page-head">
+    <p class="kicker">Wie schrijft dit</p>
     <h1>Over de auteur</h1>
+  </div>
+
+  <div class="prose">
     <p>
       Deze website is gebouwd door een enthousiaste front-end developer uit Nederland 🇳🇱 Ik heb
       altijd al een fascinatie gehad voor muizen. Ze zijn zo klein, schattig en nieuwsgierig.
@@ -37,13 +43,11 @@ const jsonLd = {
       spelen, fotografie, muziek, lekkere snacks eten en coole dingen met code bouwen.
     </p>
 
-    <img
+    <Plate
       src="/img/littlemousey_wave.png"
       alt="De getekende muis van Atelier de kleine muis zwaait"
       width="300"
       height="300"
-      loading="lazy"
-      style="margin-inline:auto;display:block"
     />
 
     <blockquote>
@@ -51,11 +55,22 @@ const jsonLd = {
       Yes, I don't write perfect code,<br />
       But who does?
     </blockquote>
-
-    <h2>Meer</h2>
-    <ul>
-      <li><a href="/over-de-auteur/wall-of-fame">Wall of fame</a> — alle muizen die hier gewoond hebben</li>
-      <li><a href="/over-de-auteur/website">Over deze website</a> — waar hij mee gebouwd is</li>
-    </ul>
   </div>
+
+  <hr class="hr" />
+
+  <ul class="index-list">
+    <li>
+      <a href="/wall-of-fame">
+        <span class="index-list__title">Wall of fame</span>
+        <span class="index-list__note">alle muizen die hier gewoond hebben</span>
+      </a>
+    </li>
+    <li>
+      <a href="/over-de-auteur/website">
+        <span class="index-list__title">Over deze website</span>
+        <span class="index-list__note">waar hij mee gebouwd is</span>
+      </a>
+    </li>
+  </ul>
 </BaseLayout>

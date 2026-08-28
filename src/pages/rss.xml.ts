@@ -4,21 +4,29 @@ import type { APIContext } from 'astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
 export async function GET(context: APIContext) {
-  const verhalen = (await getCollection('verhalen')).sort(
-    (a, b) => a.data.order - b.data.order,
-  );
+  const [verhalen, recepten, gedichten] = await Promise.all([
+    getCollection('verhalen'),
+    getCollection('recepten'),
+    getCollection('gedichten'),
+  ]);
+
+  const items = [
+    ...verhalen.map((e) => ({ e, path: `/verhalen/${e.id}` })),
+    ...recepten.map((e) => ({ e, path: `/atelier/recepten/${e.id}` })),
+    ...gedichten.map((e) => ({ e, path: `/atelier/gedichten/${e.id}` })),
+  ].sort((a, b) => b.e.data.pubDate.getTime() - a.e.data.pubDate.getTime());
 
   return rss({
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     site: context.site!,
-    items: verhalen.map((verhaal) => ({
-      title: verhaal.data.title,
-      description: verhaal.data.description,
-      pubDate: verhaal.data.pubDate,
-      link: `/verhalen/${verhaal.id}`,
-    })),
     trailingSlash: false,
+    items: items.map(({ e, path }) => ({
+      title: e.data.title,
+      description: e.data.description,
+      pubDate: e.data.pubDate,
+      link: path,
+    })),
     customData: '<language>nl-nl</language>',
   });
 }

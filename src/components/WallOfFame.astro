@@ -1,40 +1,56 @@
 ---
-import { MICE } from '../data/mice';
+import { MICE_BY_ERA } from '../data/mice';
 ---
 
-<ul class="wall">
-  {MICE.map((mouse) => (
-    <li>
-      <button
-        type="button"
-        class="wall__btn"
-        data-collage={mouse.collageImgUrl}
-        data-name={mouse.name}
-        aria-haspopup="dialog"
-      >
-        <img
-          class="wall__avatar"
-          src={mouse.imgUrl}
-          alt={`Muis ${mouse.name}`}
-          width="144"
-          height="144"
-          loading="lazy"
-          decoding="async"
-        />
-        <span class="wall__name">{mouse.name}</span>
-        {mouse.exLab && <span class="wall__badge">ex-labmuis</span>}
-        <span class="wall__traits">{mouse.traits}</span>
-      </button>
-    </li>
-  ))}
-</ul>
+{MICE_BY_ERA.map(({ era, mice }) => (
+  <section class="era">
+    <div class="era__head">
+      <h2 id={era.id}>{era.label}</h2>
+      <span class="era__count">{mice.length}</span>
+    </div>
+    <p class="era__note">{era.note}</p>
 
-<dialog class="collage-dialog" id="collage-dialog" aria-label="Foto's van de muis">
-  <div class="collage-dialog__bar">
-    <strong id="collage-dialog-title"></strong>
-    <button type="button" class="collage-dialog__close" data-close>Sluiten</button>
+    <ul class="wall">
+      {mice.map((mouse) => (
+        <li>
+          <button
+            type="button"
+            class="polaroid"
+            data-collage={mouse.collageImgUrl}
+            data-name={mouse.name}
+            aria-haspopup="dialog"
+          >
+            <img
+              class="plate"
+              src={mouse.imgUrl}
+              alt={`Muis ${mouse.name}`}
+              width="150"
+              height="150"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="polaroid__name">{mouse.name}</span>
+            {mouse.exLab && <span class="polaroid__lab">ex-labmuis</span>}
+            {/* Period renders only once real from/to dates are filled in. */}
+            {mouse.from && mouse.to && (
+              <span class="polaroid__epithet">{mouse.from} – {mouse.to}</span>
+            )}
+            {mouse.epithet && <span class="polaroid__epithet">{mouse.epithet}</span>}
+          </button>
+        </li>
+      ))}
+    </ul>
+  </section>
+))}
+
+<dialog class="collage" id="collage-dialog" aria-label="Foto's van de muis">
+  <div class="collage__inner">
+    <div class="collage__bar">
+      <strong id="collage-dialog-title"></strong>
+      <button type="button" class="btn btn-secondary" data-close>Sluiten</button>
+    </div>
+    <img id="collage-dialog-img" class="plate" src="" alt="" />
   </div>
-  <img id="collage-dialog-img" src="" alt="" />
 </dialog>
 
 <script>
@@ -43,7 +59,7 @@ import { MICE } from '../data/mice';
   const label = document.querySelector<HTMLElement>('#collage-dialog-title');
 
   if (dialog && img && label) {
-    document.querySelectorAll<HTMLButtonElement>('.wall__btn').forEach((btn) => {
+    document.querySelectorAll<HTMLButtonElement>('.polaroid').forEach((btn) => {
       btn.addEventListener('click', () => {
         const name = btn.dataset.name ?? '';
         img.src = btn.dataset.collage ?? '';
@@ -55,7 +71,7 @@ import { MICE } from '../data/mice';
 
     dialog.querySelector('[data-close]')?.addEventListener('click', () => dialog.close());
 
-    // Click on the backdrop (outside the dialog box) closes it too.
+    // Click on the backdrop closes it too.
     dialog.addEventListener('click', (event) => {
       if (event.target === dialog) dialog.close();
     });

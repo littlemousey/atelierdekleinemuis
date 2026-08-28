@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Plate from '../../components/Plate.astro';
 import { AUTHOR, SITE_TITLE } from '../../consts';
 
 const verhalen = (await getCollection('verhalen')).sort((a, b) => a.data.order - b.data.order);
@@ -25,9 +26,12 @@ const jsonLd = {
   description="Het voorwoord en de inhoudsopgave van Atelier de kleine muis: korte verhalen over muizen, mollen en koolmezen, geschreven door A.N.S. de Nijs."
   jsonLd={jsonLd}
 >
-  <div class="prose">
+  <div class="page-head">
+    <p class="kicker">Een levend boek</p>
     <h1>Verhalen van de muis</h1>
+  </div>
 
+  <div class="prose">
     <h2>Voorwoord</h2>
     <p>
       Muizen zijn overal. Ze leven in plantgewassen, struiken, maken holletjes onder de grond en
@@ -73,23 +77,30 @@ const jsonLd = {
     </p>
     <p><em>{AUTHOR}</em></p>
 
-    <img
+    <Plate
       src="/img/slapende-muizen.jpg"
       alt="Slapende muizen dicht tegen elkaar aan"
       width="900"
       height="600"
-      loading="lazy"
     />
   </div>
 
+  <hr class="hr" />
+
   <h2>Inhoudsopgave</h2>
-  <ul class="card-grid">
+  <ul class="index-list">
     {verhalen.map((verhaal) => (
-      <li class="card">
-        <p class="card__meta">{verhaal.data.type === 'recept' ? 'Recept' : 'Verhaal'}</p>
-        <h3><a href={`/verhalen/${verhaal.id}`}>{verhaal.data.title}</a></h3>
-        <p>{verhaal.data.description}</p>
+      <li>
+        <a href={`/verhalen/${verhaal.id}`}>
+          <span class="index-list__title">{verhaal.data.title}</span>
+          <span class="index-list__note">{verhaal.data.description}</span>
+        </a>
       </li>
     ))}
   </ul>
+
+  <p class="era__note">
+    Het recept <a href="/atelier/recepten/ontbijt-voor-molenaars">Ontbijt voor molenaars</a> hoort
+    bij deze verhalen en staat in het <a href="/atelier">atelier</a>.
+  </p>
 </BaseLayout>

@@ -3,8 +3,7 @@ title: "Burenruzie"
 description: "Joost betegelt zijn tuin en krijgt de mol, de merel, de egel, de hommel en de bijen op bezoek. Een verhaal over versteende tuinen en de dieren die er woonden."
 pubDate: 2023-10-22
 updatedDate: 2024-01-21
-order: 4
-type: verhaal
+order: 3
 ---
 
 Joost is bezig met zijn tuin. Hij heeft zijn tuin uitgegraven en er zand in gestort. Met een trilplaat drukt hij het zand aan en begint hij de eerste paar tegels te leggen. Met het zweet op zijn voorhoofd schrikt hij op van een roep. \

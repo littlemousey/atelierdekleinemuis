@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const recepten = (await getCollection('recepten')).sort((a, b) => a.data.order - b.data.order);
+const gedichten = (await getCollection('gedichten')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Atelier"
+  description="Het atelier van de kleine muis: recepten uit de verhalen en gedichten van A.N.S. de Nijs."
+>
+  <div class="page-head">
+    <p class="kicker">Werkplaats</p>
+    <h1>Atelier</h1>
+    <p class="lede">Wat er naast de verhalen ontstaat: recepten uit het boek en gedichten.</p>
+  </div>
+
+  <div class="grid grid--2">
+    <section>
+      <h2>Recepten</h2>
+      <ul class="index-list">
+        {recepten.map((r) => (
+          <li>
+            <a href={`/atelier/recepten/${r.id}`}>
+              <span class="index-list__title">{r.data.title}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+      <h2>Gedichten</h2>
+      <ul class="index-list">
+        {gedichten.map((g) => (
+          <li>
+            <a href={`/atelier/gedichten/${g.id}`}>
+              <span class="index-list__title">{g.data.title}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>

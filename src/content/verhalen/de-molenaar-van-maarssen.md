@@ -4,7 +4,6 @@ description: "Molenaar Maarten deelt zijn molen aan de Vecht met een klein muisj
 pubDate: 2023-10-22
 updatedDate: 2024-04-22
 order: 1
-type: verhaal
 ---
 
 *Hartig en romig,* \

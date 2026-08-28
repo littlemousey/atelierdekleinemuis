@@ -1,0 +1,23 @@
+<button type="button" class="theme-toggle" id="theme-toggle">
+  {/* Only one of these is ever displayed, so assistive tech reads the right label. */}
+  <span class="lamp-off">Lamp uit</span>
+  <span class="lamp-on">Lamp aan</span>
+</button>
+
+<script>
+  const root = document.documentElement;
+  const btn = document.querySelector<HTMLButtonElement>('#theme-toggle');
+
+  btn?.addEventListener('click', () => {
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const current = root.dataset.theme ?? (systemDark ? 'dark' : 'light');
+    const next = current === 'dark' ? 'light' : 'dark';
+
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {
+      // Private mode or blocked storage: the choice just won't persist.
+    }
+  });
+</script>

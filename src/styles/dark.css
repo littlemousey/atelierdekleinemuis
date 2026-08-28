@@ -1,0 +1,126 @@
+/* ─────────────────────────────────────────────────────────────────────
+   Dark ground for the Classical system.
+
+   Classical ships light-only, but its readme specifies how a dark ground
+   behaves: "a deep warm near-black (a shade below --color-neutral-900)",
+   accent stays stroke and steps to --color-accent-400, and elevation
+   becomes "a hairline edge + ambient darkness" rather than a soft shadow.
+   This file derives exactly that — it introduces no new roles, it only
+   restates the existing tokens for a dark ground.
+
+   The ramps REVERSE rather than change hue: step 100 stays "closest to the
+   ground" and 900 stays "furthest from it", so every component class the
+   system defines keeps its intended contrast without being restyled.
+   ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Named separately so the ramp reversal below can't invert the backdrop. */
+  --color-backdrop: color-mix(in srgb, #2d2b2b 50%, transparent);
+}
+
+/* System preference — unless the reader has explicitly chosen light. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+  --color-bg: #161513;
+  --color-surface: #211f1d;
+  --color-text: #ece7e1;
+  /* Gold steps up on a dark ground (readme: --color-accent-400). */
+  --color-accent: #e1ad66;
+  --color-accent-2: #dbaf70;
+  --color-divider: color-mix(in srgb, #ece7e1 18%, transparent);
+  --color-backdrop: color-mix(in srgb, #000000 66%, transparent);
+
+  /* Neutral ramp reversed: 100 nearest the ground, 900 furthest. */
+  --color-neutral-100: #2d2b2b;
+  --color-neutral-200: #444141;
+  --color-neutral-300: #605d5d;
+  --color-neutral-400: #7d7979;
+  --color-neutral-500: #9b9797;
+  --color-neutral-600: #bab6b6;
+  --color-neutral-700: #d7d3d3;
+  --color-neutral-800: #eae7e7;
+  --color-neutral-900: #f8f4f4;
+
+  /* Accent ramp reversed, so tinted fills stay dark and their text stays light. */
+  --color-accent-100: #3a270d;
+  --color-accent-200: #5a3b0a;
+  --color-accent-300: #7d5411;
+  --color-accent-400: #a06f24;
+  --color-accent-500: #c28d41;
+  --color-accent-600: #e1ad66;
+  --color-accent-700: #facb8d;
+  --color-accent-800: #ffe3bf;
+  --color-accent-900: #fff3e4;
+
+  --color-accent-2-100: #382810;
+  --color-accent-2-200: #573d14;
+  --color-accent-2-300: #79561f;
+  --color-accent-2-400: #9b7232;
+  --color-accent-2-500: #bc8f4e;
+  --color-accent-2-600: #dbaf70;
+  --color-accent-2-700: #f5cd96;
+  --color-accent-2-800: #ffe3be;
+  --color-accent-2-900: #fff3e4;
+
+  /* "A hairline edge + ambient darkness" rather than an ink shadow. */
+  --shadow-sm: 0 0 0 1px color-mix(in srgb, #ece7e1 8%, transparent);
+  --shadow-md: 0 0 0 1px color-mix(in srgb, #ece7e1 10%, transparent), 0 4px 14px rgb(0 0 0 / .5);
+  --shadow-lg: 0 0 0 1px color-mix(in srgb, #ece7e1 12%, transparent), 0 14px 40px rgb(0 0 0 / .6);
+  }
+  :root:not([data-theme='light']) /* The plate's warm archival grade is tuned for a light ground; on a dark one
+   it needs to sit back rather than glare. */
+.plate { filter: sepia(.24) saturate(.78) contrast(1.02) brightness(.9); }
+}
+
+/* Explicit choice always wins, in both directions. */
+:root[data-theme='dark'] {
+  --color-bg: #161513;
+  --color-surface: #211f1d;
+  --color-text: #ece7e1;
+  /* Gold steps up on a dark ground (readme: --color-accent-400). */
+  --color-accent: #e1ad66;
+  --color-accent-2: #dbaf70;
+  --color-divider: color-mix(in srgb, #ece7e1 18%, transparent);
+  --color-backdrop: color-mix(in srgb, #000000 66%, transparent);
+
+  /* Neutral ramp reversed: 100 nearest the ground, 900 furthest. */
+  --color-neutral-100: #2d2b2b;
+  --color-neutral-200: #444141;
+  --color-neutral-300: #605d5d;
+  --color-neutral-400: #7d7979;
+  --color-neutral-500: #9b9797;
+  --color-neutral-600: #bab6b6;
+  --color-neutral-700: #d7d3d3;
+  --color-neutral-800: #eae7e7;
+  --color-neutral-900: #f8f4f4;
+
+  /* Accent ramp reversed, so tinted fills stay dark and their text stays light. */
+  --color-accent-100: #3a270d;
+  --color-accent-200: #5a3b0a;
+  --color-accent-300: #7d5411;
+  --color-accent-400: #a06f24;
+  --color-accent-500: #c28d41;
+  --color-accent-600: #e1ad66;
+  --color-accent-700: #facb8d;
+  --color-accent-800: #ffe3bf;
+  --color-accent-900: #fff3e4;
+
+  --color-accent-2-100: #382810;
+  --color-accent-2-200: #573d14;
+  --color-accent-2-300: #79561f;
+  --color-accent-2-400: #9b7232;
+  --color-accent-2-500: #bc8f4e;
+  --color-accent-2-600: #dbaf70;
+  --color-accent-2-700: #f5cd96;
+  --color-accent-2-800: #ffe3be;
+  --color-accent-2-900: #fff3e4;
+
+  /* "A hairline edge + ambient darkness" rather than an ink shadow. */
+  --shadow-sm: 0 0 0 1px color-mix(in srgb, #ece7e1 8%, transparent);
+  --shadow-md: 0 0 0 1px color-mix(in srgb, #ece7e1 10%, transparent), 0 4px 14px rgb(0 0 0 / .5);
+  --shadow-lg: 0 0 0 1px color-mix(in srgb, #ece7e1 12%, transparent), 0 14px 40px rgb(0 0 0 / .6);
+}
+
+:root[data-theme='dark'] /* The plate's warm archival grade is tuned for a light ground; on a dark one
+   it needs to sit back rather than glare. */
+.plate { filter: sepia(.24) saturate(.78) contrast(1.02) brightness(.9); }

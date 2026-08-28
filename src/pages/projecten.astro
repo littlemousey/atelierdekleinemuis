@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { PROJECTS, repoUrl } from '../data/projects';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Projecten',
+  inLanguage: 'nl-NL',
+  hasPart: PROJECTS.map((p) => ({
+    '@type': 'SoftwareSourceCode',
+    name: p.title,
+    description: p.description,
+    codeRepository: repoUrl(p.repo),
+    programmingLanguage: p.tags,
+  })),
+};
+---
+
+<BaseLayout
+  title="Projecten"
+  description="Coole dingen bouwen met code — een interactieve reiskaart, een muizengalerij, een pokédex, gelukskoekjes en meer."
+  jsonLd={jsonLd}
+>
+  <div class="page-head">
+    <p class="kicker">Code</p>
+    <h1>Projecten</h1>
+    <p class="lede">Coole dingen bouwen met code — kaarten, muizen, koekjes en pokémon.</p>
+  </div>
+
+  <ul class="grid grid--2 grid--3">
+    {PROJECTS.map((p) => (
+      <li class="card">
+        {p.image
+          ? <img class="plate proj__shot" src={p.image} alt={`Schermafbeelding van ${p.title}`} loading="lazy" decoding="async" />
+          : <div class="proj__none">screenshot volgt</div>}
+        <p class="card-kicker">{p.kicker}</p>
+        <h2 class="card-title">{p.title}</h2>
+        <p class="repo">{p.repo}</p>
+        <p class="card-body">{p.description}</p>
+        <div class="card-tags">
+          {p.tags.map((t) => <span class="tag tag-neutral">{t}</span>)}
+        </div>
+        <div class="proj__links">
+          {p.demo && <a class="btn btn-primary" href={p.demo} rel="noopener">Demo</a>}
+          <a class="btn btn-secondary" href={repoUrl(p.repo)} rel="noopener">Code</a>
+        </div>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>

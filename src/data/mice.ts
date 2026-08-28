@@ -1,26 +1,63 @@
-export interface Mouse {
-  name: string;
-  /** Ex-laboratory mouse. Rendered with a text label so it is not emoji-only. */
-  exLab: boolean;
-  imgUrl: string;
-  traits: string;
-  collageImgUrl: string;
+export interface Era {
+  id: string;
+  label: string;
+  note: string;
 }
 
-export const MICE: Mouse[] = [
-  { name: 'Haley',   exLab: true,  imgUrl: '/img/avatars/haley.jpg',   traits: 'lief en dapper',                                   collageImgUrl: '/img/collages/haley.jpg' },
-  { name: 'Lizzy',   exLab: true,  imgUrl: '/img/avatars/lizzy.jpg',   traits: 'grote en sterke zus',                              collageImgUrl: '/img/collages/lizzy.jpg' },
-  { name: 'Amy',     exLab: true,  imgUrl: '/img/avatars/amy.jpg',     traits: 'klein, loyaal en sterk tot het bittere eind',      collageImgUrl: '/img/collages/amy.jpg' },
-  { name: 'Aloy',    exLab: true,  imgUrl: '/img/avatars/aloy.jpg',    traits: 'stoer en nieuwsgierig',                            collageImgUrl: '/img/collages/aloy-chell-lara.jpg' },
-  { name: 'Lara',    exLab: true,  imgUrl: '/img/avatars/lara.jpg',    traits: 'voorzichtig en ondeugend',                         collageImgUrl: '/img/collages/aloy-chell-lara.jpg' },
-  { name: 'Chell',   exLab: true,  imgUrl: '/img/avatars/chell.jpg',   traits: 'energiek en uitdagend',                            collageImgUrl: '/img/collages/aloy-chell-lara.jpg' },
-  { name: 'Lily',    exLab: true,  imgUrl: '/img/avatars/lily.jpg',    traits: 'zorgzaam maatje',                                  collageImgUrl: '/img/collages/lily.jpg' },
-  { name: 'Daisy',   exLab: true,  imgUrl: '/img/avatars/daisy.jpg',   traits: 'sterke alfa, stevige tante met flair',             collageImgUrl: '/img/collages/daisy.jpg' },
-  { name: 'Poppy',   exLab: true,  imgUrl: '/img/avatars/poppy.jpg',   traits: 'kleine free runner, ronddraaiende circus tante',   collageImgUrl: '/img/collages/poppy.jpg' },
-  { name: 'Jenny',   exLab: false, imgUrl: '/img/avatars/jenny.jpg',   traits: 'lieve, toegewijde en zorgzame moeder',             collageImgUrl: '/img/collages/jenny.jpg' },
-  { name: 'Joy',     exLab: false, imgUrl: '/img/avatars/joy.jpg',     traits: 'tante knorrepot, zonnetje in huis en kleine snurker', collageImgUrl: '/img/collages/joy.jpg' },
-  { name: 'Clair',   exLab: false, imgUrl: '/img/avatars/clair.jpg',   traits: 'voorzichtige onderzoeker. Dochter van Jenny',      collageImgUrl: '/img/collages/fallback.jpg' },
-  { name: 'Misty',   exLab: false, imgUrl: '/img/avatars/misty.jpg',   traits: 'alleen wanneer het haar uitkomt. Dochter van Jenny', collageImgUrl: '/img/collages/fallback.jpg' },
-  { name: 'Erika',   exLab: false, imgUrl: '/img/avatars/erika.jpg',   traits: 'verlegen muis. Dochter van Jenny',                 collageImgUrl: '/img/collages/fallback.jpg' },
-  { name: 'Sabrina', exLab: false, imgUrl: '/img/avatars/sabrina.jpg', traits: 'wil graag stoer zijn, maar is ook weer zo weg. Dochter van Jenny', collageImgUrl: '/img/collages/fallback.jpg' },
+export interface Mouse {
+  id: string;
+  name: string;
+  era: Era['id'];
+  /** Ex-laboratory mouse, adopted from a lab. */
+  exLab: boolean;
+  /** Short characterisation. Empty for the mice not yet described. */
+  epithet: string;
+  imgUrl: string;
+  /** Collage page; falls back to the shared fallback collage. */
+  collageImgUrl: string;
+  /** Life period. Left empty until the real months/years are known — the
+   *  period line simply does not render while these are blank. */
+  from: string;
+  to: string;
+}
+
+export const ERAS: Era[] = [
+  { id: 'rock', label: 'Rocksterren', note: 'De eerste drie, vernoemd naar vrouwelijke rocksterren.' },
+  { id: 'game', label: 'Game-heldinnen', note: 'Vernoemd naar vrouwelijke hoofdpersonen uit videogames.' },
+  { id: 'flower', label: 'Bloemen', note: 'Het bloemennest.' },
+  { id: 'pokemon', label: 'Pokémon', note: 'Jenny en Joy — en Jenny’s onverwachte nest: Erika, Sabrina, Misty en Clair.' },
+  { id: 'at', label: 'Adventure Time-prinsessen', note: 'Vernoemd naar de prinsessen uit Adventure Time.' },
 ];
+
+const FALLBACK = '/img/collages/fallback.jpg';
+
+export const MICE: Mouse[] = [
+  { id: 'haley',   name: 'Haley',   era: 'rock',    exLab: true,  epithet: 'lief en dapper',                                  imgUrl: '/img/avatars/haley.jpg',   collageImgUrl: '/img/collages/haley.jpg',            from: '', to: '' },
+  { id: 'lizzy',   name: 'Lizzy',   era: 'rock',    exLab: true,  epithet: 'grote en sterke zus',                             imgUrl: '/img/avatars/lizzy.jpg',   collageImgUrl: '/img/collages/lizzy.jpg',            from: '', to: '' },
+  { id: 'amy',     name: 'Amy',     era: 'rock',    exLab: true,  epithet: 'klein, loyaal en sterk tot het eind',             imgUrl: '/img/avatars/amy.jpg',     collageImgUrl: '/img/collages/amy.jpg',              from: '', to: '' },
+
+  { id: 'aloy',    name: 'Aloy',    era: 'game',    exLab: true,  epithet: 'stoer en nieuwsgierig',                           imgUrl: '/img/avatars/aloy.jpg',    collageImgUrl: '/img/collages/aloy-chell-lara.jpg',  from: '', to: '' },
+  { id: 'lara',    name: 'Lara',    era: 'game',    exLab: true,  epithet: 'voorzichtig en ondeugend',                        imgUrl: '/img/avatars/lara.jpg',    collageImgUrl: '/img/collages/aloy-chell-lara.jpg',  from: '', to: '' },
+  { id: 'chell',   name: 'Chell',   era: 'game',    exLab: true,  epithet: 'energiek en uitdagend',                           imgUrl: '/img/avatars/chell.jpg',   collageImgUrl: '/img/collages/aloy-chell-lara.jpg',  from: '', to: '' },
+
+  { id: 'poppy',   name: 'Poppy',   era: 'flower',  exLab: true,  epithet: 'kleine free runner, ronddraaiende circustante',   imgUrl: '/img/avatars/poppy.jpg',   collageImgUrl: '/img/collages/poppy.jpg',            from: '', to: '' },
+  { id: 'lily',    name: 'Lily',    era: 'flower',  exLab: true,  epithet: 'zorgzaam maatje',                                 imgUrl: '/img/avatars/lily.jpg',    collageImgUrl: '/img/collages/lily.jpg',             from: '', to: '' },
+  { id: 'daisy',   name: 'Daisy',   era: 'flower',  exLab: true,  epithet: 'sterke alfa, stevige tante met flair',            imgUrl: '/img/avatars/daisy.jpg',   collageImgUrl: '/img/collages/daisy.jpg',            from: '', to: '' },
+
+  { id: 'jenny',   name: 'Jenny',   era: 'pokemon', exLab: false, epithet: 'lieve, toegewijde en zorgzame moeder',            imgUrl: '/img/avatars/jenny.jpg',   collageImgUrl: '/img/collages/jenny.jpg',            from: '', to: '' },
+  { id: 'joy',     name: 'Joy',     era: 'pokemon', exLab: false, epithet: 'tante knorrepot, zonnetje in huis',               imgUrl: '/img/avatars/joy.jpg',     collageImgUrl: '/img/collages/joy.jpg',              from: '', to: '' },
+  { id: 'erika',   name: 'Erika',   era: 'pokemon', exLab: false, epithet: 'verlegen muis · dochter van Jenny',               imgUrl: '/img/avatars/erika.jpg',   collageImgUrl: FALLBACK,                             from: '', to: '' },
+  { id: 'sabrina', name: 'Sabrina', era: 'pokemon', exLab: false, epithet: 'wil graag stoer zijn · dochter van Jenny',        imgUrl: '/img/avatars/sabrina.jpg', collageImgUrl: FALLBACK,                             from: '', to: '' },
+  { id: 'misty',   name: 'Misty',   era: 'pokemon', exLab: false, epithet: 'alleen wanneer het haar uitkomt · dochter van Jenny', imgUrl: '/img/avatars/misty.jpg', collageImgUrl: FALLBACK,                          from: '', to: '' },
+  { id: 'clair',   name: 'Clair',   era: 'pokemon', exLab: false, epithet: 'voorzichtige onderzoeker · dochter van Jenny',    imgUrl: '/img/avatars/clair.jpg',   collageImgUrl: FALLBACK,                             from: '', to: '' },
+
+  { id: 'marcy',   name: 'Marcy',   era: 'at',      exLab: false, epithet: '',                                                imgUrl: '/img/avatars/marcy.jpg',   collageImgUrl: FALLBACK,                             from: '', to: '' },
+  { id: 'phoebe',  name: 'Phoebe',  era: 'at',      exLab: false, epithet: '',                                                imgUrl: '/img/avatars/phoebe.jpg',  collageImgUrl: FALLBACK,                             from: '', to: '' },
+  { id: 'bonnie',  name: 'Bonnie',  era: 'at',      exLab: false, epithet: '',                                                imgUrl: '/img/avatars/bonnie.jpg',  collageImgUrl: FALLBACK,                             from: '', to: '' },
+];
+
+/** Mice grouped by era, in era order. */
+export const MICE_BY_ERA = ERAS.map((era) => ({
+  era,
+  mice: MICE.filter((m) => m.era === era.id),
+}));

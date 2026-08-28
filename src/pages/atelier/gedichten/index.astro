@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const items = (await getCollection('gedichten')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Gedichten" description="Gedichten van A.N.S. de Nijs: Vakantie en Verandering.">
+  <div class="page-head">
+    <p class="kicker">Atelier</p>
+    <h1>Gedichten</h1>
+    <p class="lede">Een gedicht per pagina, met ruimte eromheen.</p>
+  </div>
+
+  <ul class="index-list">
+    {items.map((item) => (
+      <li>
+        <a href={`/atelier/gedichten/${item.id}`}>
+          <span class="index-list__title">{item.data.title}</span>
+          <span class="index-list__note">{item.data.description}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>

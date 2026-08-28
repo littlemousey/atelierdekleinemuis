@@ -1,9 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Plate from '../components/Plate.astro';
+import { GREETINGS } from '../data/greetings';
 import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR } from '../consts';
 
 const verhalen = (await getCollection('verhalen')).sort((a, b) => a.data.order - b.data.order);
+const nieuwste = verhalen[0];
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -19,34 +22,48 @@ const jsonLd = {
 <BaseLayout jsonLd={jsonLd}>
   <div class="hero">
     <div>
-      <h1>Atelier de kleine muis</h1>
-      <p class="hero__tagline">
-        Muizenverhalen en creaties van {AUTHOR}. Een levend boek over muizen, mollen en
-        koolmezen — kleine dieren met grote dromen, en de wereld die zij met ons delen.
+      <p class="kicker">Verhalen · Projecten · Muizen</p>
+      <h1>Welkom bij het atelier van de kleine muis</h1>
+      <p class="lede">
+        Muizen zijn overal. Ze leven in plantgewassen, struiken, maken holletjes onder de grond en
+        leven ook in huizen in kleine holletjes en gaatjes. Eigenlijk hebben ze dezelfde
+        basisbehoeften als wij: ze verlangen naar eten, drinken, liefde, geborgenheid en een warm
+        onderkomen. Hier kun je hun verhalen gratis online lezen.
       </p>
       <div class="actions">
-        <a class="btn btn--primary" href="/verhalen">Lees de verhalen</a>
-        <a class="btn btn--ghost" href="/over-de-auteur">Over de auteur</a>
+        <a class="btn btn-primary" href="/verhalen">Lees de verhalen</a>
+        <a class="btn btn-secondary" href="/projecten">Bekijk de projecten</a>
       </div>
-    </div>
-    <img
-      class="hero__img"
-      src="/img/cover.PNG"
-      alt="Tekening van muizen, de omslag van Atelier de kleine muis"
-      width="640"
-      height="640"
-      fetchpriority="high"
-    />
-  </div>
 
-  <h2>Alle verhalen</h2>
-  <ul class="card-grid">
-    {verhalen.map((verhaal) => (
-      <li class="card">
-        <p class="card__meta">{verhaal.data.type === 'recept' ? 'Recept' : 'Verhaal'}</p>
-        <h3><a href={`/verhalen/${verhaal.id}`}>{verhaal.data.title}</a></h3>
-        <p>{verhaal.data.description}</p>
-      </li>
-    ))}
-  </ul>
+      {nieuwste && (
+        <>
+          <hr class="hr" />
+          <p class="kicker">Nieuwste verhaal</p>
+          <p class="index-list__title">
+            <a href={`/verhalen/${nieuwste.id}`}>{nieuwste.data.title}</a>
+          </p>
+        </>
+      )}
+    </div>
+
+    <div>
+      <ul class="greetings">
+        {GREETINGS.map((g) => (
+          <li>
+            <span class="g-text" lang={g.lang}>{g.text}</span>
+            <span class="g-lang">{g.lang}</span>
+          </li>
+        ))}
+      </ul>
+      <Plate
+        src="/img/littlemousey_wave.png"
+        alt="De getekende kleine muis zwaait"
+        width="300"
+        height="300"
+        loading="eager"
+        fetchpriority="high"
+        caption="De kleine muis zwaait — getekend sinds de basisschool."
+      />
+    </div>
+  </div>
 </BaseLayout>

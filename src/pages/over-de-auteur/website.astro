@@ -1,18 +1,24 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Plate from '../../components/Plate.astro';
 ---
 
 <BaseLayout
   title="Over deze website"
-  description="Atelier de kleine muis is gebouwd met Astro als statische site. Eerdere versies draaiden op VitePress en daarvoor op Vue.js, Nuxt en Vuetify."
+  description="Atelier de kleine muis is gebouwd met Astro als statische site, op het Classical design system. Eerdere versies draaiden op VitePress en daarvoor op Vue.js, Nuxt en Vuetify."
+  narrow
 >
-  <div class="prose">
+  <div class="page-head">
+    <p class="kicker">Colofon</p>
     <h1>Over deze website</h1>
+  </div>
+
+  <div class="prose">
     <p>
       Deze website is gemaakt met <a href="https://astro.build/" rel="noopener">Astro</a> en wordt
-      als volledig statische site gepubliceerd. De vorige versie was gemaakt met
-      <a href="https://vitepress.dev/" rel="noopener">VitePress</a>, en de versie daarvoor met
-      Vue.js, Nuxt en Vuetify.
+      als volledig statische site gepubliceerd, vormgegeven op het Classical design system. De
+      vorige versie was gemaakt met <a href="https://vitepress.dev/" rel="noopener">VitePress</a>,
+      en de versie daarvoor met Vue.js, Nuxt en Vuetify.
     </p>
     <p>
       De code repository van de oudste website is
@@ -21,15 +27,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <a href="https://github.com/littlemousey/atelierdekleinemuis" rel="noopener">hier</a> bekijken.
     </p>
 
-    <figure>
-      <img
-        src="/img/littlemousey-old-website.png"
-        alt="Schermafbeelding van de oude website, gebouwd met Vue.js, Nuxt en Vuetify"
-        width="900"
-        height="600"
-        loading="lazy"
-      />
-      <figcaption>Oude website</figcaption>
-    </figure>
+    <Plate
+      src="/img/littlemousey-old-website.png"
+      alt="Schermafbeelding van de oude website, gebouwd met Vue.js, Nuxt en Vuetify"
+      width="900"
+      height="600"
+      caption="Oude website"
+    />
   </div>
 </BaseLayout>

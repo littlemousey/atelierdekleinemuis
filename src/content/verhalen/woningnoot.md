@@ -3,8 +3,7 @@ title: "Woningnoot"
 description: "Een koolmees zoekt een plek voor haar nest, maar het hele bos blijkt eigendom van Eekhoorn Residential Management. Een kort bosverhaal over wonen, huur en hebzucht."
 pubDate: 2023-10-22
 updatedDate: 2024-04-22
-order: 3
-type: verhaal
+order: 2
 ---
 
 Na een lange ochtend vliegen daalde een koolmeesje neer in een bos. De vogel zag een goed plekje in een boomholte van een eik en begon een nestje te bouwen. Ze kwam terug met takjes in haar bek. Tot haar verrassing stond een grijze eekhoorn naast haar nest met zijn vleugels in zijn zij.

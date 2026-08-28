@@ -1,0 +1,22 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  width?: number | string;
+  height?: number | string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'auto';
+  class?: string;
+  caption?: string;
+}
+const { src, alt, width, height, loading = 'lazy', fetchpriority, class: cls, caption } = Astro.props;
+---
+
+{caption ? (
+  <figure>
+    <img class:list={['plate', cls]} {src} {alt} {width} {height} {loading} {fetchpriority} decoding="async" />
+    <figcaption>{caption}</figcaption>
+  </figure>
+) : (
+  <img class:list={['plate', cls]} {src} {alt} {width} {height} {loading} {fetchpriority} decoding="async" />
+)}

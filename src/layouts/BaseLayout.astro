@@ -13,18 +13,22 @@ interface Props {
   modifiedTime?: Date;
   noindex?: boolean;
   jsonLd?: Record<string, unknown>;
+  /** Narrow reading measure — for articles, poems and recipes. */
+  narrow?: boolean;
 }
+
+const { narrow = false, ...head } = Astro.props;
 ---
 
 <!doctype html>
 <html lang={LANG}>
   <head>
-    <BaseHead {...Astro.props} />
+    <BaseHead {...head} />
   </head>
   <body>
     <a class="skip-link" href="#main">Naar hoofdinhoud</a>
     <SiteHeader />
-    <main id="main" class="container">
+    <main id="main" class:list={['container', narrow && 'container--narrow']}>
       <slot />
     </main>
     <SiteFooter />

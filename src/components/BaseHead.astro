@@ -33,6 +33,19 @@ const ogImage = new URL(image, Astro.site).href;
 ---
 
 <meta charset="utf-8" />
+
+<!-- Applies the saved theme before first paint, so there is no flash of the
+     wrong ground. Inline and synchronous on purpose. -->
+<script is:inline>
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || saved === 'light') {
+      document.documentElement.dataset.theme = saved;
+    }
+  } catch {
+    /* storage blocked — fall back to prefers-color-scheme */
+  }
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
 

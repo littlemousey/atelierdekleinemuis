@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const items = (await getCollection('recepten')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Recepten" description="Recepten uit de verhalen van de kleine muis: gebakken havermout voor molenaars en chocolade overnight oats.">
+  <div class="page-head">
+    <p class="kicker">Atelier</p>
+    <h1>Recepten</h1>
+    <p class="lede">Wat de molenaars eten: havermout in twee vormen.</p>
+  </div>
+
+  <ul class="index-list">
+    {items.map((item) => (
+      <li>
+        <a href={`/atelier/recepten/${item.id}`}>
+          <span class="index-list__title">{item.data.title}</span>
+          <span class="index-list__note">{item.data.description}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
