@@ -51,16 +51,23 @@ table of contents and the previous/next links. It is added to the sitemap and RS
 automatically.
 
 ## Deployment
-The site deploys to **GitHub Pages** at <https://atelierdekleinemuis.nl> on every push to
-`main`, via `.github/workflows/deploy.yml`. `public/CNAME` holds the custom domain.
+The site is published by uploading the **contents of `dist/`** to the web host over FTP.
 
-One-time setup in the GitHub repo: **Settings → Pages → Source: GitHub Actions**, and point
-the domain's DNS at GitHub Pages (four `A` records for the apex, or a `CNAME` for `www`).
+1. `npm run build` — writes the finished site to `dist/`
+2. Upload **everything inside `dist/`** (not the folder itself) to the web root
+   of atelierdekleinemuis.nl — usually `public_html`, `www` or `httpdocs`
+3. That's all: it is plain HTML, CSS and images. No Node.js runs on the server.
+
+`dist/` is regenerated from scratch by every build and is not committed to git —
+only the source lives in the repo.
+
+URLs end in a slash (`/verhalen/`), which is exactly what Apache and nginx serve
+for a directory. That means no redirects, no `.htaccess`, and canonical tags that
+match the served URL precisely.
 
 The domain is configured in one place: `site` in `astro.config.mjs`. It drives canonical
 URLs, Open Graph tags, `sitemap-index.xml` and the RSS feed. It also appears in
-`public/robots.txt` and `public/CNAME`. Because the site runs on its own apex domain,
-no `base` path is needed.
+`public/robots.txt`. Update both if the site ever moves.
 
 ## Dark mode
 `src/styles/dark.css` derives a dark ground for the Classical system, following the rules

@@ -12,11 +12,11 @@ const jsonLd = {
   name: SITE_TITLE,
   author: { '@type': 'Person', name: AUTHOR },
   inLanguage: 'nl-NL',
-  url: new URL('/verhalen', Astro.site).href,
+  url: new URL('/verhalen/', Astro.site).href,
   hasPart: verhalen.map((v) => ({
     '@type': 'CreativeWork',
     name: v.data.title,
-    url: new URL(`/verhalen/${v.id}`, Astro.site).href,
+    url: new URL(`/verhalen/${v.id}/`, Astro.site).href,
   })),
 };
 ---
@@ -91,7 +91,7 @@ const jsonLd = {
   <ul class="index-list">
     {verhalen.map((verhaal) => (
       <li>
-        <a href={`/verhalen/${verhaal.id}`}>
+        <a href={`/verhalen/${verhaal.id}/`}>
           <span class="index-list__title">{verhaal.data.title}</span>
           <span class="index-list__note">{verhaal.data.description}</span>
         </a>
@@ -100,7 +100,7 @@ const jsonLd = {
   </ul>
 
   <p class="era__note">
-    Het recept <a href="/atelier/recepten/ontbijt-voor-molenaars">Ontbijt voor molenaars</a> hoort
-    bij deze verhalen en staat in het <a href="/atelier">atelier</a>.
+    Het recept <a href="/atelier/recepten/ontbijt-voor-molenaars/">Ontbijt voor molenaars</a> hoort
+    bij deze verhalen en staat in het <a href="/atelier/">atelier</a>.
   </p>
 </BaseLayout>

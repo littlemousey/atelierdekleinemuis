@@ -5,7 +5,9 @@ import sitemap from '@astrojs/sitemap';
 // feed. Change this one value if the site is published on another domain.
 export default defineConfig({
   site: 'https://atelierdekleinemuis.nl',
-  trailingSlash: 'never',
+  // Directory-style URLs ending in a slash: exactly what Apache and nginx
+  // serve natively for a folder, so no redirect and no .htaccess is needed.
+  trailingSlash: 'always',
   build: { format: 'directory' },
   integrations: [sitemap()],
   markdown: {

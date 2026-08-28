@@ -2,11 +2,17 @@
 import { SITE_TITLE, NAV_LINKS } from '../consts';
 import ThemeToggle from './ThemeToggle.astro';
 
-const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+// Compare with trailing slashes stripped, so the match is independent of the
+// site's trailingSlash setting.
+const strip = (p: string) => p.replace(/\/+$/, '') || '/';
+const path = strip(Astro.url.pathname);
 
 // Highlight exactly one link: the longest href that matches the current path.
 const active = [...NAV_LINKS]
-  .filter((l) => path === l.href || (l.href !== '/' && path.startsWith(`${l.href}/`)))
+  .filter((l) => {
+    const href = strip(l.href);
+    return path === href || (href !== '/' && path.startsWith(`${href}/`));
+  })
   .sort((a, b) => b.href.length - a.href.length)[0]?.href;
 ---
 

@@ -15,7 +15,7 @@ const items = (await getCollection('recepten')).sort((a, b) => a.data.order - b.
   <ul class="index-list">
     {items.map((item) => (
       <li>
-        <a href={`/atelier/recepten/${item.id}`}>
+        <a href={`/atelier/recepten/${item.id}/`}>
           <span class="index-list__title">{item.data.title}</span>
           <span class="index-list__note">{item.data.description}</span>
         </a>

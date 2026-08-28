@@ -30,7 +30,7 @@ const jsonLd = {
   author: { '@type': 'Person', name: AUTHOR },
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': new URL(`/atelier/gedichten/${entry.id}`, Astro.site).href,
+    '@id': new URL(`/atelier/gedichten/${entry.id}/`, Astro.site).href,
   },
 };
 ---
@@ -49,8 +49,8 @@ const jsonLd = {
     <Content />
 
     <nav class="article__nav" aria-label="Meer gedichten">
-      {prev ? <a href={`/atelier/gedichten/${prev.id}`}>← {prev.data.title}</a> : <span />}
-      {next ? <a href={`/atelier/gedichten/${next.id}`}>{next.data.title} →</a> : <span />}
+      {prev ? <a href={`/atelier/gedichten/${prev.id}/`}>← {prev.data.title}</a> : <span />}
+      {next ? <a href={`/atelier/gedichten/${next.id}/`}>{next.data.title} →</a> : <span />}
     </nav>
   </article>
 </BaseLayout>

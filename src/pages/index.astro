@@ -31,8 +31,8 @@ const jsonLd = {
         onderkomen. Hier kun je hun verhalen gratis online lezen.
       </p>
       <div class="actions">
-        <a class="btn btn-primary" href="/verhalen">Lees de verhalen</a>
-        <a class="btn btn-secondary" href="/projecten">Bekijk de projecten</a>
+        <a class="btn btn-primary" href="/verhalen/">Lees de verhalen</a>
+        <a class="btn btn-secondary" href="/projecten/">Bekijk de projecten</a>
       </div>
 
       {nieuwste && (
@@ -40,7 +40,7 @@ const jsonLd = {
           <hr class="hr" />
           <p class="kicker">Nieuwste verhaal</p>
           <p class="index-list__title">
-            <a href={`/verhalen/${nieuwste.id}`}>{nieuwste.data.title}</a>
+            <a href={`/verhalen/${nieuwste.id}/`}>{nieuwste.data.title}</a>
           </p>
         </>
       )}

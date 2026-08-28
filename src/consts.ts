@@ -8,9 +8,9 @@ export const DEFAULT_OG_IMAGE = '/img/cover.PNG';
 
 export const NAV_LINKS = [
   { label: 'Thuis', href: '/' },
-  { label: 'Verhalen', href: '/verhalen' },
-  { label: 'Atelier', href: '/atelier' },
-  { label: 'Projecten', href: '/projecten' },
-  { label: 'Wall of fame', href: '/wall-of-fame' },
-  { label: 'Over de auteur', href: '/over-de-auteur' },
+  { label: 'Verhalen', href: '/verhalen/' },
+  { label: 'Atelier', href: '/atelier/' },
+  { label: 'Projecten', href: '/projecten/' },
+  { label: 'Wall of fame', href: '/wall-of-fame/' },
+  { label: 'Over de auteur', href: '/over-de-auteur/' },
 ] as const;

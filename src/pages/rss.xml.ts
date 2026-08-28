@@ -11,16 +11,15 @@ export async function GET(context: APIContext) {
   ]);
 
   const items = [
-    ...verhalen.map((e) => ({ e, path: `/verhalen/${e.id}` })),
-    ...recepten.map((e) => ({ e, path: `/atelier/recepten/${e.id}` })),
-    ...gedichten.map((e) => ({ e, path: `/atelier/gedichten/${e.id}` })),
+    ...verhalen.map((e) => ({ e, path: `/verhalen/${e.id}/` })),
+    ...recepten.map((e) => ({ e, path: `/atelier/recepten/${e.id}/` })),
+    ...gedichten.map((e) => ({ e, path: `/atelier/gedichten/${e.id}/` })),
   ].sort((a, b) => b.e.data.pubDate.getTime() - a.e.data.pubDate.getTime());
 
   return rss({
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     site: context.site!,
-    trailingSlash: false,
     items: items.map(({ e, path }) => ({
       title: e.data.title,
       description: e.data.description,

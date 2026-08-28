@@ -27,8 +27,10 @@ const {
 // Full title on subpages, bare site name on the homepage.
 const pageTitle = title ? `${title} — ${SITE_TITLE}` : SITE_TITLE;
 
-// Canonical without a trailing slash, matching `trailingSlash: 'never'`.
-const canonical = new URL(Astro.url.pathname.replace(/\/+$/, '') || '/', Astro.site).href;
+// Canonical WITH a trailing slash, matching `trailingSlash: 'always'` — so the
+// canonical is the exact URL the web server serves, with no redirect in between.
+const path = Astro.url.pathname;
+const canonical = new URL(path.endsWith('/') ? path : `${path}/`, Astro.site).href;
 const ogImage = new URL(image, Astro.site).href;
 ---
 
@@ -52,8 +54,9 @@ const ogImage = new URL(image, Astro.site).href;
 <title>{pageTitle}</title>
 <meta name="description" content={description} />
 <meta name="author" content={AUTHOR} />
-<link rel="canonical" href={canonical} />
-{noindex && <meta name="robots" content="noindex, follow" />}
+{noindex
+  ? <meta name="robots" content="noindex, follow" />
+  : <link rel="canonical" href={canonical} />}
 
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link

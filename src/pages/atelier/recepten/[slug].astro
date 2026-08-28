@@ -31,7 +31,7 @@ const jsonLd = {
   recipeYield: '1 portie',
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': new URL(`/atelier/recepten/${entry.id}`, Astro.site).href,
+    '@id': new URL(`/atelier/recepten/${entry.id}/`, Astro.site).href,
   },
 };
 ---
@@ -51,8 +51,8 @@ const jsonLd = {
     <Content />
 
     <nav class="article__nav" aria-label="Meer recepten">
-      {prev ? <a href={`/atelier/recepten/${prev.id}`}>← {prev.data.title}</a> : <span />}
-      {next ? <a href={`/atelier/recepten/${next.id}`}>{next.data.title} →</a> : <span />}
+      {prev ? <a href={`/atelier/recepten/${prev.id}/`}>← {prev.data.title}</a> : <span />}
+      {next ? <a href={`/atelier/recepten/${next.id}/`}>{next.data.title} →</a> : <span />}
     </nav>
   </article>
 </BaseLayout>

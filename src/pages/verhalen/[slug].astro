@@ -25,7 +25,7 @@ interface Props {
 const { entry, prev, next } = Astro.props;
 const { Content } = await render(entry);
 
-const url = new URL(`/verhalen/${entry.id}`, Astro.site).href;
+const url = new URL(`/verhalen/${entry.id}/`, Astro.site).href;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -38,7 +38,7 @@ const jsonLd = {
   author: { '@type': 'Person', name: AUTHOR },
   publisher: { '@type': 'Organization', name: SITE_TITLE },
   mainEntityOfPage: { '@type': 'WebPage', '@id': url },
-  isPartOf: { '@type': 'Book', name: SITE_TITLE, url: new URL('/verhalen', Astro.site).href },
+  isPartOf: { '@type': 'Book', name: SITE_TITLE, url: new URL('/verhalen/', Astro.site).href },
 };
 
 const dateFmt = new Intl.DateTimeFormat('nl-NL', { dateStyle: 'long' });
@@ -69,8 +69,8 @@ const dateFmt = new Intl.DateTimeFormat('nl-NL', { dateStyle: 'long' });
     <Content />
 
     <nav class="article__nav" aria-label="Meer verhalen">
-      {prev ? <a href={`/verhalen/${prev.id}`}>← {prev.data.title}</a> : <span />}
-      {next ? <a href={`/verhalen/${next.id}`}>{next.data.title} →</a> : <span />}
+      {prev ? <a href={`/verhalen/${prev.id}/`}>← {prev.data.title}</a> : <span />}
+      {next ? <a href={`/verhalen/${next.id}/`}>{next.data.title} →</a> : <span />}
     </nav>
   </article>
 </BaseLayout>
