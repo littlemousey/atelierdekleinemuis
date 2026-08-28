@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR } from '../consts';
+
+const verhalen = (await getCollection('verhalen')).sort((a, b) => a.data.order - b.data.order);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  url: Astro.site?.href,
+  inLanguage: 'nl-NL',
+  author: { '@type': 'Person', name: AUTHOR },
+};
+---
+
+<BaseLayout jsonLd={jsonLd}>
+  <div class="hero">
+    <div>
+      <h1>Atelier de kleine muis</h1>
+      <p class="hero__tagline">
+        Muizenverhalen en creaties van {AUTHOR}. Een levend boek over muizen, mollen en
+        koolmezen — kleine dieren met grote dromen, en de wereld die zij met ons delen.
+      </p>
+      <div class="actions">
+        <a class="btn btn--primary" href="/verhalen">Lees de verhalen</a>
+        <a class="btn btn--ghost" href="/over-de-auteur">Over de auteur</a>
+      </div>
+    </div>
+    <img
+      class="hero__img"
+      src="/img/cover.PNG"
+      alt="Tekening van muizen, de omslag van Atelier de kleine muis"
+      width="640"
+      height="640"
+      fetchpriority="high"
+    />
+  </div>
+
+  <h2>Alle verhalen</h2>
+  <ul class="card-grid">
+    {verhalen.map((verhaal) => (
+      <li class="card">
+        <p class="card__meta">{verhaal.data.type === 'recept' ? 'Recept' : 'Verhaal'}</p>
+        <h3><a href={`/verhalen/${verhaal.id}`}>{verhaal.data.title}</a></h3>
+        <p>{verhaal.data.description}</p>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>

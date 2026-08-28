@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { AUTHOR } from '../consts';
+---
+
+<BaseLayout
+  title="Rechten"
+  description="De auteursrechten van Atelier de kleine muis. De verhalen mogen vrij gedeeld worden, mits de auteur vermeld wordt en er niet mee verdiend wordt."
+>
+  <div class="prose">
+    <h1>Rechten</h1>
+    <p>
+      Dit is een levend boek, dat wil zeggen dat het altijd in ontwikkeling is. Er komen nieuwe
+      verhalen bij en sommigen kunnen later worden aangepast. Met versiebeheer kan je altijd oude
+      versies terug vinden.
+    </p>
+    <p>
+      De auteursrechten van dit boek zijn van {AUTHOR}. De inhoud van het boek mag vrij worden
+      gedeeld met iedereen, maar de auteur moet altijd vermeld worden en bij het delen mag geen geld
+      verdiend worden.
+    </p>
+  </div>
+</BaseLayout>

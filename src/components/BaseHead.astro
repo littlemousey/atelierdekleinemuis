@@ -1,0 +1,71 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR, LOCALE, DEFAULT_OG_IMAGE } from '../consts';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>;
+}
+
+const {
+  title,
+  description = SITE_DESCRIPTION,
+  image = DEFAULT_OG_IMAGE,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+// Full title on subpages, bare site name on the homepage.
+const pageTitle = title ? `${title} — ${SITE_TITLE}` : SITE_TITLE;
+
+// Canonical without a trailing slash, matching `trailingSlash: 'never'`.
+const canonical = new URL(Astro.url.pathname.replace(/\/+$/, '') || '/', Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+<meta name="author" content={AUTHOR} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, follow" />}
+
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title={`${SITE_TITLE} — verhalen`}
+  href={new URL('rss.xml', Astro.site).href}
+/>
+
+<!-- Open Graph -->
+<meta property="og:site_name" content={SITE_TITLE} />
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title ?? SITE_TITLE} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:locale" content={LOCALE} />
+{publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+{modifiedTime && <meta property="article:modified_time" content={modifiedTime.toISOString()} />}
+{type === 'article' && <meta property="article:author" content={AUTHOR} />}
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title ?? SITE_TITLE} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+{jsonLd && <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />}

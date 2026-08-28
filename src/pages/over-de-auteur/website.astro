@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Over deze website"
+  description="Atelier de kleine muis is gebouwd met Astro als statische site. Eerdere versies draaiden op VitePress en daarvoor op Vue.js, Nuxt en Vuetify."
+>
+  <div class="prose">
+    <h1>Over deze website</h1>
+    <p>
+      Deze website is gemaakt met <a href="https://astro.build/" rel="noopener">Astro</a> en wordt
+      als volledig statische site gepubliceerd. De vorige versie was gemaakt met
+      <a href="https://vitepress.dev/" rel="noopener">VitePress</a>, en de versie daarvoor met
+      Vue.js, Nuxt en Vuetify.
+    </p>
+    <p>
+      De code repository van de oudste website is
+      <a href="https://github.com/littlemousey/littlemousey" rel="noopener">hier</a> te vinden 💻 Je
+      kunt ook de code van de huidige website
+      <a href="https://github.com/littlemousey/atelierdekleinemuis" rel="noopener">hier</a> bekijken.
+    </p>
+
+    <figure>
+      <img
+        src="/img/littlemousey-old-website.png"
+        alt="Schermafbeelding van de oude website, gebouwd met Vue.js, Nuxt en Vuetify"
+        width="900"
+        height="600"
+        loading="lazy"
+      />
+      <figcaption>Oude website</figcaption>
+    </figure>
+  </div>
+</BaseLayout>

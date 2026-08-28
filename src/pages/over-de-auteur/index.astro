@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { AUTHOR } from '../../consts';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: {
+    '@type': 'Person',
+    name: AUTHOR,
+    jobTitle: 'Front-end developer',
+    nationality: 'Nederlands',
+    sameAs: ['https://github.com/littlemousey'],
+  },
+};
+---
+
+<BaseLayout
+  title="Over de auteur"
+  description="Atelier de kleine muis wordt geschreven en gebouwd door A.N.S. de Nijs, een front-end developer uit Nederland met een levenslange fascinatie voor muizen."
+  jsonLd={jsonLd}
+>
+  <div class="prose">
+    <h1>Over de auteur</h1>
+    <p>
+      Deze website is gebouwd door een enthousiaste front-end developer uit Nederland 🇳🇱 Ik heb
+      altijd al een fascinatie gehad voor muizen. Ze zijn zo klein, schattig en nieuwsgierig.
+    </p>
+    <p>
+      De gele muis pokémon Pikachu heeft als eerste mijn hart gestolen, maar daarna waren het gauw
+      alle muisjes (behalve de muis die mijn internetkabel kapot beet in China). Als ik een dier
+      moest uitkiezen zou de muis mijn totemdier zijn.
+    </p>
+    <p>
+      Deze getekende muis is sinds de basisschool bij mij gebleven. Soms teken ik de muis op papier
+      en houdt die mij gezelschap. Mijn andere hobby's zijn reizen, verhalen schrijven, video games
+      spelen, fotografie, muziek, lekkere snacks eten en coole dingen met code bouwen.
+    </p>
+
+    <img
+      src="/img/littlemousey_wave.png"
+      alt="De getekende muis van Atelier de kleine muis zwaait"
+      width="300"
+      height="300"
+      loading="lazy"
+      style="margin-inline:auto;display:block"
+    />
+
+    <blockquote>
+      Yes, I'm a female developer,<br />
+      Yes, I don't write perfect code,<br />
+      But who does?
+    </blockquote>
+
+    <h2>Meer</h2>
+    <ul>
+      <li><a href="/over-de-auteur/wall-of-fame">Wall of fame</a> — alle muizen die hier gewoond hebben</li>
+      <li><a href="/over-de-auteur/website">Over deze website</a> — waar hij mee gebouwd is</li>
+    </ul>
+  </div>
+</BaseLayout>
