@@ -40,10 +40,15 @@ const ogImage = new URL(image, Astro.site).href;
      wrong ground. Inline and synchronous on purpose. -->
 <script is:inline>
   try {
+    const root = document.documentElement;
     const saved = localStorage.getItem('theme');
-    if (saved === 'dark' || saved === 'light') {
-      document.documentElement.dataset.theme = saved;
-    }
+    if (saved === 'dark' || saved === 'light') root.dataset.theme = saved;
+
+    const size = Number(localStorage.getItem('reader-size'));
+    if (size >= 15 && size <= 24) root.style.setProperty('--reader-size', size + 'px');
+
+    const measure = Number(localStorage.getItem('reader-measure'));
+    if (measure >= 52 && measure <= 90) root.style.setProperty('--reader-measure', measure + 'ch');
   } catch {
     /* storage blocked — fall back to prefers-color-scheme */
   }

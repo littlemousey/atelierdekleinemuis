@@ -2,33 +2,60 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { AUTHOR } from '../../../consts';
+import { formatMinutes, isoDuration } from '../../../lib/duration';
 
 export async function getStaticPaths() {
   const items = (await getCollection('recepten')).sort((a, b) => a.data.order - b.data.order);
   return items.map((entry, i) => ({
     params: { slug: entry.id },
-    props: { entry, prev: items[i - 1] ?? null, next: items[i + 1] ?? null },
+    props: { entry, all: items, index: i },
   }));
 }
 
 interface Props {
   entry: CollectionEntry<'recepten'>;
-  prev: CollectionEntry<'recepten'> | null;
-  next: CollectionEntry<'recepten'> | null;
+  all: CollectionEntry<'recepten'>[];
+  index: number;
 }
 
-const { entry, prev, next } = Astro.props;
+const { entry, all, index } = Astro.props;
 const { Content } = await render(entry);
+const d = entry.data;
+
+const prev = all[index - 1] ?? null;
+const next = all[index + 1] ?? null;
+
+// "Ontbijt · 1 portie · 5 minuten klaarmaken · 8 uur wachten in koelkast".
+// Each part is dropped while its value is unset.
+const total = (d.prepMinutes ?? 0) + (d.restMinutes ?? 0);
+const meta = [
+  d.category,
+  d.servings,
+  d.prepMinutes ? `${formatMinutes(d.prepMinutes)} klaarmaken` : null,
+  d.restMinutes ? `${formatMinutes(d.restMinutes)} ${d.restNote ?? 'wachten'}` : null,
+].filter(Boolean);
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Recipe',
-  name: entry.data.title,
-  description: entry.data.description,
+  name: d.title,
+  description: d.description,
   inLanguage: 'nl-NL',
-  datePublished: entry.data.pubDate.toISOString(),
+  datePublished: d.pubDate.toISOString(),
   author: { '@type': 'Person', name: AUTHOR },
-  recipeYield: '1 portie',
+  recipeCategory: d.category,
+  recipeYield: d.servings,
+  recipeIngredient: d.ingredients,
+  recipeInstructions: d.steps.map((step, i) => ({
+    '@type': 'HowToStep',
+    position: i + 1,
+    text: step,
+  })),
+  // Waiting time has no schema.org property of its own, so it is folded into
+  // totalTime — which is what a reader actually has to plan for.
+  ...(d.prepMinutes ? { prepTime: isoDuration(d.prepMinutes) } : {}),
+  ...(total ? { totalTime: isoDuration(total) } : {}),
+  ...(d.tip ? { tips: d.tip } : {}),
   mainEntityOfPage: {
     '@type': 'WebPage',
     '@id': new URL(`/atelier/recepten/${entry.id}/`, Astro.site).href,
@@ -37,22 +64,62 @@ const jsonLd = {
 ---
 
 <BaseLayout
-  title={entry.data.title}
-  description={entry.data.description}
+  title={d.title}
+  description={d.description}
   type="article"
-  publishedTime={entry.data.pubDate}
-  modifiedTime={entry.data.updatedDate}
+  publishedTime={d.pubDate}
+  modifiedTime={d.updatedDate}
   jsonLd={jsonLd}
-  narrow
 >
-  <article class="prose">
-    <p class="kicker">Recept</p>
-    <h1>{entry.data.title}</h1>
-    <Content />
+  <nav class="breadcrumb" aria-label="Kruimelpad">
+    <a href="/atelier/">Atelier</a> <span aria-hidden="true">/</span>
+    <a href="/atelier/recepten/">Recepten</a> <span aria-hidden="true">/</span> {d.title}
+  </nav>
 
-    <nav class="article__nav" aria-label="Meer recepten">
-      {prev ? <a href={`/atelier/recepten/${prev.id}/`}>← {prev.data.title}</a> : <span />}
-      {next ? <a href={`/atelier/recepten/${next.id}/`}>{next.data.title} →</a> : <span />}
-    </nav>
-  </article>
+  <div class="page-head">
+    <p class="kicker">{meta.join(' · ')}</p>
+    <h1>{d.title}</h1>
+    <p class="lede">{d.description}</p>
+  </div>
+
+  <div class="recipe">
+    <div class="recipe__aside">
+      <section>
+        <h2>Ingrediënten <span class="recipe__for">voor {d.servings}</span></h2>
+        <ul class="recipe__ingredients">
+          {d.ingredients.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+
+      {d.needs.length > 0 && (
+        <section>
+          <h2>Wat heb je nodig</h2>
+          <ul class="recipe__needs">
+            {d.needs.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+      )}
+    </div>
+
+    <div class="recipe__main">
+      <h2>Instructies</h2>
+      <ol class="recipe__steps">
+        {d.steps.map((step) => <li>{step}</li>)}
+      </ol>
+
+      <div class="prose recipe__note"><Content /></div>
+
+      {d.tip && (
+        <aside class="tip">
+          <p class="kicker">Tip</p>
+          <p>{d.tip}</p>
+        </aside>
+      )}
+    </div>
+  </div>
+
+  <nav class="article__nav" aria-label="Meer recepten">
+    {prev ? <a href={`/atelier/recepten/${prev.id}/`}>← {prev.data.title}</a> : <span />}
+    {next ? <a href={`/atelier/recepten/${next.id}/`}>{next.data.title} →</a> : <span />}
+  </nav>
 </BaseLayout>

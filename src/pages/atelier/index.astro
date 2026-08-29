@@ -19,6 +19,7 @@ const gedichten = (await getCollection('gedichten')).sort((a, b) => a.data.order
   <div class="grid grid--2">
     <section>
       <h2><a href="/atelier/recepten/">Recepten</a></h2>
+      <p class="era__note">wat de muis kookt</p>
       <ul class="index-list">
         {recepten.map((r) => (
           <li>
@@ -32,6 +33,7 @@ const gedichten = (await getCollection('gedichten')).sort((a, b) => a.data.order
 
     <section>
       <h2><a href="/atelier/gedichten/">Gedichten</a></h2>
+      <p class="era__note">wat de muis voelt</p>
       <ul class="index-list">
         {gedichten.map((g) => (
           <li>

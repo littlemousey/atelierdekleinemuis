@@ -23,8 +23,26 @@ const active = [...NAV_LINKS]
       <ul>
         {NAV_LINKS.map((link) => (
           <li>
-            <a href={link.href} aria-current={link.href === active ? 'page' : undefined}>
-              {link.label}
+            <a
+              href={link.href}
+              aria-current={link.href === active ? 'page' : undefined}
+              aria-label={'icon' in link ? link.label : undefined}
+              title={'icon' in link ? link.label : undefined}
+            >
+              {'icon' in link ? (
+                /* Lucide `home` — the Dutch word for it reads oddly in a nav bar. */
+                <svg
+                  class="nav-icon"
+                  viewBox="0 0 24 24" width="16" height="16"
+                  fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                >
+                  <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+              ) : (
+                link.label
+              )}
             </a>
           </li>
         ))}

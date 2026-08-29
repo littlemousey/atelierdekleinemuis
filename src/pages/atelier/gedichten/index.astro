@@ -3,23 +3,31 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 const items = (await getCollection('gedichten')).sort((a, b) => a.data.order - b.data.order);
+const num = (n: number) => String(n).padStart(2, '0');
 ---
 
-<BaseLayout title="Gedichten" description="Gedichten van A.N.S. de Nijs: Vakantie en Verandering.">
+<BaseLayout
+  title="Gedichten"
+  description="Gedichten van A.N.S. de Nijs: Vakantie en Verandering."
+>
+  <nav class="breadcrumb" aria-label="Kruimelpad">
+    <a href="/atelier/">Atelier</a> <span aria-hidden="true">/</span> Gedichten
+  </nav>
+
   <div class="page-head">
-    <p class="kicker">Atelier</p>
+    <p class="kicker">Wat de muis voelt</p>
     <h1>Gedichten</h1>
     <p class="lede">Een gedicht per pagina, met ruimte eromheen.</p>
   </div>
 
-  <ul class="index-list">
-    {items.map((item) => (
+  <ol class="index-list index-list--numbered">
+    {items.map((item, i) => (
       <li>
         <a href={`/atelier/gedichten/${item.id}/`}>
           <span class="index-list__title">{item.data.title}</span>
-          <span class="index-list__note">{item.data.description}</span>
+          <span class="index-list__note">{num(i + 1)}</span>
         </a>
       </li>
     ))}
-  </ul>
+  </ol>
 </BaseLayout>

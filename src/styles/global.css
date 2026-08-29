@@ -65,8 +65,13 @@ main { flex: 1; padding-block: var(--space-8); }
 .page-head h1 { margin-bottom: var(--space-2); }
 
 /* Justified measure — the system's core reading idiom. */
-.prose { max-width: 68ch; font-size: 16px; line-height: 1.72; }
+.prose {
+  max-width: var(--reader-measure, 66ch);
+  font-size: var(--reader-size, 17px);
+  line-height: 1.72;
+}
 .prose p { text-align: justify; hyphens: auto; }
+.prose .kicker, .prose .article__meta { text-align: left; }
 .prose h2 { margin-top: var(--space-8); }
 .prose h3 { margin-top: var(--space-6); }
 .prose ul, .prose ol { padding-left: var(--space-4); margin: 0 0 var(--space-3); }
@@ -160,21 +165,161 @@ dialog.collage::backdrop { background: var(--color-backdrop); }
 
 /* ── theme toggle ──────────────────────────────────────────────────── */
 .theme-toggle {
-  display: inline-flex; align-items: center; gap: 6px;
+  display: inline-flex; align-items: center;
   background: transparent; border: 1px solid var(--color-divider);
   border-radius: var(--radius-md); cursor: pointer;
   font-family: var(--font-body); font-size: 12px; color: var(--color-neutral-700);
   padding: 4px 10px; margin-left: var(--space-3);
 }
 .theme-toggle:hover { color: var(--color-accent); border-color: var(--color-accent); }
-.theme-toggle .lamp-on { display: none; }
-:root[data-theme='dark'] .theme-toggle .lamp-on { display: inline; }
-:root[data-theme='dark'] .theme-toggle .lamp-off { display: none; }
+.theme-toggle span { align-items: center; gap: 6px; }
+.theme-toggle svg { flex: none; }
+
+/* Light ground: offer the moon. Dark ground: offer the sun. */
+.theme-toggle .to-dark { display: inline-flex; }
+.theme-toggle .to-light { display: none; }
+
+:root[data-theme='dark'] .theme-toggle .to-dark { display: none; }
+:root[data-theme='dark'] .theme-toggle .to-light { display: inline-flex; }
+
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .theme-toggle .lamp-on { display: inline; }
-  :root:not([data-theme='light']) .theme-toggle .lamp-off { display: none; }
+  :root:not([data-theme='light']) .theme-toggle .to-dark { display: none; }
+  :root:not([data-theme='light']) .theme-toggle .to-light { display: inline-flex; }
 }
 
 /* Classical sets figcaption at 55% of the ink, which lands at 3.63:1 on its own
    ground. Raised to 70% so captions clear AA in both grounds. */
 figcaption { color: color-mix(in srgb, var(--color-text) 70%, transparent); }
+
+/* ── reader ────────────────────────────────────────────────────────── */
+.breadcrumb { font-size: 12px; color: var(--color-neutral-700); margin-bottom: var(--space-3); }
+.breadcrumb a { text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+
+.reader-bar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-6);
+  padding-block: var(--space-2); margin-bottom: var(--space-6);
+  border-block: 1px solid var(--color-divider);
+}
+.reader-bar__group { display: flex; align-items: center; gap: var(--space-2); }
+.reader-bar__value {
+  font-size: 11px; color: var(--color-neutral-700);
+  font-feature-settings: 'tnum'; min-width: 6.5ch;
+}
+.reader-btn {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 13px;
+  background: transparent; color: var(--color-text);
+  border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+  padding: 3px 10px; cursor: pointer; line-height: 1.4;
+}
+.reader-btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.reader-btn[aria-pressed='true'] { border-color: var(--color-accent); color: var(--color-accent); }
+
+.reader { display: grid; gap: var(--space-8); align-items: start; }
+@media (min-width: 1000px) {
+  .reader:has(.reader__rail) { grid-template-columns: 200px minmax(0, 1fr); }
+}
+.reader__rail { position: sticky; top: var(--space-4); font-size: 13px; }
+.chapters { list-style: none; margin: 0; padding: 0; counter-reset: ch; }
+.chapters li { counter-increment: ch; border-bottom: 1px solid var(--color-divider); }
+.chapters a {
+  display: flex; gap: var(--space-2); padding: var(--space-2) 0;
+  text-decoration: none; color: var(--color-neutral-700);
+}
+.chapters a::before {
+  content: counter(ch, lower-roman) '.';
+  color: var(--color-accent); font-feature-settings: 'tnum'; flex: none;
+}
+.chapters a:hover { color: var(--color-accent); }
+
+/* Drop cap. The index is computed from the Markdown, and counted inside
+   .prose__body so the kicker and meta lines above the content don't shift it —
+   an opening epigraph (a haiku in italics) is skipped and the cap lands on the
+   first real prose paragraph. */
+[data-dropcap='1'] > p:nth-of-type(1)::first-letter,
+[data-dropcap='2'] > p:nth-of-type(2)::first-letter,
+[data-dropcap='3'] > p:nth-of-type(3)::first-letter,
+[data-dropcap='4'] > p:nth-of-type(4)::first-letter {
+  float: left;
+  font-family: var(--font-heading);
+  font-size: 3.4em;
+  line-height: .82;
+  padding: .06em .1em 0 0;
+  color: var(--color-accent-700);
+}
+
+/* ── nav icon ──────────────────────────────────────────────────────── */
+.site-nav a:has(.nav-icon) { display: inline-flex; align-items: center; padding-bottom: 2px; }
+.nav-icon { display: block; }
+
+/* ── recipes (design 3a: ingredients left, steps right) ────────────── */
+.recipe { display: grid; gap: var(--space-8); align-items: start; }
+@media (min-width: 900px) { .recipe { grid-template-columns: 300px minmax(0, 1fr); } }
+
+.recipe__aside { display: grid; gap: var(--space-6); }
+.recipe__aside h2 { font-size: 20px; margin: 0 0 var(--space-2); }
+.recipe__for { font-family: var(--font-body); font-size: 12px; color: var(--color-neutral-700); }
+
+.recipe__ingredients, .recipe__needs { list-style: none; margin: 0; padding: 0; font-size: 15px; }
+.recipe__ingredients li, .recipe__needs li {
+  padding: var(--space-2) 0; border-bottom: 1px solid var(--color-divider);
+  display: flex; gap: var(--space-2);
+}
+.recipe__ingredients li::before { content: '·'; color: var(--color-accent); flex: none; }
+.recipe__needs li::before { content: '—'; color: var(--color-accent); flex: none; }
+
+.recipe__main h2 { margin-top: 0; }
+.recipe__steps { list-style: none; margin: 0; padding: 0; counter-reset: step; font-size: 16px; line-height: 1.7; }
+.recipe__steps li {
+  counter-increment: step; display: grid; grid-template-columns: 2.2rem 1fr;
+  gap: var(--space-2); padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-divider);
+}
+.recipe__steps li::before {
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--font-heading); font-size: 17px; color: var(--color-accent);
+  font-feature-settings: 'tnum';
+}
+.recipe__note { margin-top: var(--space-6); max-width: none; }
+.recipe__note p { text-align: left; }
+
+.tip {
+  margin-top: var(--space-6); padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-accent-300); border-radius: var(--radius-md);
+  background: var(--color-accent-100);
+}
+.tip p:last-child { margin: 0; font-size: 15px; }
+
+/* ── poems (design 3b: one per page, lots of air) ──────────────────── */
+.poem-page { display: grid; gap: var(--space-8); align-items: start; }
+@media (min-width: 900px) { .poem-page { grid-template-columns: 220px minmax(0, 1fr); } }
+
+.poem-rail { position: sticky; top: var(--space-4); }
+.poem-index { list-style: none; margin: 0; padding: 0; }
+.poem-index li { border-bottom: 1px solid var(--color-divider); }
+.poem-index a {
+  display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-2);
+  padding: var(--space-2) 0; text-decoration: none;
+  color: var(--color-neutral-700); font-size: 14px;
+}
+.poem-index a:hover { color: var(--color-accent); }
+.poem-index a[aria-current='page'] { color: var(--color-text); }
+.poem-index a[aria-current='page'] .poem-index__num { color: var(--color-accent); }
+.poem-index__num { font-size: 11px; font-feature-settings: 'tnum'; color: var(--color-neutral-500); }
+
+.poem-body { max-width: 56ch; padding-block: var(--space-6); }
+.poem-body h1 { margin-bottom: var(--space-8); }
+.poem { font-size: var(--reader-size, 17px); line-height: 2.1; }
+.poem p { text-align: left; margin-bottom: var(--space-8); }
+
+.poem-nav {
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4);
+  margin-top: var(--space-8); padding-top: var(--space-4);
+  border-top: 1px solid var(--color-divider); font-size: 13px;
+}
+.poem-nav a { text-decoration: none; }
+.poem-nav a:hover { text-decoration: underline; }
+.poem-nav__off { color: var(--color-neutral-400); }
+.poem-nav__count { font-feature-settings: 'tnum'; color: var(--color-neutral-700); font-size: 12px; }
+
+.index-list--numbered { list-style: none; }

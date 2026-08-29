@@ -1,6 +1,7 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ReaderControls from '../../components/ReaderControls.astro';
 import { AUTHOR, SITE_TITLE } from '../../consts';
 
 export async function getStaticPaths() {
@@ -23,7 +24,19 @@ interface Props {
 }
 
 const { entry, prev, next } = Astro.props;
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
+
+// Chapters come from real `##` headings in the Markdown. Stories that have
+// none simply show no rail — chapter breaks are the author's to write.
+const chapters = headings.filter((h) => h.depth === 2);
+
+// Which paragraph gets the drop cap. Stories may open with an epigraph (a
+// haiku set in italics); the drop cap belongs on the first real prose
+// paragraph after it, so the index is computed from the source, not guessed.
+const blocks = entry.body?.trimStart().split(/\n\s*\n/) ?? [];
+let dropCap = 1;
+while (dropCap <= blocks.length && /^\s*\*/.test(blocks[dropCap - 1] ?? '')) dropCap += 1;
+if (dropCap > 4) dropCap = 0; // out of range for the CSS rules — skip it
 
 const url = new URL(`/verhalen/${entry.id}/`, Astro.site).href;
 
@@ -53,7 +66,25 @@ const dateFmt = new Intl.DateTimeFormat('nl-NL', { dateStyle: 'long' });
   jsonLd={jsonLd}
   narrow
 >
-  <article class="prose">
+  <nav class="breadcrumb" aria-label="Kruimelpad">
+    <a href="/verhalen/">Verhalen</a> <span aria-hidden="true">/</span> {entry.data.title}
+  </nav>
+
+  <ReaderControls />
+
+  <div class="reader">
+    {chapters.length > 0 && (
+      <aside class="reader__rail" aria-label="Hoofdstukken">
+        <p class="kicker">Hoofdstukken</p>
+        <ol class="chapters">
+          {chapters.map((c) => (
+            <li><a href={`#${c.slug}`}>{c.text}</a></li>
+          ))}
+        </ol>
+      </aside>
+    )}
+
+    <article class="prose prose--story">
     <p class="kicker">Verhaal</p>
     <h1>{entry.data.title}</h1>
     <p class="article__meta">
@@ -66,11 +97,14 @@ const dateFmt = new Intl.DateTimeFormat('nl-NL', { dateStyle: 'long' });
       )}
     </p>
 
-    <Content />
+    <div class="prose__body" data-dropcap={dropCap || undefined}>
+      <Content />
+    </div>
 
     <nav class="article__nav" aria-label="Meer verhalen">
       {prev ? <a href={`/verhalen/${prev.id}/`}>← {prev.data.title}</a> : <span />}
       {next ? <a href={`/verhalen/${next.id}/`}>{next.data.title} →</a> : <span />}
     </nav>
-  </article>
+    </article>
+  </div>
 </BaseLayout>

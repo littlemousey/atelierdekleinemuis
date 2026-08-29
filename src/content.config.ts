@@ -16,8 +16,29 @@ const collection = (dir: string) =>
     schema: base,
   });
 
+// Recipes carry their parts as data, not prose: it drives the two-column
+// layout and fills in recipeIngredient / recipeInstructions for search engines.
+const recepten = defineCollection({
+  loader: glob({ base: './src/content/recepten', pattern: '**/*.md' }),
+  schema: base.extend({
+    category: z.string(),
+    servings: z.string(),
+    /** Active hands-on minutes. */
+    prepMinutes: z.number().optional(),
+    /** Unattended waiting — chilling, resting. Counts towards the total time
+     *  a reader must plan for, but not towards the work. */
+    restMinutes: z.number().optional(),
+    /** What the waiting is, e.g. "wachten in koelkast". */
+    restNote: z.string().optional(),
+    needs: z.array(z.string()).default([]),
+    ingredients: z.array(z.string()).default([]),
+    steps: z.array(z.string()).default([]),
+    tip: z.string().optional(),
+  }),
+});
+
 export const collections = {
   verhalen: collection('verhalen'),
-  recepten: collection('recepten'),
+  recepten,
   gedichten: collection('gedichten'),
 };

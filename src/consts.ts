@@ -7,7 +7,8 @@ export const LANG = 'nl';
 export const DEFAULT_OG_IMAGE = '/img/cover.PNG';
 
 export const NAV_LINKS = [
-  { label: 'Thuis', href: '/' },
+  // Rendered as a house icon; the label stays as its accessible name.
+  { label: 'Startpagina', href: '/', icon: 'home' },
   { label: 'Verhalen', href: '/verhalen/' },
   { label: 'Atelier', href: '/atelier/' },
   { label: 'Projecten', href: '/projecten/' },

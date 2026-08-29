@@ -1,0 +1,77 @@
+---
+/** Reading controls from the design's reader (2c / 2d): text size and line
+ *  width. Both persist across pages, so a chosen reading comfort sticks. */
+---
+
+<div class="reader-bar">
+  <div class="reader-bar__group" role="group" aria-label="Tekstgrootte">
+    <button type="button" class="reader-btn" data-size="-1" aria-label="Tekst kleiner">A&minus;</button>
+    <span class="reader-bar__value"><span id="reader-size-value">17</span> px</span>
+    <button type="button" class="reader-btn" data-size="1" aria-label="Tekst groter">A+</button>
+  </div>
+
+  <div class="reader-bar__group">
+    <button type="button" class="reader-btn" id="reader-width" aria-pressed="false">Breedte</button>
+    <span class="reader-bar__value"><span id="reader-measure-value">66</span> tekens</span>
+  </div>
+</div>
+
+<script>
+  const SIZE_KEY = 'reader-size';
+  const MEASURE_KEY = 'reader-measure';
+  const SIZE_MIN = 15;
+  const SIZE_MAX = 24;
+  const MEASURE_NARROW = 66;
+  const MEASURE_WIDE = 82;
+
+  const root = document.documentElement;
+
+  const read = (key: string, fallback: number) => {
+    try {
+      const v = Number(localStorage.getItem(key));
+      return Number.isFinite(v) && v > 0 ? v : fallback;
+    } catch {
+      return fallback;
+    }
+  };
+
+  const save = (key: string, value: number) => {
+    try {
+      localStorage.setItem(key, String(value));
+    } catch {
+      // Storage blocked — the setting simply won't persist.
+    }
+  };
+
+  let size = Math.min(SIZE_MAX, Math.max(SIZE_MIN, read(SIZE_KEY, 17)));
+  let measure = read(MEASURE_KEY, MEASURE_NARROW) === MEASURE_WIDE ? MEASURE_WIDE : MEASURE_NARROW;
+
+  const sizeOut = document.querySelector<HTMLElement>('#reader-size-value');
+  const measureOut = document.querySelector<HTMLElement>('#reader-measure-value');
+  const widthBtn = document.querySelector<HTMLButtonElement>('#reader-width');
+
+  function apply() {
+    root.style.setProperty('--reader-size', `${size}px`);
+    root.style.setProperty('--reader-measure', `${measure}ch`);
+    if (sizeOut) sizeOut.textContent = String(size);
+    if (measureOut) measureOut.textContent = String(measure);
+    widthBtn?.setAttribute('aria-pressed', String(measure === MEASURE_WIDE));
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-size]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const step = Number(btn.dataset.size);
+      size = Math.min(SIZE_MAX, Math.max(SIZE_MIN, size + step));
+      save(SIZE_KEY, size);
+      apply();
+    });
+  });
+
+  widthBtn?.addEventListener('click', () => {
+    measure = measure === MEASURE_WIDE ? MEASURE_NARROW : MEASURE_WIDE;
+    save(MEASURE_KEY, measure);
+    apply();
+  });
+
+  apply();
+</script>

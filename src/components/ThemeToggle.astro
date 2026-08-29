@@ -1,7 +1,35 @@
+---
+/* Lucide `moon` and `sun` (https://lucide.dev), inlined — the design system
+   asks for Lucide throughout, and two icons don't justify a dependency. */
+const icon = {
+  stroke: 'currentColor',
+  fill: 'none',
+  'stroke-width': '2',
+  'stroke-linecap': 'round' as const,
+  'stroke-linejoin': 'round' as const,
+  viewBox: '0 0 24 24',
+  width: '14',
+  height: '14',
+  'aria-hidden': 'true',
+};
+---
+
 <button type="button" class="theme-toggle" id="theme-toggle">
   {/* Only one of these is ever displayed, so assistive tech reads the right label. */}
-  <span class="lamp-off">Lamp uit</span>
-  <span class="lamp-on">Lamp aan</span>
+  <span class="to-dark">
+    <svg {...icon}><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg>
+    Donker thema
+  </span>
+  <span class="to-light">
+    <svg {...icon}>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2" /><path d="M12 20v2" />
+      <path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" />
+      <path d="M2 12h2" /><path d="M20 12h2" />
+      <path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" />
+    </svg>
+    Licht thema
+  </span>
 </button>
 
 <script>

@@ -1,6 +1,7 @@
-/** "little mouse" in ten languages — the landing hero. */
+/** "little mouse" in every language on the landing hero. Add a line and the
+ *  hero grows on its own — nothing else counts them. */
 export const GREETINGS = [
-  { text: 'klein muisje',  lang: 'nl' },
+  { text: 'kleine muis',  lang: 'nl' },
   { text: 'little mouse',  lang: 'en' },
   { text: '小老鼠',         lang: 'zh' },
   { text: 'ratoncito',     lang: 'es' },
@@ -10,4 +11,5 @@ export const GREETINGS = [
   { text: 'мышонок',       lang: 'ru' },
   { text: 'ratinho',       lang: 'pt' },
   { text: 'topolino',      lang: 'it' },
+  { text: 'мишеня',        lang: 'uk' },
 ] as const;

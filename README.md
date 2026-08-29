@@ -20,7 +20,14 @@ Built with [Astro](https://astro.build/) as a fully static site (no server-side 
 Open <http://localhost:4321> after `npm run dev`. Every page hot-reloads on save.
 
 ## Structure
-- `src/content/{verhalen,recepten,gedichten}/` — the writing, as Markdown with frontmatter (title, description, dates, order)
+- `src/content/verhalen/` and `src/content/gedichten/` — prose and poems, as Markdown
+- `src/content/recepten/` — recipes: `ingredients`, `steps`, `needs` and `tip` live in the
+  frontmatter as lists, not prose. That drives the two-column layout **and** fills in
+  `recipeIngredient` / `recipeInstructions` for search engines, which is what earns a recipe
+  rich result. Times are `prepMinutes` (hands-on) and, where a recipe waits unattended,
+  `restMinutes` + `restNote` — both in minutes, formatted by `src/lib/duration.ts`. Waiting
+  has no schema.org property of its own, so it is folded into `totalTime`, which is what a
+  reader must actually plan for. Omit a field and its part of the meta line disappears.
 - `src/pages/` — one file per route
 - `src/data/mice.ts` — the 18 mice and their five naming eras
 - `src/data/projects.ts` — the projects gallery
@@ -76,8 +83,8 @@ elevation as "a hairline edge + ambient darkness"). The neutral and accent ramps
 *reversed* rather than recoloured, so step 100 stays nearest the ground and every component
 class keeps its intended contrast without being restyled.
 
-It follows the reader's system preference; the "Lamp uit / Lamp aan" toggle in the header
-overrides that and persists in `localStorage`. A small inline script in `BaseHead.astro`
+It follows the reader's system preference; the "Donker thema / Licht thema" toggle in the
+header overrides that and persists in `localStorage`. A small inline script in `BaseHead.astro`
 applies the saved choice before first paint, so there is no flash of the wrong ground.
 
 Every text role clears WCAG AA (4.5:1, or 3:1 for accent used as interface chrome) in both
@@ -86,3 +93,34 @@ light ground and should not be used for type.
 
 ## Usage
 Everyone is allowed to share this code and change the code, but ONLY for non-commercial use. When sharing the stories or creating a new version of the code and stories, you always need to place a reference to the original version.
+
+## The reader
+Story pages carry the reading controls from the design: **A− / A+** for text size (15–24 px)
+and **Breedte** for line width (66 or 82 characters). Both persist in `localStorage` and are
+applied before first paint, so there is no flash at the old size.
+
+They set `--reader-size` and `--reader-measure` on `<html>`, and `.prose` reads those
+variables — so a size chosen while reading a story carries over to the recipes and poems too.
+
+Two details that make it read like a book:
+
+- **Drop cap.** The opening letter is set large in the heading face. Which paragraph gets it
+  is computed from the Markdown, so a story that opens with an epigraph (a haiku in italics,
+  as *De molenaar van Maarssen* does) skips it and the cap lands on the first real prose.
+  Counted inside `.prose__body` so the kicker and byline above don't shift it.
+- **Chapter rail.** Built from real `##` headings in the story. None of the stories have
+  chapter headings today, so no rail appears. Add `## Hoofdstuknaam` lines to a story and the
+  rail shows up on its own, numbered in lower-case roman — no code change needed.
+
+## Atelier layouts
+Recipes and poems follow the design's own treatments:
+
+- **Recipes** put ingredients and equipment in a left column and numbered steps on the right,
+  with the tip in an accent-bordered callout. The meta line reads
+  "Ontbijt · 1 portie · 5 minuten klaarmaken · 8 uur wachten in koelkast"; the recipe index
+  shows the compact form ("5 min").
+- **Poems** get one per page with generous leading, an index rail, and
+  "← vorige · 01 / 02 · volgende →" underneath.
+
+Adding a poem or recipe renumbers and re-links everything automatically — the counters and
+prev/next come from collection order, not hard-coded numbers.

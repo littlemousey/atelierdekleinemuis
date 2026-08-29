@@ -7,18 +7,22 @@ export async function getStaticPaths() {
   const items = (await getCollection('gedichten')).sort((a, b) => a.data.order - b.data.order);
   return items.map((entry, i) => ({
     params: { slug: entry.id },
-    props: { entry, prev: items[i - 1] ?? null, next: items[i + 1] ?? null },
+    props: { entry, all: items, index: i },
   }));
 }
 
 interface Props {
   entry: CollectionEntry<'gedichten'>;
-  prev: CollectionEntry<'gedichten'> | null;
-  next: CollectionEntry<'gedichten'> | null;
+  all: CollectionEntry<'gedichten'>[];
+  index: number;
 }
 
-const { entry, prev, next } = Astro.props;
+const { entry, all, index } = Astro.props;
 const { Content } = await render(entry);
+
+const prev = all[index - 1] ?? null;
+const next = all[index + 1] ?? null;
+const num = (n: number) => String(n).padStart(2, '0');
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -28,6 +32,7 @@ const jsonLd = {
   inLanguage: 'nl-NL',
   datePublished: entry.data.pubDate.toISOString(),
   author: { '@type': 'Person', name: AUTHOR },
+  position: index + 1,
   mainEntityOfPage: {
     '@type': 'WebPage',
     '@id': new URL(`/atelier/gedichten/${entry.id}/`, Astro.site).href,
@@ -41,16 +46,40 @@ const jsonLd = {
   type="article"
   publishedTime={entry.data.pubDate}
   jsonLd={jsonLd}
-  narrow
 >
-  <article class="prose poem">
-    <p class="kicker">Gedicht</p>
-    <h1>{entry.data.title}</h1>
-    <Content />
+  <nav class="breadcrumb" aria-label="Kruimelpad">
+    <a href="/atelier/">Atelier</a> <span aria-hidden="true">/</span>
+    <a href="/atelier/gedichten/">Gedichten</a> <span aria-hidden="true">/</span> {entry.data.title}
+  </nav>
 
-    <nav class="article__nav" aria-label="Meer gedichten">
-      {prev ? <a href={`/atelier/gedichten/${prev.id}/`}>← {prev.data.title}</a> : <span />}
-      {next ? <a href={`/atelier/gedichten/${next.id}/`}>{next.data.title} →</a> : <span />}
-    </nav>
-  </article>
+  <div class="poem-page">
+    <aside class="poem-rail" aria-label="Alle gedichten">
+      <ol class="poem-index">
+        {all.map((p, i) => (
+          <li>
+            <a href={`/atelier/gedichten/${p.id}/`} aria-current={p.id === entry.id ? 'page' : undefined}>
+              <span>{p.data.title}</span>
+              <span class="poem-index__num">{num(i + 1)}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </aside>
+
+    <article class="poem-body">
+      <p class="kicker">Gedicht {num(index + 1)}</p>
+      <h1>{entry.data.title}</h1>
+      <div class="poem"><Content /></div>
+
+      <nav class="poem-nav" aria-label="Meer gedichten">
+        {prev
+          ? <a href={`/atelier/gedichten/${prev.id}/`}>← vorige</a>
+          : <span class="poem-nav__off">← vorige</span>}
+        <span class="poem-nav__count">{num(index + 1)} / {num(all.length)}</span>
+        {next
+          ? <a href={`/atelier/gedichten/${next.id}/`}>volgende →</a>
+          : <span class="poem-nav__off">volgende →</span>}
+      </nav>
+    </article>
+  </div>
 </BaseLayout>
