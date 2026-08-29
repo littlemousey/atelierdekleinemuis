@@ -37,8 +37,16 @@ const recepten = defineCollection({
   }),
 });
 
+// Losse prozapagina's (voorwoord, en wat er nog bij komt). Alleen een titel:
+// de tekst wordt elders geschreven en hier ongewijzigd ingeplakt.
+const paginas = defineCollection({
+  loader: glob({ base: './src/content/paginas', pattern: '**/*.md' }),
+  schema: z.object({ title: z.string() }),
+});
+
 export const collections = {
   verhalen: collection('verhalen'),
   recepten,
   gedichten: collection('gedichten'),
+  paginas,
 };

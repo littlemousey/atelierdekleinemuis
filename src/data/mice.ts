@@ -46,14 +46,14 @@ export const MICE: Mouse[] = [
 
   { id: 'jenny',   name: 'Jenny',   era: 'pokemon', exLab: false, epithet: 'lieve, toegewijde en zorgzame moeder',            imgUrl: '/img/avatars/jenny.jpg',   collageImgUrl: '/img/collages/jenny.jpg',            from: '', to: '' },
   { id: 'joy',     name: 'Joy',     era: 'pokemon', exLab: false, epithet: 'tante knorrepot, zonnetje in huis',               imgUrl: '/img/avatars/joy.jpg',     collageImgUrl: '/img/collages/joy.jpg',              from: '', to: '' },
-  { id: 'erika',   name: 'Erika',   era: 'pokemon', exLab: false, epithet: 'verlegen muis · dochter van Jenny',               imgUrl: '/img/avatars/erika.jpg',   collageImgUrl: FALLBACK,                             from: '', to: '' },
-  { id: 'sabrina', name: 'Sabrina', era: 'pokemon', exLab: false, epithet: 'wil graag stoer zijn · dochter van Jenny',        imgUrl: '/img/avatars/sabrina.jpg', collageImgUrl: FALLBACK,                             from: '', to: '' },
-  { id: 'misty',   name: 'Misty',   era: 'pokemon', exLab: false, epithet: 'alleen wanneer het haar uitkomt · dochter van Jenny', imgUrl: '/img/avatars/misty.jpg', collageImgUrl: FALLBACK,                          from: '', to: '' },
-  { id: 'clair',   name: 'Clair',   era: 'pokemon', exLab: false, epithet: 'voorzichtige onderzoeker · dochter van Jenny',    imgUrl: '/img/avatars/clair.jpg',   collageImgUrl: FALLBACK,                             from: '', to: '' },
+  { id: 'erika',   name: 'Erika',   era: 'pokemon', exLab: false, epithet: 'verlegen muis · dochter van Jenny',               imgUrl: '/img/avatars/erika.jpg',   collageImgUrl: '/img/collages/erika.jpg',                             from: '', to: '' },
+  { id: 'sabrina', name: 'Sabrina', era: 'pokemon', exLab: false, epithet: 'wil graag stoer zijn · dochter van Jenny',        imgUrl: '/img/avatars/sabrina.jpg', collageImgUrl: '/img/collages/sabrina.jpg',                             from: '', to: '' },
+  { id: 'misty',   name: 'Misty',   era: 'pokemon', exLab: false, epithet: 'alleen wanneer het haar uitkomt · dochter van Jenny', imgUrl: '/img/avatars/misty.jpg', collageImgUrl: '/img/collages/misty.jpg',                          from: '', to: '' },
+  { id: 'clair',   name: 'Clair',   era: 'pokemon', exLab: false, epithet: 'voorzichtige onderzoeker · dochter van Jenny',    imgUrl: '/img/avatars/clair.jpg',   collageImgUrl: '/img/collages/clair.jpg',                             from: '', to: '' },
 
-  { id: 'marcy',   name: 'Marcy',   era: 'at',      exLab: false, epithet: '',                                                imgUrl: '/img/avatars/marcy.jpg',   collageImgUrl: FALLBACK,                             from: '', to: '' },
-  { id: 'phoebe',  name: 'Phoebe',  era: 'at',      exLab: false, epithet: '',                                                imgUrl: '/img/avatars/phoebe.jpg',  collageImgUrl: FALLBACK,                             from: '', to: '' },
-  { id: 'bonnie',  name: 'Bonnie',  era: 'at',      exLab: false, epithet: '',                                                imgUrl: '/img/avatars/bonnie.jpg',  collageImgUrl: FALLBACK,                             from: '', to: '' },
+  { id: 'marcy',   name: 'Marcy',   era: 'at',      exLab: true, epithet: 'kleine avonturier',                               imgUrl: '/img/avatars/marcy.jpg',   collageImgUrl: '/img/collages/marcy.jpg',                             from: '', to: '' },
+  { id: 'phoebe',  name: 'Phoebe',  era: 'at',      exLab: true, epithet: 'levensgenieter',                                  imgUrl: '/img/avatars/phoebe.jpg',  collageImgUrl: '/img/collages/phoebe.jpg',                             from: '', to: '' },
+  { id: 'bonnie',  name: 'Bonnie',  era: 'at',      exLab: true, epithet: 'kieskeurige bedelaar voor snacks',                imgUrl: '/img/avatars/bonnie.jpg',  collageImgUrl: FALLBACK,                             from: '', to: '' },
 ];
 
 /** Mice grouped by era, in era order. */

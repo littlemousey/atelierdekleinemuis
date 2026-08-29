@@ -33,7 +33,7 @@ export const PROJECTS: Project[] = [
     image: '/img/projects/petmice.png',
   },
   {
-    kicker: 'Vanilla · API',
+    kicker: 'Catalogus · Pokémon',
     title: 'Pokédex',
     repo: 'littlemousey/pokedex',
     description:
@@ -42,7 +42,7 @@ export const PROJECTS: Project[] = [
     image: '/img/projects/pokedex.png',
   },
   {
-    kicker: 'Feest · Collectie',
+    kicker: 'Horoscoop · Festival',
     title: 'Fortune cookie app',
     repo: 'littlemousey/fortunecookie',
     description:
@@ -50,7 +50,7 @@ export const PROJECTS: Project[] = [
     tags: ['JavaScript', 'CSS', 'API'],
   },
   {
-    kicker: 'PWA · Giphy',
+    kicker: 'Gifjes · Giphy',
     title: 'Pikachu Giphy',
     repo: 'littlemousey/pikachuGiphy',
     description:
@@ -58,11 +58,21 @@ export const PROJECTS: Project[] = [
     tags: ['JavaScript', 'Giphy API', 'PWA'],
   },
   {
-    kicker: 'Website',
-    title: 'Deze site',
+    kicker: 'VR · Experience',
+    title: 'VR escape',
+    repo: 'littlemousey/WorldOfAFrame',
+    description:
+      'A small WebVR project: you arrive in a room floating in space, pick one of four doorways, and step into the world behind it',
+    tags: ['A-Frame', 'HTML', 'Javascript'],
+    demo: 'https://github.com/littlemousey/WorldOfAFrame',
+    image: '/img/projects/worldofaframe.png',
+  },
+  {
+    kicker: 'Atelier · Verhalen',
+    title: 'Code van deze site',
     repo: 'littlemousey/atelierdekleinemuis',
     description:
-      'Het atelier zelf: alle verhalen gratis te lezen, de wall of fame en de projecten.',
+      'Broncode van deze website',
     tags: ['Astro', 'TypeScript'],
   },
 ];

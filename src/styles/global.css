@@ -160,8 +160,12 @@ dialog.collage::backdrop { background: var(--color-backdrop); }
 .index-list li { border-bottom: 1px solid var(--color-divider); }
 .index-list a { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); padding: var(--space-3) 0; text-decoration: none; color: inherit; }
 .index-list a:hover .index-list__title { color: var(--color-accent); }
-.index-list__title { font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 20px; }
-.index-list__note { font-size: 12px; color: var(--color-neutral-700); text-align: right; flex: none; }
+.index-list__title { font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 20px; min-width: 0; }
+.index-list__note { font-size: 12px; color: var(--color-neutral-700); text-align: right; flex: 0 1 auto; }
+
+/* Notes van zinlengte passen niet naast de titel: stapel ze eronder. */
+.index-list--stacked a { flex-direction: column; align-items: stretch; gap: var(--space-1); }
+.index-list--stacked .index-list__note { text-align: left; max-width: 62ch; line-height: 1.5; }
 
 /* ── theme toggle ──────────────────────────────────────────────────── */
 .theme-toggle {

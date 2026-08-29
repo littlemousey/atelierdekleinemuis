@@ -1,12 +1,8 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Plate from '../components/Plate.astro';
 import { GREETINGS } from '../data/greetings';
 import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR } from '../consts';
-
-const verhalen = (await getCollection('verhalen')).sort((a, b) => a.data.order - b.data.order);
-const nieuwste = verhalen[0];
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -34,16 +30,6 @@ const jsonLd = {
         <a class="btn btn-primary" href="/verhalen/">Lees de verhalen</a>
         <a class="btn btn-secondary" href="/projecten/">Bekijk de projecten</a>
       </div>
-
-      {nieuwste && (
-        <>
-          <hr class="hr" />
-          <p class="kicker">Nieuwste verhaal</p>
-          <p class="index-list__title">
-            <a href={`/verhalen/${nieuwste.id}/`}>{nieuwste.data.title}</a>
-          </p>
-        </>
-      )}
     </div>
 
     <div>

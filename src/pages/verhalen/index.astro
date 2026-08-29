@@ -1,10 +1,13 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Plate from '../../components/Plate.astro';
 import { AUTHOR, SITE_TITLE } from '../../consts';
 
 const verhalen = (await getCollection('verhalen')).sort((a, b) => a.data.order - b.data.order);
+
+const voorwoord = await getEntry('paginas', 'voorwoord');
+const { Content: Voorwoord } = await render(voorwoord!);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -32,49 +35,8 @@ const jsonLd = {
   </div>
 
   <div class="prose">
-    <h2>Voorwoord</h2>
-    <p>
-      Muizen zijn overal. Ze leven in plantgewassen, struiken, maken holletjes onder de grond en
-      leven ook in huizen in kleine holletjes en gaatjes. Eigenlijk hebben ze dezelfde
-      basisbehoeften als wij: ze verlangen naar eten, drinken, liefde, geborgenheid en een warm
-      onderkomen. Het zijn sociale intelligente dieren die in groepen leven. Ze maken vrienden,
-      houden van hun familie maar maken ook ruzie over wie er met het lekkerste stukje eten vandoor
-      is gegaan.
-    </p>
-    <p>
-      Ook al zijn muizen klein, ze dromen groots. Sommige muizen willen het hoogst mogelijke
-      beklimmen of de wereld ontdekken, en andere muizen gaan op zoek naar de lekkerste snack die
-      er is. Als ze zich geen zorgen hoeven te maken houden ze van puzzels oplossen, nieuwe
-      vaardigheden leren en knappen ze hun huis op. Ze weten hoe ze van het leven kunnen genieten en
-      springen er op los als ze enthousiast zijn. Muizen hebben allemaal een eigen persoonlijkheid
-      en kennen net als wij angst, en sommigen kunnen heel drammerig, aanwezig, vocaal of
-      vastberaden zijn. Of juist heel zorgzaam, verlegen, liefdevol of behulpzaam. Er zijn veel
-      verschillende soorten muizen op deze wereld en ze maken veel mee van wat wij mensen doen.
-      Muizen communiceren onderling meer dan je zou verwachten. Met hoge frequenties, door te
-      piepen, kwetteren, tjilpen en non-verbale communicatie. Groot of klein, zelfverzekerd of
-      onzeker, vlug of traag, geen muis is hetzelfde. Helaas hebben de meeste muizen maar een kort
-      leven, maar daardoor weten ze wel hoe je tijd het beste kunt besteden.
-    </p>
-    <p>
-      Dit zijn de verhalen die muizen elkaar vertellen met de personages die voor eeuwig in onze
-      harten blijven voortbestaan. Misschien voel je je meer verbonden met muizen na het lezen van
-      dit boek. Wees nieuwsgierig als een muis en lees de verhalen met een open geest. Wellicht
-      herken je jezelf in een van de verhalen. En wie weet, misschien help je een keer een muis uit
-      de brand.
-    </p>
-    <p>
-      Dit boek draag ik op aan mijn lieve muizen Haley, Lizzy, Amy, Aloy, Lara, Chell, Daisy, Lily,
-      Poppy, Jenny, Joy, Clair, Erika, Misty en Sabrina. En alle andere (ex-lab)muizen die ik in de
-      toekomst zal adopteren. Ze zijn mijn vrolijke dartelende bolletjes die altijd een beetje licht
-      brengen in mijn leven. Laten we samen dromen van een wereld waar dieren niet meer worden
-      ingezet voor experimenten.
-    </p>
-    <p>
-      Ook wil ik een wens sturen naar iedereen die het moeilijk vindt fouten te maken, inclusief
-      mezelf en in het bijzonder mijn lieve nichtje Esther: maak ze alsjeblieft en voel je er niet
-      slecht over. We leven om te leren en je bent nooit te oud om iets nieuws te leren. En boven
-      alles: blijf (dag)dromen.
-    </p>
+    <h2>{voorwoord!.data.title}</h2>
+    <Voorwoord />
     <p><em>{AUTHOR}</em></p>
 
     <Plate
@@ -88,7 +50,7 @@ const jsonLd = {
   <hr class="hr" />
 
   <h2>Inhoudsopgave</h2>
-  <ul class="index-list">
+  <ul class="index-list index-list--stacked">
     {verhalen.map((verhaal) => (
       <li>
         <a href={`/verhalen/${verhaal.id}/`}>
@@ -98,10 +60,4 @@ const jsonLd = {
       </li>
     ))}
   </ul>
-
-  <p class="era__note">
-    Het recept <a href="/atelier/recepten/granola-havermout-met-appel-en-rozijnen/">Granola
-    havermout met appel en rozijnen</a> — het ontbijt voor molenaars — staat in het
-    <a href="/atelier/">atelier</a>.
-  </p>
 </BaseLayout>
