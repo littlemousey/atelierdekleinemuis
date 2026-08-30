@@ -254,6 +254,9 @@ figcaption { color: color-mix(in srgb, var(--color-text) 70%, transparent); }
 
 /* ── nav icon ──────────────────────────────────────────────────────── */
 .site-nav a:has(.nav-icon) { display: inline-flex; align-items: center; padding-bottom: 2px; }
+/* An accent bar under a 16px glyph reads as a stray mark, so the icon link
+   shows the current page through its colour instead. */
+.site-nav a:has(.nav-icon)[aria-current='page'] { border-bottom-color: transparent; color: var(--color-accent); }
 .nav-icon { display: block; }
 
 /* ── recipes (design 3a: ingredients left, steps right) ────────────── */

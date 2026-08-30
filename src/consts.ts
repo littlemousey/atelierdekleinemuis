@@ -1,6 +1,6 @@
 export const SITE_TITLE = 'Atelier de kleine muis';
 export const SITE_DESCRIPTION =
-  'Muizenverhalen en creaties van A.N.S. de Nijs. Een levend boek met korte verhalen over muizen, mollen en koolmezen — gratis online te lezen.';
+  'Muizenverhalen en creaties van A.N.S. de Nijs. Een levend boek met korte verhalen over muizen en andere dieren — gratis online te lezen.';
 export const AUTHOR = 'A.N.S. de Nijs';
 export const LOCALE = 'nl_NL';
 export const LANG = 'nl';

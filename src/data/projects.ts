@@ -48,6 +48,7 @@ export const PROJECTS: Project[] = [
     description:
       'Vier het Chinees nieuwjaar door gelukskoekjesboodschappen te verzamelen. Met geluidjes en illustraties.',
     tags: ['JavaScript', 'CSS', 'API'],
+    image: '/img/projects/fortune-cookie.png',
   },
   {
     kicker: 'Gifjes · Giphy',
@@ -56,16 +57,36 @@ export const PROJECTS: Project[] = [
     description:
       'Swipe door Pikachu-gifjes via de Giphy-API. Werkt offline als progressive web app.',
     tags: ['JavaScript', 'Giphy API', 'PWA'],
+    image: '/img/projects/pikachu-giphy.png',
   },
   {
     kicker: 'VR · Experience',
     title: 'VR escape',
     repo: 'littlemousey/WorldOfAFrame',
     description:
-      'A small WebVR project: you arrive in a room floating in space, pick one of four doorways, and step into the world behind it',
-    tags: ['A-Frame', 'HTML', 'Javascript'],
-    demo: 'https://github.com/littlemousey/WorldOfAFrame',
+      'Een klein WebVR-project: je komt aan in een kamer die in de ruimte zweeft, kiest een van de vier deuropeningen en stapt de wereld erachter binnen.',
+    tags: ['A-Frame', 'HTML', 'JavaScript'],
+    demo: 'https://littlemousey.github.io/WorldOfAFrame/',
     image: '/img/projects/worldofaframe.png',
+  },
+  {
+    kicker: 'Portfolio · Ervaringen',
+    title: 'Mijn portfolio',
+    repo: 'littlemousey/littlemousey.github.io',
+    description:
+      'Mijn persoonlijke portfolio. Werkervaringen, opleidingen, vaardigheden, bezochte conferenties en artikelen van of over mij.',
+    tags: ['Astro', 'React 19', 'Tailwind', 'Framer Motion'],
+    demo: 'https://littlemousey.github.io/',
+    image: '/img/projects/portfolio.png',
+  },
+  {
+    kicker: 'Interactive fiction · Verhaal',
+    title: 'Avondgloren',
+    repo: 'littlemousey/avondgloren-IF',
+    description:
+      'Een Nederlandstalig keuzespel: je erft de winkel van je oma tussen de wortels van een oude eik. Vijf herfstdagen lang zet je thee, luister je naar bezoekers en bepalen je keuzes het einde.',
+    tags: ['JavaScript', 'HTML', 'CSS', 'Interactive fiction'],
+    image: '/img/projects/avondgloren.png',
   },
   {
     kicker: 'Atelier · Verhalen',
@@ -74,6 +95,7 @@ export const PROJECTS: Project[] = [
     description:
       'Broncode van deze website',
     tags: ['Astro', 'TypeScript'],
+    image: '/img/projects/atelierdekleinemuis.png',
   },
 ];
 
