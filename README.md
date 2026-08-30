@@ -30,6 +30,10 @@ Open <http://localhost:4321> after `npm run dev`. Every page hot-reloads on save
   reader must actually plan for. Omit a field and its part of the meta line disappears.
 - `src/pages/` — one file per route
 - `src/data/mice.ts` — the 18 mice and their five naming eras
+- `src/data/kunst.ts` — the drawings in the art gallery
+- `src/assets/kunst/` — the drawings themselves. Unlike `public/`, files here go through
+  Astro's build-time image pipeline: each one is resized and converted to WebP, so a 14 MB
+  source PNG reaches the reader as a ~30 kB thumbnail
 - `src/data/projects.ts` — the projects gallery
 - `src/data/greetings.ts` — "little mouse" in ten languages, for the landing hero
 - `src/components/BaseHead.astro` — all SEO metadata (title, description, canonical, Open Graph, JSON-LD)
@@ -49,6 +53,19 @@ Take every color, font and spacing value from the `var(--color-*)`, `var(--font-
 Add an entry to `MICE` in `src/data/mice.ts` and drop a square portrait in
 `public/img/avatars/`. The `from` / `to` fields are the life period: leave them empty and the
 period line simply does not render, so they can be filled in later without touching the markup.
+
+## Adding a drawing
+Drop the image in `src/assets/kunst/` and add an entry to `ARTWORKS` in `src/data/kunst.ts`:
+import the file at the top, then give it a `title`, a `collection` (the rail groups in
+`COLLECTIONS`), a `medium`, a `year` and an `alt`. Astro sizes and converts the image at
+build time — the source can be as large as it likes, and no thumbnail needs making by hand.
+
+`year` works like the mice's `from` / `to`: leave it empty and the meta line drops it, so an
+undated drawing simply does not appear under a year. Fill one in and that year shows up in
+the rail on its own.
+
+`alt` describes the drawing itself rather than calling it decoration — here the image *is*
+the content.
 
 ## Adding a story, recipe or poem
 Create a new `.md` file in `src/content/verhalen/`, `src/content/recepten/` or
@@ -113,7 +130,7 @@ Two details that make it read like a book:
   rail shows up on its own, numbered in lower-case roman — no code change needed.
 
 ## Atelier layouts
-Recipes and poems follow the design's own treatments:
+Recipes, poems and the art gallery follow the design's own treatments:
 
 - **Recipes** put ingredients and equipment in a left column and numbered steps on the right,
   with the tip in an accent-bordered callout. The meta line reads
@@ -121,6 +138,11 @@ Recipes and poems follow the design's own treatments:
   shows the compact form ("5 min").
 - **Poems** get one per page with generous leading, an index rail, and
   "← vorige · 01 / 02 · volgende →" underneath.
+- **Kunst** is a masonry of matted plates with a filter rail (collection and year) beside it;
+  clicking a plate opens it large. The drawings keep their own proportions instead of being
+  cropped square, and get a mat rather than the sepia `.plate` treatment, which would drain
+  the colour out of them. On a phone the title comes first, then the filters, then two
+  columns of plates.
 
 Adding a poem or recipe renumbers and re-links everything automatically — the counters and
 prev/next come from collection order, not hard-coded numbers.

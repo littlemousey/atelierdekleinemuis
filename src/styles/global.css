@@ -131,12 +131,12 @@ main { flex: 1; padding-block: var(--space-8); }
 .polaroid__epithet { font-size: 12px; line-height: 1.45; color: var(--color-neutral-700); }
 .polaroid__lab { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--color-accent-700); }
 
-dialog.collage { border: 0; padding: 0; background: transparent; max-width: min(92vw, 900px); }
-dialog.collage::backdrop { background: var(--color-backdrop); }
-.collage__inner { background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
-.collage__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-divider); }
-.collage__bar strong { font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 20px; }
-.collage__inner img { max-height: 78vh; width: auto; margin: 0 auto; }
+dialog.collage, dialog.lightbox { border: 0; padding: 0; background: transparent; max-width: min(92vw, 900px); }
+dialog.collage::backdrop, dialog.lightbox::backdrop { background: var(--color-backdrop); }
+.collage__inner, .lightbox__inner { background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+.collage__bar, .lightbox__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-divider); }
+.collage__bar strong, .lightbox__bar strong { font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 20px; }
+.collage__inner img, .lightbox__inner img { max-height: 78vh; width: auto; margin: 0 auto; }
 
 /* ── projects ──────────────────────────────────────────────────────── */
 .proj__shot { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; width: 100%; }
@@ -148,6 +148,83 @@ dialog.collage::backdrop { background: var(--color-backdrop); }
 }
 .proj__links { display: flex; gap: var(--space-2); margin-top: auto; padding-top: var(--space-2); }
 .repo { font-size: 11px; color: var(--color-neutral-700); font-family: var(--font-body); }
+
+/* ── kunst (design 3c: filterrail, masonry van matted plates) ──────── */
+/* Areas rather than source order: the rail sits beside the title on a wide
+   screen, but on a phone the title has to come first and the filters after
+   it — the grid can never end up above its own heading. */
+.art-page { display: grid; gap: var(--space-4); align-items: start; grid-template-areas: 'head' 'rail' 'main'; }
+.art-head { grid-area: head; }
+.art-rail { grid-area: rail; }
+.art-main { grid-area: main; }
+.art-head .page-head { margin-bottom: 0; }
+
+@media (min-width: 900px) {
+  .art-page {
+    grid-template-columns: 220px minmax(0, 1fr);
+    grid-template-areas: 'rail head' 'rail main';
+    column-gap: var(--space-8);
+  }
+  .art-rail { position: sticky; top: var(--space-4); }
+}
+.art-rail h2 {
+  font-family: var(--font-body); font-size: 11px; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--color-neutral-700); margin: 0 0 var(--space-2);
+}
+
+.art-filters { list-style: none; margin: 0 0 var(--space-6); padding: 0; }
+.art-filters li { border-bottom: 1px solid var(--color-divider); }
+.art-filters button {
+  display: flex; width: 100%; justify-content: space-between; gap: var(--space-2);
+  padding: var(--space-2) 0; background: none; border: 0; cursor: pointer;
+  font: inherit; font-size: 13.5px; color: var(--color-neutral-700); text-align: left;
+}
+.art-filters button:hover { color: var(--color-accent); }
+.art-filters button[aria-pressed='true'] { color: var(--color-text); }
+.art-filters__count { color: var(--color-neutral-700); font-feature-settings: 'tnum'; }
+
+.art-years { display: flex; flex-wrap: wrap; gap: var(--space-1); list-style: none; margin: 0; padding: 0; }
+.art-years button {
+  padding: 4px 9px; background: none; cursor: pointer;
+  border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+  font: inherit; font-size: 11.5px; color: var(--color-text); font-feature-settings: 'tnum';
+}
+.art-years button:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.art-years button[aria-pressed='true'] {
+  border-color: var(--color-accent); background: var(--color-accent-100); color: var(--color-accent-700);
+}
+
+.art-count { font-size: 11px; color: var(--color-neutral-700); font-feature-settings: 'tnum'; }
+
+/* Masonry by columns: each drawing keeps its own proportions, so the plates
+   stagger the way they do in the design instead of being cropped to a grid. */
+.art-grid { column-count: 2; column-gap: var(--space-4); }
+@media (min-width: 900px) { .art-grid { column-count: 3; } }
+
+.art-figure { break-inside: avoid; display: inline-block; width: 100%; margin: 0 0 var(--space-4); }
+.art-figure[hidden] { display: none; }
+.art-figure figcaption { padding-top: var(--space-2); }
+
+/* A mat rather than the sepia .plate: these are the drawings themselves, and
+   the plate treatment would drain the colour the artist put in. */
+.art-mat {
+  display: block; width: 100%; padding: 0; cursor: zoom-in;
+  background: var(--color-surface);
+  border: 8px solid var(--color-surface);
+  outline: 1px solid var(--color-divider);
+}
+/* A narrower mat where the plates themselves are narrow. */
+@media (max-width: 639px) { .art-mat { border-width: 6px; } }
+.art-mat:hover { border-color: var(--color-accent-200); outline-color: var(--color-accent); }
+.art-mat img, .art-img { filter: saturate(.94); }
+.art-mat img { width: 100%; height: auto; }
+
+.art-title {
+  display: block; font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 16px; line-height: 1.25; color: var(--color-text);
+}
+.art-meta { display: block; font-size: 11px; color: var(--color-neutral-700); margin-top: 2px; font-feature-settings: 'tnum'; }
 
 /* ── article ───────────────────────────────────────────────────────── */
 .article__meta { font-size: 12px; color: var(--color-neutral-700); margin-bottom: var(--space-6); font-feature-settings: 'tnum'; }
@@ -164,6 +241,8 @@ dialog.collage::backdrop { background: var(--color-backdrop); }
 .index-list__note { font-size: 12px; color: var(--color-neutral-700); text-align: right; flex: 0 1 auto; }
 
 /* Notes van zinlengte passen niet naast de titel: stapel ze eronder. */
+.index-list__row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); padding: var(--space-3) 0; }
+
 .index-list--stacked a { flex-direction: column; align-items: stretch; gap: var(--space-1); }
 .index-list--stacked .index-list__note { text-align: left; max-width: 62ch; line-height: 1.5; }
 

@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ArtGallery from '../../../components/ArtGallery.astro';
+import { ARTWORKS } from '../../../data/kunst';
+import { AUTHOR } from '../../../consts';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ImageGallery',
+  name: 'Kunst — de tekeningen van Atelier de kleine muis',
+  inLanguage: 'nl-NL',
+  numberOfItems: ARTWORKS.length,
+  hasPart: ARTWORKS.map((a) => ({
+    '@type': 'VisualArtwork',
+    name: a.title,
+    artMedium: a.medium,
+    creator: { '@type': 'Person', name: AUTHOR },
+    ...(a.year ? { dateCreated: a.year } : {}),
+  })),
+};
+---
+
+<BaseLayout
+  title="Kunst"
+  description={`${ARTWORKS.length} tekeningen van muizen door ${AUTHOR} — wenskaarten, logo’s en portretten.`}
+  jsonLd={jsonLd}
+>
+  <nav class="breadcrumb" aria-label="Kruimelpad">
+    <a href="/atelier/">Atelier</a> <span aria-hidden="true">/</span> Kunst
+  </nav>
+
+  <ArtGallery>
+    <div class="page-head">
+      <p class="kicker">Wat de muis tekent</p>
+      <h1>Kunst</h1>
+      <p class="lede">
+        Tekeningen van muizen: wenskaarten, logo’s en portretten. Klik een plaat aan om hem
+        groot te zien.
+      </p>
+    </div>
+  </ArtGallery>
+</BaseLayout>

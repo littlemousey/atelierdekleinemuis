@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ARTWORKS, ARTWORKS_BY_COLLECTION } from '../../data/kunst';
 
 const recepten = (await getCollection('recepten')).sort((a, b) => a.data.order - b.data.order);
 const gedichten = (await getCollection('gedichten')).sort((a, b) => a.data.order - b.data.order);
@@ -8,15 +9,15 @@ const gedichten = (await getCollection('gedichten')).sort((a, b) => a.data.order
 
 <BaseLayout
   title="Atelier"
-  description="Het atelier van de kleine muis: recepten uit de verhalen en gedichten van A.N.S. de Nijs."
+  description="Het atelier van de kleine muis: recepten uit de verhalen, gedichten en tekeningen van A.N.S. de Nijs."
 >
   <div class="page-head">
     <p class="kicker">Werkplaats</p>
     <h1>Atelier</h1>
-    <p class="lede">Wat er naast de verhalen ontstaat: recepten uit het boek en gedichten.</p>
+    <p class="lede">Wat er naast de verhalen ontstaat: recepten uit het boek, gedichten en tekeningen.</p>
   </div>
 
-  <div class="grid grid--2">
+  <div class="grid grid--2 grid--3">
     <section>
       <h2><a href="/atelier/recepten/">Recepten</a></h2>
       <p class="era__note">wat de muis kookt</p>
@@ -40,6 +41,20 @@ const gedichten = (await getCollection('gedichten')).sort((a, b) => a.data.order
             <a href={`/atelier/gedichten/${g.id}/`}>
               <span class="index-list__title">{g.data.title}</span>
             </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+      <h2><a href="/atelier/kunst/">Kunst</a></h2>
+      <p class="era__note">wat de muis tekent · {ARTWORKS.length}</p>
+      {/* The heading is the link; the groups below only say what is in there. */}
+      <ul class="index-list">
+        {ARTWORKS_BY_COLLECTION.map(({ collection, artworks }) => (
+          <li class="index-list__row">
+            <span class="index-list__title">{collection.label}</span>
+            <span class="index-list__note">{artworks.length}</span>
           </li>
         ))}
       </ul>

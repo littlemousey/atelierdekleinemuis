@@ -1,0 +1,160 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { ARTWORKS, ARTWORKS_BY_COLLECTION, ART_YEARS } from '../data/kunst';
+
+/* One optimised variant per work for the large view. The originals run to
+   14 MB, so the dialog gets a web-sized copy rather than the source file. */
+const large = new Map(
+  await Promise.all(
+    ARTWORKS.map(async (a) => {
+      const img = await getImage({ src: a.src, width: Math.min(1400, a.src.width), format: 'webp' });
+      return [a.id, img.src] as const;
+    }),
+  ),
+);
+---
+
+<div class="art-page">
+  <div class="art-head"><slot /></div>
+
+  <aside class="art-rail">
+    <h2 id="art-filter-label">Kunst</h2>
+    <ul class="art-filters" aria-labelledby="art-filter-label">
+      <li>
+        <button type="button" data-collection="" aria-pressed="true">
+          Alles<span class="art-filters__count">{ARTWORKS.length}</span>
+        </button>
+      </li>
+      {ARTWORKS_BY_COLLECTION.map(({ collection, artworks }) => (
+        <li>
+          <button type="button" data-collection={collection.id} aria-pressed="false">
+            {collection.label}<span class="art-filters__count">{artworks.length}</span>
+          </button>
+        </li>
+      ))}
+    </ul>
+
+    {/* Renders only once at least one drawing carries a year. */}
+    {ART_YEARS.length > 0 && (
+      <>
+        <h2 id="art-year-label">Jaar</h2>
+        <ul class="art-years" aria-labelledby="art-year-label">
+          {ART_YEARS.map((year) => (
+            <li>
+              <button type="button" data-year={year} aria-pressed="false">{year}</button>
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+  </aside>
+
+  <div class="art-main">
+    <hr class="hr" />
+    <p class="art-count" role="status">{ARTWORKS.length} werken</p>
+
+    <div class="art-grid">
+      {ARTWORKS.map((a) => (
+        <figure class="art-figure" data-collection={a.collection} data-year={a.year}>
+          <button
+            type="button"
+            class="art-mat"
+            data-large={large.get(a.id)}
+            data-title={a.title}
+            data-alt={a.alt}
+            aria-haspopup="dialog"
+          >
+            <Image
+              src={a.src}
+              alt={a.alt}
+              widths={[320, 480, 640]}
+              sizes="(min-width: 900px) 300px, (min-width: 640px) 45vw, 92vw"
+              loading="lazy"
+            />
+          </button>
+          <figcaption>
+            <span class="art-title">{a.title}</span>
+            <span class="art-meta">{[a.medium, a.year].filter(Boolean).join(' · ')}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</div>
+
+<dialog class="lightbox" id="art-dialog" aria-label="Tekening groot bekijken">
+  <div class="lightbox__inner">
+    <div class="lightbox__bar">
+      <strong id="art-dialog-title"></strong>
+      <button type="button" class="btn btn-secondary" data-close>Sluiten</button>
+    </div>
+    <img id="art-dialog-img" class="art-img" src="" alt="" />
+  </div>
+</dialog>
+
+<script>
+  /* — large view — */
+  const dialog = document.querySelector<HTMLDialogElement>('#art-dialog');
+  const img = document.querySelector<HTMLImageElement>('#art-dialog-img');
+  const label = document.querySelector<HTMLElement>('#art-dialog-title');
+
+  if (dialog && img && label) {
+    document.querySelectorAll<HTMLButtonElement>('.art-mat').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        img.src = btn.dataset.large ?? '';
+        img.alt = btn.dataset.alt ?? '';
+        label.textContent = btn.dataset.title ?? '';
+        dialog.showModal();
+      });
+    });
+
+    dialog.querySelector('[data-close]')?.addEventListener('click', () => dialog.close());
+
+    // Click on the backdrop closes it too.
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  }
+
+  /* — filters — */
+  const figures = [...document.querySelectorAll<HTMLElement>('.art-figure')];
+  const collectionBtns = [...document.querySelectorAll<HTMLButtonElement>('.art-filters button')];
+  const yearBtns = [...document.querySelectorAll<HTMLButtonElement>('.art-years button')];
+  const count = document.querySelector<HTMLElement>('.art-count');
+
+  let collection = '';
+  let year = '';
+
+  const press = (btns: HTMLButtonElement[], key: 'collection' | 'year', value: string) => {
+    btns.forEach((b) => b.setAttribute('aria-pressed', String((b.dataset[key] ?? '') === value)));
+  };
+
+  const apply = () => {
+    let shown = 0;
+    figures.forEach((fig) => {
+      const match =
+        (!collection || fig.dataset.collection === collection) &&
+        (!year || fig.dataset.year === year);
+      fig.hidden = !match;
+      if (match) shown += 1;
+    });
+    if (count) count.textContent = `${shown} ${shown === 1 ? 'werk' : 'werken'}`;
+  };
+
+  collectionBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      collection = btn.dataset.collection ?? '';
+      press(collectionBtns, 'collection', collection);
+      apply();
+    });
+  });
+
+  yearBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      // A pressed year toggles back off, which clears the year filter.
+      year = year === btn.dataset.year ? '' : (btn.dataset.year ?? '');
+      press(yearBtns, 'year', year);
+      apply();
+    });
+  });
+</script>
