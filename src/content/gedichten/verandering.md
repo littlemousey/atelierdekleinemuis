@@ -5,21 +5,23 @@ pubDate: 2026-08-22
 order: 2
 ---
 
-"Vroeger was je" \
+Vroeger was je \
 spontaner, vrolijker, grappiger \
 Was ik vroeger leuker? \
-Ben ik nu een ander persoon? \
-Als ik in de oude foto's terugkijk zie ik \
-Iemand jonger, knapper, reislustiger
+Als ik in de oude foto's terugkijk \
+Zie ik iemand anders \
+Iemand met andere wensen en dromen
 
-Nu wil ik andere dingen. \
-Was ik vroeger beter? \
-Moet ik rouwen? \
+Was mijn vroegere versie beter? \
+Hoe zou die naar mij kijken? \
+Zou die schrikken? \
+Of trots zijn? \
 Waarom kon ik niet blijven hoe ik was? \
-Kan het nog terug? \
+Moet ik rouwen? \
+Waarom kan ik niet terug? \
 Naar die goede oude tijd? \
-Of was er een reden \
-Waarom ik moest veranderen?
+Was er een reden \
+Dat ik moest veranderen?
 
 Ben ik de enige \
 Of is alles veranderd \
