@@ -1,5 +1,6 @@
 ---
 title: Voorwoord
+description: 'Over muizen, hun dromen en waarom hun verhalen verteld mogen worden.'
 ---
 
 Muizen zijn overal, van de hoogste toppen van het Andesgebergte tot vlak onder je eigen dak. Ze leven tussen plantgewassen en struiken, maken holletjes onder de grond en wonen in kleine gaatjes in je muren, op je zolder of in je kelderkast. Eigenlijk hebben ze dezelfde basisbehoeften als wij: ze verlangen naar eten, drinken, liefde, geborgenheid en een warm onderkomen. Het zijn sociale intelligente dieren die in groepen leven. Ze maken vrienden, houden van hun familie, zorgen voor hun naasten, maar maken ook ruzie over wie er met het lekkerste stukje eten vandoor is gegaan.

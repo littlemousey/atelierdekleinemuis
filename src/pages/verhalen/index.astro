@@ -1,5 +1,5 @@
 ---
-import { getCollection, getEntry, render } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Plate from '../../components/Plate.astro';
 import { AUTHOR, SITE_TITLE } from '../../consts';
@@ -7,7 +7,20 @@ import { AUTHOR, SITE_TITLE } from '../../consts';
 const verhalen = (await getCollection('verhalen')).sort((a, b) => a.data.order - b.data.order);
 
 const voorwoord = await getEntry('paginas', 'voorwoord');
-const { Content: Voorwoord } = await render(voorwoord!);
+const nawoord = await getEntry('paginas', 'nawoord');
+
+// De inleiding op deze pagina is de eerste alinea van het voorwoord zelf, zodat
+// die tekst maar op één plek geschreven wordt. Het is kale prosa zonder inline
+// markdown, dus hij kan als tekst gezet worden.
+const opening = voorwoord!.body?.trimStart().split(/\n\s*\n/)[0] ?? '';
+
+// De inhoudsopgave is het boek in leesvolgorde: het voorwoord opent, het
+// nawoord sluit, de verhalen staan ertussen.
+const inhoud = [
+  { href: '/verhalen/voorwoord/', ...voorwoord!.data },
+  ...verhalen.map((v) => ({ href: `/verhalen/${v.id}/`, ...v.data })),
+  { href: '/verhalen/nawoord/', ...nawoord!.data },
+];
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -16,17 +29,17 @@ const jsonLd = {
   author: { '@type': 'Person', name: AUTHOR },
   inLanguage: 'nl-NL',
   url: new URL('/verhalen/', Astro.site).href,
-  hasPart: verhalen.map((v) => ({
+  hasPart: inhoud.map((deel) => ({
     '@type': 'CreativeWork',
-    name: v.data.title,
-    url: new URL(`/verhalen/${v.id}/`, Astro.site).href,
+    name: deel.title,
+    url: new URL(deel.href, Astro.site).href,
   })),
 };
 ---
 
 <BaseLayout
   title="Verhalen van de muis"
-  description="Het voorwoord en de inhoudsopgave van Atelier de kleine muis: korte verhalen over muizen, mollen en koolmezen, geschreven door A.N.S. de Nijs."
+  description="De inhoudsopgave van Atelier de kleine muis: korte verhalen over muizen, mollen en koolmezen, geschreven door A.N.S. de Nijs."
   jsonLd={jsonLd}
 >
   <div class="page-head">
@@ -35,9 +48,8 @@ const jsonLd = {
   </div>
 
   <div class="prose">
-    <h2>{voorwoord!.data.title}</h2>
-    <Voorwoord />
-    <p><em>{AUTHOR}</em></p>
+    <p>{opening}</p>
+    <p class="verder"><a href="/verhalen/voorwoord/">Lees verder in het voorwoord →</a></p>
 
     <Plate
       src="/img/slapende-muizen.jpg"
@@ -51,11 +63,11 @@ const jsonLd = {
 
   <h2>Inhoudsopgave</h2>
   <ul class="index-list index-list--stacked">
-    {verhalen.map((verhaal) => (
+    {inhoud.map((deel) => (
       <li>
-        <a href={`/verhalen/${verhaal.id}/`}>
-          <span class="index-list__title">{verhaal.data.title}</span>
-          <span class="index-list__note">{verhaal.data.description}</span>
+        <a href={deel.href}>
+          <span class="index-list__title">{deel.title}</span>
+          <span class="index-list__note">{deel.description}</span>
         </a>
       </li>
     ))}

@@ -332,11 +332,27 @@ figcaption { color: color-mix(in srgb, var(--color-text) 70%, transparent); }
 }
 
 /* ── nav icon ──────────────────────────────────────────────────────── */
-.site-nav a:has(.nav-icon) { display: inline-flex; align-items: center; padding-bottom: 2px; }
-/* An accent bar under a 16px glyph reads as a stray mark, so the icon link
+/* An icon link is an atomic inline box, so it would hang off the text
+   baseline — a few px above where the neighbouring letters read. Centre the
+   row instead, and strip the underline box so the glyph itself is what gets
+   centred. */
+.site-nav ul { align-items: center; }
+.site-nav a:has(.nav-icon) {
+  display: inline-flex; align-items: center;
+  padding-bottom: 0; border-bottom: 0;
+}
+/* An accent bar under a small glyph reads as a stray mark, so the icon link
    shows the current page through its colour instead. */
-.site-nav a:has(.nav-icon)[aria-current='page'] { border-bottom-color: transparent; color: var(--color-accent); }
-.nav-icon { display: block; }
+.site-nav a:has(.nav-icon)[aria-current='page'] { color: var(--color-accent); }
+/* Sized off the link's own text (13px), not a stock 16px: a bigger glyph
+   overshoots the ascenders and drops below the baseline, which reads as
+   misalignment however the boxes are centred. */
+.nav-icon { display: block; width: 1em; height: 1em; }
+
+/* Doorleeslink onder een aangesneden stuk proza. */
+.verder { font-family: var(--font-body); font-size: 13px; text-align: left; }
+.verder a { text-decoration: none; }
+.verder a:hover { text-decoration: underline; }
 
 /* ── recipes (design 3a: ingredients left, steps right) ────────────── */
 .recipe { display: grid; gap: var(--space-8); align-items: start; }

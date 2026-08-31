@@ -1,0 +1,64 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ReaderControls from './ReaderControls.astro';
+import { AUTHOR, SITE_TITLE } from '../consts';
+
+interface Props {
+  /** Id in de `paginas`-collectie: 'voorwoord' of 'nawoord'. */
+  id: string;
+  /** Waar de pagina in het boek staat: vóór het eerste of ná het laatste verhaal. */
+  plaats: 'voor' | 'na';
+}
+
+const { id, plaats } = Astro.props;
+
+const pagina = await getEntry('paginas', id);
+const { Content } = await render(pagina!);
+
+// Voorwoord en nawoord horen bij de leesvolgorde: elk linkt door naar het
+// verhaal aan zijn eigen kant van het boek.
+const verhalen = (await getCollection('verhalen')).sort((a, b) => a.data.order - b.data.order);
+const buur = plaats === 'voor' ? verhalen[0] : verhalen[verhalen.length - 1];
+
+const url = new URL(`/verhalen/${id}/`, Astro.site).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: pagina!.data.title,
+  description: pagina!.data.description,
+  inLanguage: 'nl-NL',
+  author: { '@type': 'Person', name: AUTHOR },
+  publisher: { '@type': 'Organization', name: SITE_TITLE },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+  isPartOf: { '@type': 'Book', name: SITE_TITLE, url: new URL('/verhalen/', Astro.site).href },
+};
+---
+
+<BaseLayout title={pagina!.data.title} description={pagina!.data.description} jsonLd={jsonLd} narrow>
+  <nav class="breadcrumb" aria-label="Kruimelpad">
+    <a href="/verhalen/">Verhalen</a> <span aria-hidden="true">/</span> {pagina!.data.title}
+  </nav>
+
+  <ReaderControls />
+
+  <article class="prose prose--story">
+    <p class="kicker">Een levend boek</p>
+    <h1>{pagina!.data.title}</h1>
+
+    <div class="prose__body">
+      <Content />
+      <p><em>{AUTHOR}</em></p>
+    </div>
+
+    <nav class="article__nav" aria-label="Meer verhalen">
+      {plaats === 'na' && buur
+        ? <a href={`/verhalen/${buur.id}/`}>← {buur.data.title}</a>
+        : <span />}
+      {plaats === 'voor' && buur
+        ? <a href={`/verhalen/${buur.id}/`}>{buur.data.title} →</a>
+        : <span />}
+    </nav>
+  </article>
+</BaseLayout>

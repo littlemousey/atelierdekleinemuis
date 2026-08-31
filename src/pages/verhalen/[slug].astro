@@ -1,26 +1,43 @@
 ---
-import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { getCollection, getEntry, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ReaderControls from '../../components/ReaderControls.astro';
 import { AUTHOR, SITE_TITLE } from '../../consts';
 
 export async function getStaticPaths() {
   const verhalen = (await getCollection('verhalen')).sort((a, b) => a.data.order - b.data.order);
+  const [voorwoord, nawoord] = await Promise.all([
+    getEntry('paginas', 'voorwoord'),
+    getEntry('paginas', 'nawoord'),
+  ]);
+
+  // Doorlezen volgt het boek: voor het eerste verhaal ligt het voorwoord, na
+  // het laatste het nawoord.
+  const keten = [
+    { href: '/verhalen/voorwoord/', title: voorwoord!.data.title },
+    ...verhalen.map((v) => ({ href: `/verhalen/${v.id}/`, title: v.data.title })),
+    { href: '/verhalen/nawoord/', title: nawoord!.data.title },
+  ];
 
   return verhalen.map((entry, index) => ({
     params: { slug: entry.id },
     props: {
       entry,
-      prev: verhalen[index - 1] ?? null,
-      next: verhalen[index + 1] ?? null,
+      prev: keten[index],
+      next: keten[index + 2],
     },
   }));
 }
 
+interface Link {
+  href: string;
+  title: string;
+}
+
 interface Props {
   entry: CollectionEntry<'verhalen'>;
-  prev: CollectionEntry<'verhalen'> | null;
-  next: CollectionEntry<'verhalen'> | null;
+  prev: Link;
+  next: Link;
 }
 
 const { entry, prev, next } = Astro.props;
@@ -102,8 +119,8 @@ const dateFmt = new Intl.DateTimeFormat('nl-NL', { dateStyle: 'long' });
     </div>
 
     <nav class="article__nav" aria-label="Meer verhalen">
-      {prev ? <a href={`/verhalen/${prev.id}/`}>← {prev.data.title}</a> : <span />}
-      {next ? <a href={`/verhalen/${next.id}/`}>{next.data.title} →</a> : <span />}
+      <a href={prev.href}>← {prev.title}</a>
+      <a href={next.href}>{next.title} →</a>
     </nav>
     </article>
   </div>

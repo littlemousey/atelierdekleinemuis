@@ -37,11 +37,12 @@ const recepten = defineCollection({
   }),
 });
 
-// Losse prozapagina's (voorwoord, en wat er nog bij komt). Alleen een titel:
-// de tekst wordt elders geschreven en hier ongewijzigd ingeplakt.
+// Losse prozapagina's van het boek: voorwoord, nawoord, en wat er nog bij komt.
+// De tekst wordt elders geschreven en hier ongewijzigd ingeplakt; de
+// description is alleen de regel eronder in de inhoudsopgave.
 const paginas = defineCollection({
   loader: glob({ base: './src/content/paginas', pattern: '**/*.md' }),
-  schema: z.object({ title: z.string() }),
+  schema: z.object({ title: z.string(), description: z.string() }),
 });
 
 export const collections = {
