@@ -64,12 +64,6 @@ const ogImage = new URL(image, Astro.site).href;
   : <link rel="canonical" href={canonical} />}
 
 <link rel="icon" href="/favicon.ico" sizes="any" />
-<link
-  rel="alternate"
-  type="application/rss+xml"
-  title={`${SITE_TITLE} — verhalen`}
-  href={new URL('rss.xml', Astro.site).href}
-/>
 
 <!-- Open Graph -->
 <meta property="og:site_name" content={SITE_TITLE} />

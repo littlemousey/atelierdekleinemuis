@@ -71,7 +71,7 @@ the content.
 Create a new `.md` file in `src/content/verhalen/`, `src/content/recepten/` or
 `src/content/gedichten/`. The filename becomes the URL.
 Copy the frontmatter block from an existing story; `order` controls its position in the
-table of contents and the previous/next links. It is added to the sitemap and RSS feed
+table of contents and the previous/next links. It is added to the sitemap
 automatically.
 
 ## Deployment
@@ -90,7 +90,7 @@ for a directory. That means no redirects, no `.htaccess`, and canonical tags tha
 match the served URL precisely.
 
 The domain is configured in one place: `site` in `astro.config.mjs`. It drives canonical
-URLs, Open Graph tags, `sitemap-index.xml` and the RSS feed. It also appears in
+URLs, Open Graph tags and `sitemap-index.xml`. It also appears in
 `public/robots.txt`. Update both if the site ever moves.
 
 ## Dark mode
