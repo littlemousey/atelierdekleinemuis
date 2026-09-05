@@ -86,6 +86,7 @@ export const PROJECTS: Project[] = [
     description:
       'Een Nederlandstalig keuzespel: je erft de winkel van je oma tussen de wortels van een oude eik. Vijf herfstdagen lang zet je thee, luister je naar bezoekers en bepalen je keuzes het einde.',
     tags: ['JavaScript', 'HTML', 'CSS', 'Interactive fiction'],
+    demo: 'https://littlemousey.github.io/avondgloren-IF/',
     image: '/img/projects/avondgloren.png',
   },
   {

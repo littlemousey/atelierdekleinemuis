@@ -1,10 +1,12 @@
 import type { ImageMetadata } from 'astro';
 
+import cover from '../assets/kunst/cover.png';
 import happyKingsday from '../assets/kunst/happy-kingsday.png';
 import merle from '../assets/kunst/merle-de-magische-muis.jpg';
 import merryChristmouse from '../assets/kunst/merry-christmouse.png';
 import miceStories from '../assets/kunst/mice-stories.png';
 import mouseAvatar from '../assets/kunst/mouse-avatar.png';
+import haveaMiceDay from '../assets/kunst/haveamiceday.png';
 import mousePenguin from '../assets/kunst/mouse-penguin-christmas.png';
 import mouse from '../assets/kunst/mouse.png';
 import saveTheMice from '../assets/kunst/save-the-mice.png';
@@ -37,11 +39,20 @@ export const COLLECTIONS: Collection[] = [
 
 export const ARTWORKS: Artwork[] = [
   {
+    id: 'have-a-mice-day',
+    title: 'Have a mice day',
+    collection: 'wenskaarten',
+    medium: 'digitaal',
+    year: '2019',
+    alt: 'Mouse with balloon',
+    src: haveaMiceDay,
+  },
+  {
     id: 'muis-tussen-de-sterren',
     title: 'Muis tussen de sterren',
     collection: 'logos',
     medium: 'digitaal',
-    year: '',
+    year: '2025',
     alt: 'Zwart silhouet van een rechtop zittende muis in een cirkel vol sterren, op een wolk van roze en paarse waterverf.',
     src: mouseAvatar,
   },
@@ -50,7 +61,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Mice stories',
     collection: 'logos',
     medium: 'digitaal',
-    year: '',
+    year: '2024',
     alt: 'Grijze muis die een opengeslagen rood boek leest met de titel “Mice stories”, in een gele cirkel op zwart.',
     src: miceStories,
   },
@@ -59,7 +70,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Save the mice',
     collection: 'logos',
     medium: 'digitaal',
-    year: '',
+    year: '2026',
     alt: 'Een open hand met daarin een klein grijs muisje, op een lichtblauwe cirkel met de tekst “Save the mice”.',
     src: saveTheMice,
   },
@@ -68,7 +79,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Thank you all',
     collection: 'wenskaarten',
     medium: 'digitaal',
-    year: '',
+    year: '2024',
     alt: 'Donkergrijze muis met gesloten ogen en een rood hartje bij haar snuit, voor een achtergrond van gekleurde vlakken, met de tekst “Thank you all”.',
     src: thankYou,
   },
@@ -77,7 +88,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Happy King’s day',
     collection: 'wenskaarten',
     medium: 'digitaal',
-    year: '',
+    year: '2025',
     alt: 'Muis met een gouden kroon en een Nederlands vlaggetje, tussen dwarrelende confetti, met de tekst “Happy King’s day”.',
     src: happyKingsday,
   },
@@ -101,10 +112,10 @@ export const ARTWORKS: Artwork[] = [
   },
   {
     id: 'merle-de-magische-muis',
-    title: 'Merle, de magische muis',
+    title: 'Merle de magische muis',
     collection: 'tekeningen',
     medium: 'digitaal',
-    year: '',
+    year: '2025',
     alt: 'Grijze muis op haar achterpoten met een paarse tovenaarshoed met een gouden ster erop.',
     src: merle,
   },
@@ -114,8 +125,17 @@ export const ARTWORKS: Artwork[] = [
     collection: 'tekeningen',
     medium: 'digitaal',
     year: '2023',
-    alt: 'Bruine muis van opzij, met grote roze oren, snorharen en een lange staart, op een zandkleurige achtergrond.',
+    alt: 'Bruine muis van opzij',
     src: mouse,
+  },
+  {
+    id: 'verhalen-van-de-muis',
+    title: 'Verhalen van de muis',
+    collection: 'logos',
+    medium: 'digitaal',
+    year: '2024',
+    alt: 'boek cover',
+    src: cover,
   },
 ];
 

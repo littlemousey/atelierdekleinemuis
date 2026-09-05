@@ -83,6 +83,14 @@ main { flex: 1; padding-block: var(--space-8); }
 }
 .prose img { margin-block: var(--space-6); }
 
+/* A screenshot is far wider than the plate's frame: crop the empty right
+   margin away rather than letting the declared box squeeze the whole page
+   out of proportion. */
+.plate--cover {
+  width: 100%; height: auto; aspect-ratio: 3 / 2;
+  object-fit: cover; object-position: left center;
+}
+
 /* Poems keep their line breaks and stay unjustified. */
 .poem { font-size: 17px; line-height: 1.9; }
 .poem p { text-align: left; }
@@ -425,3 +433,18 @@ figcaption { color: color-mix(in srgb, var(--color-text) 70%, transparent); }
 .poem-nav__count { font-feature-settings: 'tnum'; color: var(--color-neutral-700); font-size: 12px; }
 
 .index-list--numbered { list-style: none; }
+
+/* ── "nu in Utrecht" (over de auteur) ──────────────────────────────── */
+.now {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-1) var(--space-4);
+  margin-block: var(--space-4) var(--space-8); padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+/* Hidden until the browser has filled it in — `display: flex` would win from
+   the `hidden` attribute on its own. */
+.now[hidden] { display: none; }
+.now .kicker { margin: 0; }
+.now__line { margin: 0; font-size: 14px; color: var(--color-neutral-700); font-feature-settings: 'tnum'; }
+.now__time { color: var(--color-text); }
+.now__sep { color: var(--color-neutral-400); margin-inline: var(--space-1); }

@@ -1,0 +1,106 @@
+---
+// A small live touch for the about page: the clock in Utrecht and the weather
+// there right now. The site is statically built, so both are filled in by the
+// browser — a build-time fetch would freeze the weather at deploy time.
+// Weather comes from Open-Meteo (https://open-meteo.com), free and key-less.
+---
+
+<aside class="now" id="nu-in-utrecht" hidden>
+  <p class="kicker">Nu in Utrecht</p>
+  <p class="now__line">
+    <time class="now__time" id="nu-tijd"></time>
+    <span class="now__sep" aria-hidden="true">·</span>
+    <span class="now__weer" id="nu-weer"></span>
+  </p>
+</aside>
+
+<script>
+  const box = document.querySelector<HTMLElement>('#nu-in-utrecht');
+  const timeEl = document.querySelector<HTMLTimeElement>('#nu-tijd');
+  const weerEl = document.querySelector<HTMLElement>('#nu-weer');
+
+  if (box && timeEl && weerEl) {
+    const ZONE = 'Europe/Amsterdam';
+    // Utrecht, Domplein.
+    const LAT = 52.0908;
+    const LON = 5.1222;
+
+    const klok = new Intl.DateTimeFormat('nl-NL', {
+      timeZone: ZONE,
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    function toonTijd() {
+      const nu = new Date();
+      // Utrecht on the face of it, the plain instant underneath.
+      timeEl!.textContent = klok.format(nu);
+      timeEl!.dateTime = nu.toISOString();
+    }
+
+    toonTijd();
+    // The clock is the part that always works, also offline: show it right away.
+    box.hidden = false;
+    setInterval(toonTijd, 30_000);
+
+    // WMO weather codes, the vocabulary Open-Meteo answers in.
+    const WEER: Record<number, [string, string]> = {
+      0: ['☀️', 'helder'],
+      1: ['🌤️', 'overwegend helder'],
+      2: ['⛅', 'half bewolkt'],
+      3: ['☁️', 'bewolkt'],
+      45: ['🌫️', 'mistig'],
+      48: ['🌫️', 'aanvriezende mist'],
+      51: ['🌦️', 'lichte motregen'],
+      53: ['🌦️', 'motregen'],
+      55: ['🌧️', 'dichte motregen'],
+      56: ['🌧️', 'lichte ijzel'],
+      57: ['🌧️', 'ijzel'],
+      61: ['🌦️', 'lichte regen'],
+      63: ['🌧️', 'regen'],
+      65: ['🌧️', 'zware regen'],
+      66: ['🌧️', 'lichte ijzelregen'],
+      67: ['🌧️', 'ijzelregen'],
+      71: ['🌨️', 'lichte sneeuw'],
+      73: ['🌨️', 'sneeuw'],
+      75: ['❄️', 'zware sneeuw'],
+      77: ['🌨️', 'sneeuwkorrels'],
+      80: ['🌦️', 'lichte regenbui'],
+      81: ['🌧️', 'regenbui'],
+      82: ['🌧️', 'zware regenbui'],
+      85: ['🌨️', 'lichte sneeuwbui'],
+      86: ['🌨️', 'sneeuwbui'],
+      95: ['⛈️', 'onweer'],
+      96: ['⛈️', 'onweer met hagel'],
+      99: ['⛈️', 'onweer met zware hagel'],
+    };
+
+    async function toonWeer() {
+      const url =
+        'https://api.open-meteo.com/v1/forecast' +
+        `?latitude=${LAT}&longitude=${LON}` +
+        '&current=temperature_2m,weather_code,is_day' +
+        `&timezone=${encodeURIComponent(ZONE)}`;
+
+      const res = await fetch(url, { signal: AbortSignal.timeout(5000) });
+      if (!res.ok) throw new Error(`Open-Meteo: ${res.status}`);
+
+      const { current } = (await res.json()) as {
+        current: { temperature_2m: number; weather_code: number; is_day: number };
+      };
+
+      const [icoon, tekst] = WEER[current.weather_code] ?? ['🌡️', 'onbekend weer'];
+      // At night a clear sky is a moon, not a sun.
+      const teken = current.weather_code === 0 && !current.is_day ? '🌙' : icoon;
+      const graden = Math.round(current.temperature_2m);
+
+      weerEl!.textContent = `${teken} ${graden}°C, ${tekst}`;
+    }
+
+    // No weather is fine — the line then just carries the clock.
+    toonWeer().catch(() => {
+      weerEl!.remove();
+      box.querySelector('.now__sep')?.remove();
+    });
+  }
+</script>

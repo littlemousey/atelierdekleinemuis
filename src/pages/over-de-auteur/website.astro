@@ -17,22 +17,31 @@ import Plate from '../../components/Plate.astro';
     <p>
       Deze website is gemaakt met <a href="https://astro.build/" rel="noopener">Astro</a> en wordt
       als volledig statische site gepubliceerd, vormgegeven op het Classical design system. De
-      vorige versie was gemaakt met <a href="https://vitepress.dev/" rel="noopener">VitePress</a>,
+      vorige versie was gemaakt met <a href="https://vitepress.dev/" rel="noopener">VitePress</a> {" "}
       en de versie daarvoor met Vue.js, Nuxt en Vuetify.
     </p>
     <p>
-      De code repository van de oudste website is
+      De code repository van de eerste website is {" "}
       <a href="https://github.com/littlemousey/littlemousey" rel="noopener">hier</a> te vinden 💻 Je
-      kunt ook de code van de huidige website
+      kunt ook de code van de huidige website {" "}
       <a href="https://github.com/littlemousey/atelierdekleinemuis" rel="noopener">hier</a> bekijken.
     </p>
 
     <Plate
       src="/img/littlemousey-old-website.png"
-      alt="Schermafbeelding van de oude website, gebouwd met Vue.js, Nuxt en Vuetify"
+      alt="Schermafbeelding van de eerste website, gebouwd met Vue.js, Nuxt en Vuetify"
       width="900"
       height="600"
-      caption="Oude website"
+      class="plate--cover"
+      caption="Eerste website"
+    />
+    <Plate
+      src="/img/website-second-version.png"
+      alt="Schermafbeelding van de tweede website, gebouwd met Vitepress"
+      width="900"
+      height="600"
+      class="plate--cover"
+      caption="Tweede versie website"
     />
   </div>
 </BaseLayout>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Plate from '../../components/Plate.astro';
+import NuInUtrecht from '../../components/NuInUtrecht.astro';
 import { AUTHOR } from '../../consts';
 
 const jsonLd = {
@@ -25,6 +26,10 @@ const jsonLd = {
   <div class="page-head">
     <p class="kicker">Wie schrijft dit</p>
     <h1>Over de auteur</h1>
+  </div>
+
+  <div>
+    <NuInUtrecht />
   </div>
 
   <div class="prose">
