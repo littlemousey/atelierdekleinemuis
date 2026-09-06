@@ -1,17 +1,18 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Plate from '../components/Plate.astro';
-import { GREETINGS } from '../data/greetings';
-import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR } from '../consts';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Plate from "../components/Plate.astro";
+import wave from "../assets/littlemousey_wave.png";
+import { GREETINGS } from "../data/greetings";
+import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR } from "../consts";
 
 const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
+  "@context": "https://schema.org",
+  "@type": "WebSite",
   name: SITE_TITLE,
   description: SITE_DESCRIPTION,
   url: Astro.site?.href,
-  inLanguage: 'nl-NL',
-  author: { '@type': 'Person', name: AUTHOR },
+  inLanguage: "nl-NL",
+  author: { "@type": "Person", name: AUTHOR },
 };
 ---
 
@@ -21,29 +22,42 @@ const jsonLd = {
       <p class="kicker">Verhalen · Projecten · Muizen</p>
       <h1>Welkom bij het atelier van de kleine muis</h1>
       <p class="lede">
-        Muizen zijn overal, van de hoogste toppen van het Andesgebergte tot vlak onder je eigen dak. Ze leven tussen plantgewassen en struiken, maken holletjes onder de grond en wonen in kleine gaatjes in je muren, op je zolder of in je kelderkast. Hier kun je hun verhalen gratis online lezen.
+        Je hebt mijn kleine muizenhoekje van het internet gevonden 🐁 <br />
+        Leuk dat je er bent! Neem gerust een kijkje. <br />
+        Misschien ben je geïnteresseerd in mijn verhalen, gedichten of digitale kunst.
+        <br />
+        Of misschien spreekt een van mijn hobby applicaties je aan 🎮 <br />
+        Veel plezier en wie weet tot ziens!
       </p>
       <div class="actions">
         <a class="btn btn-primary" href="/verhalen/">Lees de verhalen</a>
         <a class="btn btn-secondary" href="/atelier/">Bezoek het atelier</a>
         <a class="btn btn-secondary" href="/projecten/">Bekijk de projecten</a>
       </div>
+      <blockquote>
+        Your very own story <br />
+        Everyone deserves it <br />
+        You, me and yes also mice <br />
+      </blockquote>
     </div>
 
     <div>
       <ul class="greetings">
-        {GREETINGS.map((g) => (
-          <li>
-            <span class="g-text" lang={g.lang}>{g.text}</span>
-            <span class="g-lang">{g.lang}</span>
-          </li>
-        ))}
+        {
+          GREETINGS.map((g) => (
+            <li>
+              <span class="g-text" lang={g.lang}>
+                {g.text}
+              </span>
+              <span class="g-lang">{g.lang}</span>
+            </li>
+          ))
+        }
       </ul>
       <Plate
-        src="/img/littlemousey_wave.png"
+        src={wave}
         alt="De getekende kleine muis zwaait"
-        width="300"
-        height="300"
+        width={300}
         loading="eager"
         fetchpriority="high"
         caption="De kleine muis zwaait — getekend sinds de basisschool."

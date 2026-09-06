@@ -1,3 +1,15 @@
+import type { ImageMetadata } from 'astro';
+
+import travels from '../assets/projects/travels.png';
+import petmice from '../assets/projects/petmice.png';
+import pokedex from '../assets/projects/pokedex.png';
+import fortuneCookie from '../assets/projects/fortune-cookie.png';
+import pikachuGiphy from '../assets/projects/pikachu-giphy.png';
+import worldOfAframe from '../assets/projects/worldofaframe.png';
+import portfolio from '../assets/projects/portfolio.png';
+import avondgloren from '../assets/projects/avondgloren.png';
+import atelierDeKleineMuis from '../assets/projects/atelierdekleinemuis.png';
+
 export interface Project {
   kicker: string;
   title: string;
@@ -5,8 +17,9 @@ export interface Project {
   description: string;
   tags: string[];
   demo?: string;
-  /** Screenshot in /public/img/projects; omitted where none exists yet. */
-  image?: string;
+  /** Screenshot, resolved through the asset pipeline; omitted where none
+   *  exists yet. */
+  image?: ImageMetadata;
 }
 
 const GH = 'https://github.com/';
@@ -20,7 +33,7 @@ export const PROJECTS: Project[] = [
       'Een interactieve kaart met mijn reizen van 1991 tot 2026: verhalen naast een kaart die meevliegt, een 3D-globe met alle locaties, en een overzicht per decennium.',
     tags: ['React', 'TypeScript', 'MapLibre', 'Vite'],
     demo: 'https://littlemousey.github.io/travels/',
-    image: '/img/projects/travels.png',
+    image: travels,
   },
   {
     kicker: 'Galerij · Muizen',
@@ -30,7 +43,7 @@ export const PROJECTS: Project[] = [
       'De liefste muizen van r/PetMice in een galerij met vijf thema’s — regenboog, kerst, sterrennacht, blauwe lucht en hartjes — je voorkeur wordt onthouden.',
     tags: ['React 19', 'TypeScript', 'Tailwind', 'Vite'],
     demo: 'https://littlemousey.github.io/petmice-remix/',
-    image: '/img/projects/petmice.png',
+    image: petmice,
   },
   {
     kicker: 'Catalogus · Pokémon',
@@ -39,7 +52,7 @@ export const PROJECTS: Project[] = [
     description:
       'Een pokédex zonder framework: gewoon HTML, CSS en JavaScript, met een detailpagina per pokémon.',
     tags: ['JavaScript', 'CSS', 'HTML'],
-    image: '/img/projects/pokedex.png',
+    image: pokedex,
   },
   {
     kicker: 'Horoscoop · Festival',
@@ -48,7 +61,7 @@ export const PROJECTS: Project[] = [
     description:
       'Vier het Chinees nieuwjaar door gelukskoekjesboodschappen te verzamelen. Met geluidjes en illustraties.',
     tags: ['JavaScript', 'CSS', 'API'],
-    image: '/img/projects/fortune-cookie.png',
+    image: fortuneCookie,
   },
   {
     kicker: 'Gifjes · Giphy',
@@ -57,7 +70,7 @@ export const PROJECTS: Project[] = [
     description:
       'Swipe door Pikachu-gifjes via de Giphy-API. Werkt offline als progressive web app.',
     tags: ['JavaScript', 'Giphy API', 'PWA'],
-    image: '/img/projects/pikachu-giphy.png',
+    image: pikachuGiphy,
   },
   {
     kicker: 'VR · Experience',
@@ -67,7 +80,7 @@ export const PROJECTS: Project[] = [
       'Een klein WebVR-project: je komt aan in een kamer die in de ruimte zweeft, kiest een van de vier deuropeningen en stapt de wereld erachter binnen.',
     tags: ['A-Frame', 'HTML', 'JavaScript'],
     demo: 'https://littlemousey.github.io/WorldOfAFrame/',
-    image: '/img/projects/worldofaframe.png',
+    image: worldOfAframe,
   },
   {
     kicker: 'Portfolio · Ervaringen',
@@ -77,7 +90,7 @@ export const PROJECTS: Project[] = [
       'Mijn persoonlijke portfolio. Werkervaringen, opleidingen, vaardigheden, bezochte conferenties en artikelen van of over mij.',
     tags: ['Astro', 'React 19', 'Tailwind', 'Framer Motion'],
     demo: 'https://littlemousey.github.io/',
-    image: '/img/projects/portfolio.png',
+    image: portfolio,
   },
   {
     kicker: 'Interactive fiction · Verhaal',
@@ -87,7 +100,7 @@ export const PROJECTS: Project[] = [
       'Een Nederlandstalig keuzespel: je erft de winkel van je oma tussen de wortels van een oude eik. Vijf herfstdagen lang zet je thee, luister je naar bezoekers en bepalen je keuzes het einde.',
     tags: ['JavaScript', 'HTML', 'CSS', 'Interactive fiction'],
     demo: 'https://littlemousey.github.io/avondgloren-IF/',
-    image: '/img/projects/avondgloren.png',
+    image: avondgloren,
   },
   {
     kicker: 'Atelier · Verhalen',
@@ -96,7 +109,7 @@ export const PROJECTS: Project[] = [
     description:
       'Broncode van deze website',
     tags: ['Astro', 'TypeScript'],
-    image: '/img/projects/atelierdekleinemuis.png',
+    image: atelierDeKleineMuis,
   },
 ];
 

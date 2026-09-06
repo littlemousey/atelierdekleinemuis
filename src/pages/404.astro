@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Plate from '../components/Plate.astro';
+import wave from '../assets/littlemousey_wave.png';
 ---
 
 <BaseLayout title="Pagina niet gevonden" noindex narrow>
@@ -15,6 +16,6 @@ import Plate from '../components/Plate.astro';
       <a href="/verhalen/">verhalen</a> wat je zocht, of ga terug naar de
       <a href="/">homepage</a>.
     </p>
-    <Plate src="/img/littlemousey_wave.png" alt="" width="220" height="220" />
+    <Plate src={wave} alt="" width={220} />
   </div>
 </BaseLayout>

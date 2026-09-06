@@ -60,9 +60,25 @@ main { flex: 1; padding-block: var(--space-8); }
   font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
   color: var(--color-neutral-700); margin: 0 0 var(--space-2);
 }
+/* Classical sizes the display face for a desktop measure (42/32/25px). Those
+   are the ceilings; on a phone they scale down with the viewport so a long
+   title no longer runs to three lines. */
+h1 { font-size: clamp(30px, 8.5vw, 42px); }
+h2 { font-size: clamp(24px, 6.5vw, 32px); }
+h3 { font-size: clamp(20px, 5.2vw, 25px); }
+
 .lede { font-size: 17px; line-height: 1.6; }
 .page-head { margin-bottom: var(--space-6); }
 .page-head h1 { margin-bottom: var(--space-2); }
+
+/* Classical's reset caps the width of an image but never releases its height,
+   so a `height` attribute stays a hard pixel height while the width shrinks to
+   the column — which squashes the picture on any screen narrower than its
+   declared width. The attributes stay: with `height: auto` they no longer
+   fight the layout and still reserve the right box before the file lands.
+   Rules that deliberately crop (.plate--cover, .polaroid img, .proj__shot)
+   set their own aspect-ratio and are unaffected. */
+img { height: auto; }
 
 /* Justified measure — the system's core reading idiom. */
 .prose {
@@ -76,7 +92,9 @@ main { flex: 1; padding-block: var(--space-8); }
 .prose h3 { margin-top: var(--space-6); }
 .prose ul, .prose ol { padding-left: var(--space-4); margin: 0 0 var(--space-3); }
 .prose li { margin-bottom: var(--space-1); }
-.prose blockquote {
+/* Not scoped to .prose: the homepage hero quotes one too, outside any prose
+   block, and it should read the same wherever it appears. */
+blockquote {
   margin: var(--space-6) 0; padding-left: var(--space-4);
   border-left: 1px solid var(--color-accent);
   font-style: italic; color: var(--color-neutral-700);
@@ -307,10 +325,15 @@ figcaption { color: color-mix(in srgb, var(--color-text) 70%, transparent); }
 .reader-btn[aria-pressed='true'] { border-color: var(--color-accent); color: var(--color-accent); }
 
 .reader { display: grid; gap: var(--space-8); align-items: start; }
+/* Same ordering rule as .poem-page. Guarded by :has() so a story without
+   chapters keeps a single row and gains no empty gap. */
+.reader:has(.reader__rail) { grid-template-areas: 'body' 'rail'; }
+.reader__rail { grid-area: rail; font-size: 13px; }
+.reader:has(.reader__rail) > .prose { grid-area: body; }
 @media (min-width: 1000px) {
-  .reader:has(.reader__rail) { grid-template-columns: 200px minmax(0, 1fr); }
+  .reader:has(.reader__rail) { grid-template-columns: 200px minmax(0, 1fr); grid-template-areas: 'rail body'; }
+  .reader__rail { position: sticky; top: var(--space-4); }
 }
-.reader__rail { position: sticky; top: var(--space-4); font-size: 13px; }
 .chapters { list-style: none; margin: 0; padding: 0; counter-reset: ch; }
 .chapters li { counter-increment: ch; border-bottom: 1px solid var(--color-divider); }
 .chapters a {
@@ -401,10 +424,19 @@ figcaption { color: color-mix(in srgb, var(--color-text) 70%, transparent); }
 .tip p:last-child { margin: 0; font-size: 15px; }
 
 /* ── poems (design 3b: one per page, lots of air) ──────────────────── */
-.poem-page { display: grid; gap: var(--space-8); align-items: start; }
-@media (min-width: 900px) { .poem-page { grid-template-columns: 220px minmax(0, 1fr); } }
-
-.poem-rail { position: sticky; top: var(--space-4); }
+/* Areas rather than source order, for the same reason .art-page uses them: on
+   a phone the reader must land on the poem, not scroll past an index of all
+   six to reach it. Beside the poem on a wide screen, under it on a narrow. */
+.poem-page {
+  display: grid; gap: var(--space-8); align-items: start;
+  grid-template-areas: 'body' 'rail';
+}
+.poem-rail { grid-area: rail; }
+.poem-body { grid-area: body; }
+@media (min-width: 900px) {
+  .poem-page { grid-template-columns: 220px minmax(0, 1fr); grid-template-areas: 'rail body'; }
+  .poem-rail { position: sticky; top: var(--space-4); }
+}
 .poem-index { list-style: none; margin: 0; padding: 0; }
 .poem-index li { border-bottom: 1px solid var(--color-divider); }
 .poem-index a {
@@ -448,3 +480,107 @@ figcaption { color: color-mix(in srgb, var(--color-text) 70%, transparent); }
 .now__line { margin: 0; font-size: 14px; color: var(--color-neutral-700); font-feature-settings: 'tnum'; }
 .now__time { color: var(--color-text); }
 .now__sep { color: var(--color-neutral-400); margin-inline: var(--space-1); }
+
+/* ═══ phones ══════════════════════════════════════════════════════════
+   Everything below 640px. The layout already stacks on its own — these
+   rules deal with what stacking alone does not fix: a header that ate a
+   fifth of the screen, justified type at 40 characters a line, and a
+   gallery whose plates ended up smaller than a stamp.
+   ═════════════════════════════════════════════════════════════════════ */
+@media (max-width: 639px) {
+  /* ── header: brand + toggle on one row, nav a scrolling strip ────── */
+  .site-header__inner { gap: var(--space-2); min-height: 0; padding-block: var(--space-2); }
+  .nav-brand { font-size: 20px; }
+  /* Pushed hard right so it sits opposite the brand instead of being
+     stranded mid-row by the desktop `margin-left`. Icon only: with its label
+     the button is too wide to share the row, and it drops to a line of its
+     own — which costs more height than the label is worth. */
+  .theme-toggle {
+    margin-left: auto; padding: 10px;
+    min-width: 44px; min-height: 44px; justify-content: center;
+  }
+  /* Clipped, not removed: the words are still the button's accessible name. */
+  .theme-toggle__label {
+    position: absolute; width: 1px; height: 1px;
+    overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+  }
+
+  /* The strip bleeds to both screen edges — a scrollable row that stopped
+     short of the edge would read as a mistake rather than as more content.
+     Its own padding puts the first and last link back on the text margin. */
+  .site-nav {
+    order: 3; flex: 1 0 100%;
+    margin-inline: calc(var(--space-6) * -1);
+    padding-inline: var(--space-6);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    /* The clipped link at the edge is the affordance; a scrollbar over a
+       62px strip is just noise. */
+    scrollbar-width: none;
+  }
+  .site-nav::-webkit-scrollbar { display: none; }
+  .site-nav ul { flex-wrap: nowrap; gap: var(--space-4); }
+  .site-nav li { flex: none; }
+  /* Reads as a row of tabs at this width, so the current-page rule lands on
+     the bottom edge of a full-height target rather than under the words. */
+  .site-nav a { padding-block: 11px; white-space: nowrap; }
+  /* The house is a 13px glyph, so its box has to be widened deliberately —
+     the nav-icon rule further up drops the padding these links get. */
+  .site-nav a:has(.nav-icon) { padding-block: 11px; min-width: 44px; }
+
+  /* ── reader bar ──────────────────────────────────────────────────── */
+  /* The measure is already capped by the screen here: 66ch at 17px wants
+     ~550px and the phone has ~305px, so the width toggle moves nothing.
+     Drop the control rather than keep a button that cannot do anything. */
+  .reader-bar__group--measure { display: none; }
+
+  /* ── prose: ragged right ─────────────────────────────────────────── */
+  /* Justification needs a measure to work with. At ~40 characters it opens
+     rivers of white instead, so the phone gets a normal ragged edge —
+     hyphenation stays on, which is what keeps the rag tight in Dutch. */
+  .prose p { text-align: left; }
+
+  /* ── gallery: one column, filters as chips ───────────────────────── */
+  .art-grid { column-count: 1; }
+  .art-page { gap: var(--space-3); }
+
+  /* The rail is a sidebar on a wide screen and a header on a narrow one:
+     two rows of chips above the plates, not a full screen of list. */
+  .art-rail h2 { margin-bottom: var(--space-1); }
+  .art-filters {
+    display: flex; flex-wrap: wrap; gap: var(--space-1);
+    margin-bottom: var(--space-3);
+  }
+  .art-filters li { border-bottom: 0; }
+  .art-filters button {
+    width: auto; padding: 8px 12px;
+    border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+    font-size: 12.5px;
+  }
+  .art-filters button[aria-pressed='true'] {
+    border-color: var(--color-accent);
+    background: var(--color-accent-100); color: var(--color-accent-700);
+  }
+}
+
+/* ── touch targets ───────────────────────────────────────────────────
+   The design system sizes its controls for a cursor; several land under the
+   24x24 CSS px floor of WCAG 2.2 SC 2.5.8. These grow the box without
+   touching the type.
+
+   Two conditions, because neither covers the ground alone: `pointer: coarse`
+   catches a tablet, which has a wide screen and fingers all the same, and the
+   width catches anything that reports a fine pointer while being held in a
+   hand. */
+@media (pointer: coarse), (max-width: 639px) {
+  .btn { padding-block: 11px; }
+  .theme-toggle { padding: 10px 12px; }
+  .reader-btn { padding: 9px 14px; }
+  .art-years button { padding: 9px 12px; }
+  .breadcrumb a,
+  .site-footer a,
+  .article__nav a,
+  .poem-nav a,
+  .verder a { display: inline-block; padding-block: var(--space-2); }
+  .art-filters button { padding-block: 11px; }
+}

@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Plate from '../../components/Plate.astro';
+import oldWebsite from '../../assets/littlemousey-old-website.png';
+import secondWebsite from '../../assets/website-second-version.png';
 ---
 
 <BaseLayout
@@ -28,18 +30,18 @@ import Plate from '../../components/Plate.astro';
     </p>
 
     <Plate
-      src="/img/littlemousey-old-website.png"
+      src={oldWebsite}
       alt="Schermafbeelding van de eerste website, gebouwd met Vue.js, Nuxt en Vuetify"
-      width="900"
-      height="600"
+      widths={[320, 640, 900]}
+      sizes="(min-width: 800px) 705px, 92vw"
       class="plate--cover"
       caption="Eerste website"
     />
     <Plate
-      src="/img/website-second-version.png"
+      src={secondWebsite}
       alt="Schermafbeelding van de tweede website, gebouwd met Vitepress"
-      width="900"
-      height="600"
+      widths={[320, 640, 900]}
+      sizes="(min-width: 800px) 705px, 92vw"
       class="plate--cover"
       caption="Tweede versie website"
     />

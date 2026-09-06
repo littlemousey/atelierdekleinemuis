@@ -2,6 +2,7 @@
 import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Plate from '../../components/Plate.astro';
+import slapendeMuizen from '../../assets/slapende-muizen.jpg';
 import { AUTHOR, SITE_TITLE } from '../../consts';
 
 const verhalen = (await getCollection('verhalen')).sort((a, b) => a.data.order - b.data.order);
@@ -52,10 +53,10 @@ const jsonLd = {
     <p class="verder"><a href="/verhalen/voorwoord/">Lees verder in het voorwoord →</a></p>
 
     <Plate
-      src="/img/slapende-muizen.jpg"
+      src={slapendeMuizen}
       alt="Slapende muizen dicht tegen elkaar aan"
-      width="900"
-      height="600"
+      widths={[320, 640, 900]}
+      sizes="(min-width: 800px) 705px, 92vw"
     />
   </div>
 

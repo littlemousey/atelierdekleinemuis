@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Plate from '../../components/Plate.astro';
+import wave from '../../assets/littlemousey_wave.png';
 import NuInUtrecht from '../../components/NuInUtrecht.astro';
 import { AUTHOR } from '../../consts';
 
@@ -49,10 +50,9 @@ const jsonLd = {
     </p>
 
     <Plate
-      src="/img/littlemousey_wave.png"
+      src={wave}
       alt="De getekende muis van Atelier de kleine muis zwaait"
-      width="300"
-      height="300"
+      width={300}
     />
 
     <blockquote>

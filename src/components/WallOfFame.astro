@@ -1,5 +1,18 @@
 ---
-import { MICE_BY_ERA } from '../data/mice';
+import { Image, getImage } from 'astro:assets';
+import { MICE_BY_ERA, MICE } from '../data/mice';
+
+// The collage opens in a dialog whose src is set from a data attribute, so it
+// needs a plain URL rather than an <Image>. Resolve each one at build time,
+// capped at 1200px — the dialog never shows them larger than 78vh.
+const collages = new Map(
+  await Promise.all(
+    MICE.map(async (m) => {
+      const img = await getImage({ src: m.collage, width: Math.min(1200, m.collage.width), format: 'webp' });
+      return [m.id, img.src] as const;
+    }),
+  ),
+);
 ---
 
 {MICE_BY_ERA.map(({ era, mice }) => (
@@ -16,18 +29,18 @@ import { MICE_BY_ERA } from '../data/mice';
           <button
             type="button"
             class="polaroid"
-            data-collage={mouse.collageImgUrl}
+            data-collage={collages.get(mouse.id)}
             data-name={mouse.name}
             aria-haspopup="dialog"
           >
-            <img
+            <Image
               class="plate"
-              src={mouse.imgUrl}
+              src={mouse.img}
               alt={`Muis ${mouse.name}`}
-              width="150"
-              height="150"
+              width={320}
+              densities={[1, 2]}
+              format="webp"
               loading="lazy"
-              decoding="async"
             />
             <span class="polaroid__name">{mouse.name}</span>
             {mouse.exLab && <span class="polaroid__lab">ex-labmuis</span>}

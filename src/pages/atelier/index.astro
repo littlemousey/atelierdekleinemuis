@@ -20,7 +20,7 @@ const gedichten = (await getCollection('gedichten')).sort((a, b) => a.data.order
   <div class="grid grid--2 grid--3">
     <section>
       <h2><a href="/atelier/recepten/">Recepten</a></h2>
-      <p class="era__note">wat de muis kookt</p>
+      <p class="era__note">aanbevelingen van de muis</p>
       <ul class="index-list">
         {recepten.map((r) => (
           <li>
@@ -34,7 +34,7 @@ const gedichten = (await getCollection('gedichten')).sort((a, b) => a.data.order
 
     <section>
       <h2><a href="/atelier/gedichten/">Gedichten</a></h2>
-      <p class="era__note">wat de muis voelt</p>
+      <p class="era__note">gevoelens op papier</p>
       <ul class="index-list">
         {gedichten.map((g) => (
           <li>
@@ -48,7 +48,7 @@ const gedichten = (await getCollection('gedichten')).sort((a, b) => a.data.order
 
     <section>
       <h2><a href="/atelier/kunst/">Kunst</a></h2>
-      <p class="era__note">wat de muis tekent · {ARTWORKS.length}</p>
+      <p class="era__note">tekeningen van de muis · {ARTWORKS.length}</p>
       {/* The heading is the link; the groups below only say what is in there. */}
       <ul class="index-list">
         {ARTWORKS_BY_COLLECTION.map(({ collection, artworks }) => (

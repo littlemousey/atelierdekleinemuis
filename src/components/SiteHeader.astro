@@ -51,3 +51,17 @@ const active = [...NAV_LINKS]
     <ThemeToggle />
   </div>
 </header>
+
+<script>
+  // Below 640px the nav is a strip that scrolls sideways, so the current page
+  // can sit off the right edge with nothing to show for it. Bring it into
+  // view before first paint — no animation, it should look like where the
+  // strip already was.
+  const nav = document.querySelector<HTMLElement>('.site-nav');
+  const current = nav?.querySelector<HTMLAnchorElement>('a[aria-current="page"]');
+
+  if (nav && current && nav.scrollWidth > nav.clientWidth) {
+    const overshoot = current.offsetLeft + current.offsetWidth - nav.clientWidth;
+    if (overshoot > 0) nav.scrollLeft = overshoot + 16;
+  }
+</script>

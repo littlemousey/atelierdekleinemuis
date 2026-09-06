@@ -1,22 +1,44 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
 interface Props {
-  src: string;
+  src: ImageMetadata;
   alt: string;
-  width?: number | string;
-  height?: number | string;
+  /** Widest the plate is ever displayed. Astro emits this width and a 2x
+   *  companion; the height comes from the file, so it can never be declared
+   *  wrong. Pass `widths` + `sizes` instead where the plate is fluid. */
+  width?: number;
+  widths?: number[];
+  sizes?: string;
   loading?: 'lazy' | 'eager';
   fetchpriority?: 'high' | 'auto';
   class?: string;
   caption?: string;
 }
-const { src, alt, width, height, loading = 'lazy', fetchpriority, class: cls, caption } = Astro.props;
+
+const {
+  src,
+  alt,
+  width,
+  widths,
+  sizes,
+  loading = 'lazy',
+  fetchpriority,
+  class: cls,
+  caption,
+} = Astro.props;
+
+// A fixed plate gets a 1x/2x pair; a fluid one gets the candidate widths it was
+// given. `densities` and `widths` are mutually exclusive, so pick one.
+const sizing = widths ? { widths, sizes } : { width, densities: [1, 2] };
 ---
 
 {caption ? (
   <figure>
-    <img class:list={['plate', cls]} {src} {alt} {width} {height} {loading} {fetchpriority} decoding="async" />
+    <Image class:list={['plate', cls]} {src} {alt} {loading} {fetchpriority} format="webp" {...sizing} />
     <figcaption>{caption}</figcaption>
   </figure>
 ) : (
-  <img class:list={['plate', cls]} {src} {alt} {width} {height} {loading} {fetchpriority} decoding="async" />
+  <Image class:list={['plate', cls]} {src} {alt} {loading} {fetchpriority} format="webp" {...sizing} />
 )}
