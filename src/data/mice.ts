@@ -48,8 +48,8 @@ export interface Mouse {
 export const ERAS: Era[] = [
   { id: 'rock', label: 'Rocksterren', note: 'De eerste drie, vernoemd naar vrouwelijke rocksterren.' },
   { id: 'game', label: 'Game-heldinnen', note: 'Vernoemd naar vrouwelijke hoofdpersonen uit videogames.' },
-  { id: 'flower', label: 'Bloemen', note: 'Het bloemennest.' },
-  { id: 'pokemon', label: 'Pokémon', note: 'Jenny en Joy — en Jenny’s onverwachte nest: Erika, Sabrina, Misty en Clair.' },
+  { id: 'flower', label: 'Bloemen', note: 'De bloemetjes in mijn leven' },
+  { id: 'pokemon', label: 'Pokémon personages', note: 'Jenny en Joy — en Jenny’s onverwachte nest: Erika, Sabrina, Misty en Clair.' },
   { id: 'at', label: 'Adventure Time-prinsessen', note: 'Vernoemd naar de prinsessen uit Adventure Time.' },
 ];
 

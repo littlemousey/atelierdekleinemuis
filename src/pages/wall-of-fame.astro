@@ -1,13 +1,13 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import WallOfFame from '../components/WallOfFame.astro';
-import { MICE, ERAS } from '../data/mice';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WallOfFame from "../components/WallOfFame.astro";
+import { MICE, ERAS } from "../data/mice";
 
 const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ImageGallery',
-  name: 'Wall of fame — de muizen van Atelier de kleine muis',
-  inLanguage: 'nl-NL',
+  "@context": "https://schema.org",
+  "@type": "ImageGallery",
+  name: "Wall of fame — de muizen van Atelier de kleine muis",
+  inLanguage: "nl-NL",
   numberOfItems: MICE.length,
 };
 ---
@@ -21,11 +21,17 @@ const jsonLd = {
     <p class="kicker">{MICE.length} muizen · {ERAS.length} tijdperken</p>
     <h1>Wall of fame</h1>
     <p class="lede">
-      Alle muizen die hier gewoond hebben, gegroepeerd per tijdperk — elk nest kreeg zijn eigen
-      naamthema. De muizen met het label <em>ex-labmuis</em> zijn geadopteerd uit een laboratorium.
-      Klik op een muis om meer foto's te zien.
+      Alle muizen die bij mij gewoond hebben, gegroepeerd per tijdperk. Elk
+      groepje kreeg hun eigen thema, die je kan zien als tijdperk. De muizen met
+      het label <em>ex-labmuis</em> zijn geadopteerd uit het laboratorium. Klik op
+      een muis om meer foto's te zien.
     </p>
   </div>
+  <blockquote>
+    Let's remember ones life<br/>
+    Not by how it has ended<br/>
+    But how it was lived
+  </blockquote>
 
   <WallOfFame />
 </BaseLayout>
