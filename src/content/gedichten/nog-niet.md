@@ -1,6 +1,6 @@
 ---
 title: "Nog niet"
-description: "Een gedicht over verlangen naar de hemel — en toch nog even willen blijven."
+description: "Een gedicht over verlangen naar de hemel"
 pubDate: 2026-08-22
 order: 5
 ---

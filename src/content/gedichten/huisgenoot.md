@@ -1,6 +1,6 @@
 ---
 title: "Huisgenoot"
-description: "Een haiku over de muis die 's nachts door de muren graaft en het aanrecht achterlaat zoals hij hem vindt."
+description: "Een haiku over de huisgenoot"
 pubDate: 2026-08-22
 order: 4
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Verandering"
-description: "Een gedicht over ouder worden en veranderen: was ik vroeger leuker, en moet ik daar om rouwen?"
+description: "Veranderingen opmerken"
 pubDate: 2026-08-22
 order: 2
 ---

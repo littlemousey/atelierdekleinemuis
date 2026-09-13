@@ -1,6 +1,6 @@
 ---
 title: "Afscheid"
-description: "Schuldgevoel en vragen bij afscheid nemen"
+description: "Vragen bij afscheid"
 pubDate: 2026-08-22
 order: 3
 ---

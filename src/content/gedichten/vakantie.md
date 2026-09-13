@@ -1,6 +1,6 @@
 ---
 title: "Vakantie"
-description: "Een gedicht over weg willen van jezelf, van alle eisen en oordelen — zo licht als een veertje."
+description: "Vrij van alles"
 pubDate: 2026-08-22
 order: 1
 ---
