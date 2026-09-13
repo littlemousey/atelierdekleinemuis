@@ -50,12 +50,13 @@ Misschien is er nog tijd om mijzelf diep in de ogen te kijken \
 Of is het al te laat?
 
 Zou je mijn excuses accepteren? \
-En geloof je me \
-Als ik zeg dat ik zal luisteren? \
 Zou je nog steeds bij mij blijven \
-Als je de keuze had om weg te gaan?
+Als je de keuze had om weg te gaan? \
+Je mag er even over doen \
+Om te ontdekken wat je zelf wil
 
 "Het spijt me" \
 Kan je daarmee leven? \
-Laten we in gesprek gaan \
-Kan je me laten weten wat jij wil?
+Nu ben ik er voor jou \
+En ik beloof je \
+Dat ik zal luisteren
