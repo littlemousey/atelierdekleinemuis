@@ -45,9 +45,17 @@ const paginas = defineCollection({
   schema: z.object({ title: z.string(), description: z.string() }),
 });
 
+// Eén in memoriam per muis, bestandsnaam = het id uit data/mice.ts. Alleen de
+// tekst; naam, data en foto's staan in mice.ts.
+const muizen = defineCollection({
+  loader: glob({ base: './src/content/muizen', pattern: '**/*.md' }),
+  schema: z.object({}),
+});
+
 export const collections = {
   verhalen: collection('verhalen'),
   recepten,
   gedichten: collection('gedichten'),
   paginas,
+  muizen,
 };

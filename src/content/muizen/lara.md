@@ -1,0 +1,1 @@
+Vernoemd naar Lara Croft uit Tomb Raider. Een meer voorzichtige verlegen muis, maar wel ondeugend. Je vond het kleine verblijf maar niets en klom gauw met je zusjes er uit wanneer er een kans was. Je hebt veel lief en leed gedeeld met je zusjes, van met z'n drietjes in een tentje en elkaar wassen tot ruzies en beten in de staarten.

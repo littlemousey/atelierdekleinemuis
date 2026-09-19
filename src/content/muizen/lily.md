@@ -1,0 +1,1 @@
+Een zorgzaam maatje voor Chell. Wel wat timide, maar we hebben je ook niet heel lang gehad. Ze sliep vaak gezellig met Chell en hield haar in de gaten, wat een mooi zwart wit contrast gaf. We hadden graag meer tijd met je samen willen hebben.

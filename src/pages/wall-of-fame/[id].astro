@@ -1,0 +1,94 @@
+---
+import { Image } from 'astro:assets';
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { MICE, ERAS, type Mouse } from '../../data/mice';
+import { formatDate } from '../../lib/period';
+
+export async function getStaticPaths() {
+  return MICE.map((mouse, index) => ({
+    params: { id: mouse.id },
+    props: { mouse, index },
+  }));
+}
+
+interface Props {
+  mouse: Mouse;
+  index: number;
+}
+
+const { mouse, index } = Astro.props;
+
+// Every mouse needs its text; fail the build rather than ship an empty page.
+const entry = await getEntry('muizen', mouse.id);
+if (!entry) throw new Error(`wall-of-fame: geen tekst in content/muizen/${mouse.id}.md`);
+const { Content } = await render(entry);
+
+const era = ERAS.find((e) => e.id === mouse.era)!;
+const prev = MICE[index - 1] ?? null;
+const next = MICE[index + 1] ?? null;
+const num = (n: number) => String(n).padStart(2, '0');
+
+// Responsive widths for the collage, never wider than the file itself.
+const widths = [480, 800, 1200, 1600].filter((w) => w <= mouse.collage.width);
+if (!widths.length) widths.push(mouse.collage.width);
+---
+
+<BaseLayout
+  title={`${mouse.name} — Wall of fame`}
+  description={`In memoriam ${mouse.name} (${formatDate(mouse.from)} – ${formatDate(mouse.to)}): ${mouse.epithet}.`}
+  type="article"
+>
+  <nav class="breadcrumb" aria-label="Kruimelpad">
+    <a href="/wall-of-fame/">Wall of fame</a> <span aria-hidden="true">/</span>
+    <a href={`/wall-of-fame/#${era.id}`}>{era.label}</a> <span aria-hidden="true">/</span> {mouse.name}
+  </nav>
+
+  <article class="mouse-page">
+    <header class="mouse-head">
+      <Image
+        class="plate mouse-head__avatar"
+        src={mouse.img}
+        alt={`Muis ${mouse.name}`}
+        width={160}
+        densities={[1, 2]}
+        format="webp"
+      />
+      <div>
+        <p class="kicker">
+          {era.label}{mouse.exLab && <> · <span class="polaroid__lab">ex-labmuis</span></>}
+        </p>
+        <h1>{mouse.name}</h1>
+        <p class="mouse-head__period">
+          <time datetime={mouse.from}>{formatDate(mouse.from)}</time>
+          {' – '}
+          <time datetime={mouse.to}>{formatDate(mouse.to)}</time>
+        </p>
+        <p class="mouse-head__epithet">{mouse.epithet}</p>
+      </div>
+    </header>
+
+    <div class="prose mouse-text"><Content /></div>
+
+    <figure class="mouse-collage">
+      <Image
+        class="plate"
+        src={mouse.collage}
+        alt={`Collage met foto's van muis ${mouse.name}`}
+        widths={widths}
+        sizes="(min-width: 1000px) 40vw, 100vw"
+        format="webp"
+      />
+    </figure>
+
+    <nav class="poem-nav mouse-nav" aria-label="Andere muizen">
+      {prev
+        ? <a href={`/wall-of-fame/${prev.id}/`}>← {prev.name}</a>
+        : <span class="poem-nav__off">← vorige</span>}
+      <span class="poem-nav__count">{num(index + 1)} / {num(MICE.length)}</span>
+      {next
+        ? <a href={`/wall-of-fame/${next.id}/`}>{next.name} →</a>
+        : <span class="poem-nav__off">volgende →</span>}
+    </nav>
+  </article>
+</BaseLayout>

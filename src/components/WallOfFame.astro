@@ -1,18 +1,7 @@
 ---
-import { Image, getImage } from 'astro:assets';
-import { MICE_BY_ERA, MICE } from '../data/mice';
-
-// The collage opens in a dialog whose src is set from a data attribute, so it
-// needs a plain URL rather than an <Image>. Resolve each one at build time,
-// capped at 1200px — the dialog never shows them larger than 78vh.
-const collages = new Map(
-  await Promise.all(
-    MICE.map(async (m) => {
-      const img = await getImage({ src: m.collage, width: Math.min(1200, m.collage.width), format: 'webp' });
-      return [m.id, img.src] as const;
-    }),
-  ),
-);
+import { Image } from 'astro:assets';
+import { MICE_BY_ERA } from '../data/mice';
+import { shortDate } from '../lib/period';
 ---
 
 {MICE_BY_ERA.map(({ era, mice }) => (
@@ -26,17 +15,11 @@ const collages = new Map(
     <ul class="wall">
       {mice.map((mouse) => (
         <li>
-          <button
-            type="button"
-            class="polaroid"
-            data-collage={collages.get(mouse.id)}
-            data-name={mouse.name}
-            aria-haspopup="dialog"
-          >
+          <a class="polaroid" href={`/wall-of-fame/${mouse.id}/`}>
             <Image
               class="plate"
               src={mouse.img}
-              alt={`Muis ${mouse.name}`}
+              alt=""
               width={320}
               densities={[1, 2]}
               format="webp"
@@ -44,49 +27,11 @@ const collages = new Map(
             />
             <span class="polaroid__name">{mouse.name}</span>
             {mouse.exLab && <span class="polaroid__lab">ex-labmuis</span>}
-            {/* Period renders only once real from/to dates are filled in. */}
-            {mouse.from && mouse.to && (
-              <span class="polaroid__epithet">{mouse.from} – {mouse.to}</span>
-            )}
+            <span class="polaroid__period">{shortDate(mouse.from)} – {shortDate(mouse.to)}</span>
             {mouse.epithet && <span class="polaroid__epithet">{mouse.epithet}</span>}
-          </button>
+          </a>
         </li>
       ))}
     </ul>
   </section>
 ))}
-
-<dialog class="collage" id="collage-dialog" aria-label="Foto's van de muis">
-  <div class="collage__inner">
-    <div class="collage__bar">
-      <strong id="collage-dialog-title"></strong>
-      <button type="button" class="btn btn-secondary" data-close>Sluiten</button>
-    </div>
-    <img id="collage-dialog-img" class="plate" src="" alt="" />
-  </div>
-</dialog>
-
-<script>
-  const dialog = document.querySelector<HTMLDialogElement>('#collage-dialog');
-  const img = document.querySelector<HTMLImageElement>('#collage-dialog-img');
-  const label = document.querySelector<HTMLElement>('#collage-dialog-title');
-
-  if (dialog && img && label) {
-    document.querySelectorAll<HTMLButtonElement>('.polaroid').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const name = btn.dataset.name ?? '';
-        img.src = btn.dataset.collage ?? '';
-        img.alt = `Collage van muis ${name}`;
-        label.textContent = name;
-        dialog.showModal();
-      });
-    });
-
-    dialog.querySelector('[data-close]')?.addEventListener('click', () => dialog.close());
-
-    // Click on the backdrop closes it too.
-    dialog.addEventListener('click', (event) => {
-      if (event.target === dialog) dialog.close();
-    });
-  }
-</script>

@@ -1,0 +1,1 @@
+Vernoemd naar de stoere Aloy uit de video game Horizon Zero Dawn. Stoere witte labmuis die niet bang was om te laten zien wie de baas was. Was altijd snel op onderzoek uit en als iets haar niet aan stond van de mensen ratelde ze gevaarlijk met haar staart.

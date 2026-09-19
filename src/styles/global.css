@@ -148,21 +148,45 @@ blockquote {
 .wall { display: grid; gap: var(--space-6) var(--space-4); grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); list-style: none; margin: 0; padding: 0; }
 .polaroid {
   display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
-  width: 100%; background: none; border: 0; padding: 0; cursor: pointer;
-  font: inherit; color: inherit; text-align: center;
+  width: 100%; text-decoration: none; color: inherit; text-align: center;
 }
 .polaroid img { width: 100%; aspect-ratio: 1; object-fit: cover; }
 .polaroid:hover .plate { border-color: var(--color-accent-200); outline-color: var(--color-accent); }
 .polaroid__name { font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 17px; }
 .polaroid__epithet { font-size: 12px; line-height: 1.45; color: var(--color-neutral-700); }
+.polaroid__period { font-size: 11px; font-feature-settings: 'tnum'; color: var(--color-neutral-700); }
 .polaroid__lab { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--color-accent-700); }
 
-dialog.collage, dialog.lightbox { border: 0; padding: 0; background: transparent; max-width: min(92vw, 900px); }
-dialog.collage::backdrop, dialog.lightbox::backdrop { background: var(--color-backdrop); }
-.collage__inner, .lightbox__inner { background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
-.collage__bar, .lightbox__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-divider); }
-.collage__bar strong, .lightbox__bar strong { font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 20px; }
-.collage__inner img, .lightbox__inner img { max-height: 78vh; width: auto; margin: 0 auto; }
+dialog.lightbox { border: 0; padding: 0; background: transparent; max-width: min(92vw, 900px); }
+dialog.lightbox::backdrop { background: var(--color-backdrop); }
+.lightbox__inner { background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+.lightbox__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-divider); }
+.lightbox__bar strong { font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 20px; }
+.lightbox__inner img { max-height: 78vh; width: auto; margin: 0 auto; }
+
+/* One page per mouse: portrait and dates on top, then the text. On a wide
+   screen the collage sits beside the text and stays in view while reading. */
+.mouse-page {
+  display: grid; gap: var(--space-6) var(--space-8); align-items: start;
+  grid-template-areas: 'head' 'text' 'collage' 'nav';
+}
+.mouse-head { grid-area: head; display: flex; align-items: center; gap: var(--space-4); }
+.mouse-head__avatar { width: 96px; aspect-ratio: 1; object-fit: cover; flex: none; }
+.mouse-head h1 { margin-bottom: var(--space-1); }
+.mouse-head__period { margin: 0; font-size: 14px; font-feature-settings: 'tnum'; }
+.mouse-head__epithet { margin: 0; font-size: 14px; font-style: italic; color: var(--color-neutral-700); }
+.mouse-text { grid-area: text; }
+.mouse-collage { grid-area: collage; margin: 0; }
+.mouse-collage img { width: 100%; }
+.mouse-nav { grid-area: nav; margin-top: 0; }
+@media (min-width: 1000px) {
+  .mouse-page {
+    grid-template-columns: minmax(0, 1fr) minmax(0, .8fr);
+    grid-template-areas: 'head collage' 'text collage' 'nav nav';
+  }
+  .mouse-head__avatar { width: 128px; }
+  .mouse-collage { position: sticky; top: var(--space-4); }
+}
 
 /* ── projects ──────────────────────────────────────────────────────── */
 .proj__shot { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; width: 100%; }

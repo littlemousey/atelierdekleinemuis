@@ -1,0 +1,1 @@
+Vernoemd naar Lzzy Hale uit de band Halestorm. De alfamuis die haar vrouwtje stond om een steen. Wat was je een grote en sterke zus. Je had voorkeur voor snacks en pindakaas en liet goed merken wie de baas was. Als het koud was vond je het fijn om in mijn handen te schuilen, lekker warm.

@@ -1,0 +1,1 @@
+Vernoemd naar de rockster Hayley Williams van de band Paramore. De muis die ik helaas niet zo lang heb kunnen kennen als ik had gewild. We hebben je maar even meegemaakt, maar je was een lief en dapper muisje.
