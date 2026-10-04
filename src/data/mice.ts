@@ -59,26 +59,26 @@ export const ERAS: Era[] = [
 export const MICE: Mouse[] = [
   { id: 'haley',   name: 'Haley',   era: 'rock',    exLab: true,  epithet: 'lief en dapper',                                  img: avatar('haley.jpg'),   collage: collage('haley.jpg'), from: '2020-02', to: '2020-12' },
   { id: 'lizzy',   name: 'Lizzy',   era: 'rock',    exLab: true,  epithet: 'grote en sterke zus',                             img: avatar('lizzy.jpg'),   collage: collage('lizzy.jpg'), from: '2020-02', to: '2021-08' },
-  { id: 'amy',     name: 'Amy',     era: 'rock',    exLab: true,  epithet: 'klein, loyaal en sterk tot het eind',             img: avatar('amy.jpg'),     collage: collage('amy.jpg'), from: '2020-02', to: '2021-07' },
+  { id: 'amy',     name: 'Amy',     era: 'rock',    exLab: true,  epithet: 'klein, loyaal met een sterke overlevingswil',     img: avatar('amy.jpg'),     collage: collage('amy.jpg'), from: '2020-02', to: '2021-07' },
 
   { id: 'aloy',    name: 'Aloy',    era: 'game',    exLab: true,  epithet: 'stoer en nieuwsgierig',                           img: avatar('aloy.jpg'),    collage: collage('aloy-chell-lara.jpg'), from: '2021-02', to: '2022-06' },
   { id: 'lara',    name: 'Lara',    era: 'game',    exLab: true,  epithet: 'voorzichtig en ondeugend',                        img: avatar('lara.jpg'),    collage: collage('aloy-chell-lara.jpg'), from: '2021-02', to: '2022-08' },
   { id: 'chell',   name: 'Chell',   era: 'game',    exLab: true,  epithet: 'energiek en uitdagend',                           img: avatar('chell.jpg'),   collage: collage('aloy-chell-lara.jpg'), from: '2021-02', to: '2022-11' },
 
-  { id: 'poppy',   name: 'Poppy',   era: 'flower',  exLab: true,  epithet: 'kleine free runner, ronddraaiende circustante',   img: avatar('poppy.jpg'),   collage: collage('poppy.jpg'), from: '2021-08', to: '2023-10-11' },
+  { id: 'poppy',   name: 'Poppy',   era: 'flower',  exLab: true,  epithet: 'kleine free runner',                              img: avatar('poppy.jpg'),   collage: collage('poppy.jpg'), from: '2021-08', to: '2023-10-11' },
   { id: 'lily',    name: 'Lily',    era: 'flower',  exLab: true,  epithet: 'zorgzaam maatje',                                 img: avatar('lily.jpg'),    collage: collage('lily.jpg'), from: '2021-08', to: '2022-12-23' },
-  { id: 'daisy',   name: 'Daisy',   era: 'flower',  exLab: true,  epithet: 'sterke alfa, stevige tante met flair',            img: avatar('daisy.jpg'),   collage: collage('daisy.jpg'), from: '2021-08', to: '2023-09-26' },
+  { id: 'daisy',   name: 'Daisy',   era: 'flower',  exLab: true,  epithet: 'stevige tante met flair',                         img: avatar('daisy.jpg'),   collage: collage('daisy.jpg'), from: '2021-08', to: '2023-09-26' },
 
   { id: 'jenny',   name: 'Jenny',   era: 'pokemon', exLab: false, epithet: 'lieve, toegewijde en zorgzame moeder',            img: avatar('jenny.jpg'),   collage: collage('jenny.jpg'), from: '2021-12', to: '2023-02' },
   { id: 'joy',     name: 'Joy',     era: 'pokemon', exLab: false, epithet: 'tante knorrepot, zonnetje in huis',               img: avatar('joy.jpg'),     collage: collage('joy.jpg'), from: '2021-12', to: '2024-03' },
   { id: 'erika',   name: 'Erika',   era: 'pokemon', exLab: false, epithet: 'verlegen muis · dochter van Jenny',               img: avatar('erika.jpg'),   collage: collage('erika.jpg'), from: '2023-01', to: '2024-05' },
-  { id: 'sabrina', name: 'Sabrina', era: 'pokemon', exLab: false, epithet: 'wil graag stoer zijn · dochter van Jenny',        img: avatar('sabrina.jpg'), collage: collage('sabrina.jpg'), from: '2023-01', to: '2025-03' },
-  { id: 'misty',   name: 'Misty',   era: 'pokemon', exLab: false, epithet: 'alleen wanneer het haar uitkomt · dochter van Jenny', img: avatar('misty.jpg'), collage: collage('misty.jpg'), from: '2023-01', to: '2024-10' },
+  { id: 'sabrina', name: 'Sabrina', era: 'pokemon', exLab: false, epithet: 'stoere eigenzinnige muis · dochter van Jenny',    img: avatar('sabrina.jpg'), collage: collage('sabrina.jpg'), from: '2023-01', to: '2025-03' },
+  { id: 'misty',   name: 'Misty',   era: 'pokemon', exLab: false, epithet: 'komt als ze zin heeft · dochter van Jenny',       img: avatar('misty.jpg'), collage: collage('misty.jpg'), from: '2023-01', to: '2024-10' },
   { id: 'clair',   name: 'Clair',   era: 'pokemon', exLab: false, epithet: 'voorzichtige onderzoeker · dochter van Jenny',    img: avatar('clair.jpg'),   collage: collage('clair.jpg'), from: '2023-01', to: '2025-02' },
 
   { id: 'marcy',   name: 'Marcy',   era: 'at',      exLab: true, epithet: 'kleine avonturier',                               img: avatar('marcy.jpg'),   collage: collage('marcy.jpg'), from: '2024-06', to: '2026-05' },
   { id: 'phoebe',  name: 'Phoebe',  era: 'at',      exLab: true, epithet: 'levensgenieter',                                  img: avatar('phoebe.jpg'),  collage: collage('phoebe.jpg'), from: '2024-06', to: '2026-08' },
-  { id: 'bonnie',  name: 'Bonnie',  era: 'at',      exLab: true, epithet: 'kieskeurige bedelaar voor snacks',                img: avatar('bonnie.jpg'),  collage: collage('bonnie.jpg'), from: '2024-06', to: '2026-09' },
+  { id: 'bonnie',  name: 'Bonnie',  era: 'at',      exLab: true, epithet: 'kieskeurige bedelaar',                img: avatar('bonnie.jpg'),  collage: collage('bonnie.jpg'), from: '2024-06', to: '2026-09' },
 ];
 
 /** Mice grouped by era, in era order. */
