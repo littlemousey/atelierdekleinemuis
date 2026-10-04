@@ -54,7 +54,7 @@ export const ERAS: Era[] = [
   { id: 'at', label: 'Adventure Time-prinsessen', note: 'Vernoemd naar de prinsessen uit Adventure Time.' },
 ];
 
-const FALLBACK = collage('fallback.jpg');
+// const FALLBACK = collage('fallback.jpg');
 
 export const MICE: Mouse[] = [
   { id: 'haley',   name: 'Haley',   era: 'rock',    exLab: true,  epithet: 'lief en dapper',                                  img: avatar('haley.jpg'),   collage: collage('haley.jpg'), from: '2020-02', to: '2020-12' },

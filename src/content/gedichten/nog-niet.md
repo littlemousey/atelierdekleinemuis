@@ -16,7 +16,7 @@ Maar wordt het dan geen saai leven. \
 Is dat waar ik naar wil streven?
 
 Wat als ik heimwee krijg naar hier, \
-naar ruzie, regen en plezier? \
+naar toeval, regen en plezier? \
 Misschien hoef ik er nog niet heen, \
 ook al voelt het leven soms alleen.
 

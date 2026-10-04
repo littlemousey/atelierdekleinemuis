@@ -10,7 +10,8 @@ spontaner, vrolijker, grappiger \
 Was ik vroeger leuker? \
 Als ik in de oude foto's terugkijk \
 Zie ik iemand anders \
-Iemand met andere wensen en dromen
+Iemand met andere wensen en dromen \
+Een meer energiek persoon
 
 Was mijn vroegere versie beter? \
 Hoe zou die naar mij kijken? \
