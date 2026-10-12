@@ -16,7 +16,7 @@ Dat ik mezelf in de kou heb laten staan \
 Waarom is het zo moeilijk om van mij te houden?
 
 Pas wanneer de naden uit elkaar scheuren \
-En de wereld uit elkaar valt \
+En de wereld in elkaar stort \
 Zie ik wat ik al die tijd voor lief genomen heb
 
 Steeds meer willen, en meer vragen \
