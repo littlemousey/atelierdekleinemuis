@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://atelierdekleinemuis.nl',
   // Directory-style URLs ending in a slash: exactly what Apache and nginx
-  // serve natively for a folder, so no redirect and no .htaccess is needed.
+  // serve natively for a folder. public/.htaccess adds the slash when missing.
   trailingSlash: 'always',
   build: { format: 'directory' },
   integrations: [sitemap()],

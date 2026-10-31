@@ -1,0 +1,32 @@
+# Server rules for the web host (Apache-compatible). The build copies this
+# file into dist/ like everything else in public/.
+
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Always serve over https. The host ends https at a proxy in front of the
+  # server, so %{HTTPS} is "off" even for https visits and would redirect in
+  # a loop. Only redirect when the proxy explicitly reports plain http.
+  RewriteCond %{HTTP:X-Forwarded-Proto} =http
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  # Add the trailing slash to a folder URL ourselves: the server's own
+  # redirect for this points to http://, which leaves https for a hop.
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^(.*[^/])$ https://%{HTTP_HOST}/$1/ [R=301,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Without this header browsers guess how long to keep a page, and can keep
+  # showing an old copy after an upload. "no-cache" still lets them keep it,
+  # but they check with the server before every use (a tiny 304 when unchanged).
+  # "always" covers redirects too, so a wrong redirect never sticks in a browser.
+  Header always set Cache-Control "no-cache"
+
+  # Files in /_astro/ carry a content hash in their name, so a change always
+  # gets a new URL: these can be kept for a year without ever going stale.
+  SetEnvIf Request_URI "^/_astro/" ASTRO_ASSET
+  Header always set Cache-Control "public, max-age=31536000, immutable" env=ASTRO_ASSET
+</IfModule>

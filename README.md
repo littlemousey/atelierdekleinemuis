@@ -86,8 +86,13 @@ The site is published by uploading the **contents of `dist/`** to the web host o
 only the source lives in the repo.
 
 URLs end in a slash (`/verhalen/`), which is exactly what Apache and nginx serve
-for a directory. That means no redirects, no `.htaccess`, and canonical tags that
-match the served URL precisely.
+for a directory, so canonical tags match the served URL precisely.
+
+`public/.htaccess` ends up in the web root with the rest of `dist/`. It forces https,
+serves `404.html` for missing pages, and sets `Cache-Control`: pages are revalidated on
+every visit, so an upload shows up at once, and the hashed files in `/_astro/` are cached
+for a year. Without it browsers guess a cache lifetime and can keep showing an old page.
+It is a dotfile, so make sure your FTP client shows and uploads hidden files.
 
 The domain is configured in one place: `site` in `astro.config.mjs`. It drives canonical
 URLs, Open Graph tags and `sitemap-index.xml`. It also appears in
